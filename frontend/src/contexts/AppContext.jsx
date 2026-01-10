@@ -1,0 +1,64 @@
+import { createContext, useContext, useState, useEffect } from 'react'
+import { appService } from '../services/appService'
+
+const AppContext = createContext(null)
+
+export const useApp = () => {
+  const context = useContext(AppContext)
+  if (!context) {
+    throw new Error('useApp must be used within an AppProvider')
+  }
+  return context
+}
+
+export const AppProvider = ({ children }) => {
+  const [socialLinks, setSocialLinks] = useState({
+    whatsapp: 'https://wa.me/237699933135',
+    facebook: 'https://web.facebook.com/search/top?q=l%27acad%C3%A9mie%20des%20%C3%A9leveurs',
+  })
+  const [siteConfig, setSiteConfig] = useState({
+    siteName: "L'Académie DES Éleveurs",
+    currency: 'FCFA',
+    currencySymbol: 'FCFA',
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const config = await appService.getSiteConfig()
+        setSocialLinks(config.socialLinks || socialLinks)
+        // Preserve siteName - it should never be changed/translated
+        setSiteConfig({ 
+          ...siteConfig, 
+          ...config,
+          siteName: "L'Académie DES Éleveurs" // Always keep the original site name
+        })
+      } catch (error) {
+        console.error('Failed to load site config:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadConfig()
+  }, [])
+
+  const updateSocialLinks = async (links) => {
+    try {
+      await appService.updateSocialLinks(links)
+      setSocialLinks(links)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const value = {
+    socialLinks,
+    siteConfig,
+    loading,
+    updateSocialLinks,
+  }
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+}
+
