@@ -10,11 +10,11 @@ const LanguageSelector = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm"
+        className="flex items-center space-x-1 px-2 py-1.5 text-gray-700 hover:text-gray-900 transition-colors text-sm"
       >
-        <span>{currentLanguage.flag}</span>
-        <span className="font-medium hidden sm:inline">{currentLanguage.code.toUpperCase()}</span>
-        <FiChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-lg">{currentLanguage.flag}</span>
+        <span className="font-medium">{currentLanguage.code.toUpperCase()}</span>
+        <FiChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (

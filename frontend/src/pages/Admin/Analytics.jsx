@@ -42,7 +42,7 @@ const Analytics = () => {
       label: 'Produits',
       value: stats.totalProducts,
       icon: FiTrendingUp,
-      color: 'bg-purple-500',
+      color: 'bg-green-500',
     },
     {
       label: 'Utilisateurs',

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { productService } from '../services/productService'
+import { productService, setTranslationFunction } from '../services/productService'
 import ProductCard from '../components/ProductCard/ProductCard'
+import SkeletonLoader from '../components/LoadingSpinner/SkeletonLoader'
 import { useLanguage } from '../contexts/LanguageContext'
 import { FiSearch } from 'react-icons/fi'
 
@@ -12,12 +13,29 @@ const ProductsPage = () => {
   const { t } = useLanguage()
 
   useEffect(() => {
+    // Set translation function for productService
+    setTranslationFunction(t)
+  }, [t])
+
+  useEffect(() => {
     const loadProducts = async () => {
       try {
+        // Check for search query in URL
+        const urlParams = new URLSearchParams(window.location.search)
+        const searchParam = urlParams.get('search')
+        
+        if (searchParam) {
+          setSearchQuery(searchParam)
+          const data = await productService.searchProducts(searchParam)
+          const productsList = Array.isArray(data) ? data : (data.data || [])
+          setProducts(productsList)
+          setFilteredProducts(productsList)
+        } else {
         const data = await productService.getAllProducts()
-        const productsList = data.data || data
+          const productsList = Array.isArray(data) ? data : (data.data || data)
         setProducts(productsList)
         setFilteredProducts(productsList)
+        }
       } catch (error) {
         console.error('Failed to load products:', error)
         setProducts([])
@@ -27,7 +45,7 @@ const ProductsPage = () => {
       }
     }
     loadProducts()
-  }, [])
+  }, [t])
 
   useEffect(() => {
     if (searchQuery.trim() === '') {
@@ -42,9 +60,9 @@ const ProductsPage = () => {
   }, [searchQuery, products])
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white min-h-screen">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
           {t('allProducts')}
         </h1>
 
@@ -56,24 +74,22 @@ const ProductsPage = () => {
             placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="input-field pl-10"
+            className="input-field pl-10 bg-white"
           />
         </div>
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-        </div>
+        <SkeletonLoader count={8} />
       ) : filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
+          <p className="text-gray-600 text-lg">
             {searchQuery ? t('noSearchResults') : t('noProductsFound')}
           </p>
         </div>

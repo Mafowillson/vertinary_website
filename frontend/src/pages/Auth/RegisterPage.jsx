@@ -46,7 +46,7 @@ const RegisterPage = () => {
       })
       navigate('/')
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de l\'inscription. Veuillez réessayer.')
+      setError(err.message || err.response?.data?.message || 'Erreur lors de l\'inscription. Veuillez réessayer.')
     } finally {
       setLoading(false)
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { FiMail, FiLock, FiAlertCircle } from 'react-icons/fi'
 
 const LoginPage = () => {
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -23,7 +25,7 @@ const LoginPage = () => {
       await login(email, password)
       navigate(from, { replace: true })
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de la connexion. Veuillez réessayer.')
+      setError(err.message || err.response?.data?.message || 'Erreur lors de la connexion. Veuillez réessayer.')
     } finally {
       setLoading(false)
     }
@@ -34,17 +36,26 @@ const LoginPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Connexion à votre compte
+            {t('loginTitle')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Ou{' '}
+            {t('orCreateAccount')}{' '}
             <Link
               to="/register"
-              className="font-medium text-primary-600 hover:text-primary-500"
+              className="font-medium text-green-600 hover:text-green-500"
             >
-              créez un nouveau compte
+              {t('register')}
             </Link>
           </p>
+          {/* Test Credentials Info */}
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm font-semibold text-blue-900 mb-2">Comptes de test:</p>
+            <div className="text-xs text-blue-800 space-y-1">
+              <p><strong>Admin:</strong> admin@academie.com / admin123</p>
+              <p><strong>User:</strong> user@academie.com / user123</p>
+              <p><strong>Bodric:</strong> bodric@academie.com / bodric123</p>
+            </div>
+          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
@@ -56,7 +67,7 @@ const LoginPage = () => {
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Adresse email
+                {t('email')}
               </label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -75,7 +86,7 @@ const LoginPage = () => {
             </div>
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Mot de passe
+                {t('password')}
               </label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -100,7 +111,7 @@ const LoginPage = () => {
               disabled={loading}
               className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Connexion...' : 'Se connecter'}
+              {loading ? t('processing') : t('loginButton')}
             </button>
           </div>
         </form>

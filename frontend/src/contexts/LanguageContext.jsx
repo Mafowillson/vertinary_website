@@ -26,6 +26,8 @@ const translations = {
     register: "S'inscrire",
     logout: 'Déconnexion',
     admin: 'Admin',
+    cart: 'Votre panier',
+    search: 'Rechercher',
     
     // Homepage
     heroTitle: 'Réduis 70% de tes dépenses en médicaments',
@@ -52,6 +54,24 @@ const translations = {
     sold: 'Vendu',
     remaining: 'Restant',
     viewDetails: 'Voir les détails',
+    
+    // Product Titles & Descriptions
+    product1Title: "GUIDE COMPLET DE L'ÉLEVAGE DE POULES PONDEUSES",
+    product1Desc: "Guide pratique complet pour l'élevage de poules pondeuses, de la sélection des races à la gestion de la production d'œufs. Inclut des conseils sur l'alimentation, la santé, et la gestion des installations.",
+    product2Title: "TOUT SUR L'ÉLEVAGE DE PORCS - GUIDE COMPLET",
+    product2Desc: "Manuel complet sur l'élevage porcin moderne. Couvre la sélection génétique, l'alimentation, les soins vétérinaires, la gestion sanitaire et les techniques de reproduction.",
+    product3Title: "KIT DE DÉMARRAGE EN ÉLEVAGE AVICOL - ÉDITION SPÉCIALE",
+    product3Desc: "Kit complet pour débuter dans l'élevage avicole. Inclut des guides sur la construction de poulaillers, la sélection des poussins, l'alimentation, et la prévention des maladies.",
+    product4Title: "GUIDE DE VACCINATION ET MÉDICATION - POULETS DE CHAIR (0-8 SEMAINES)",
+    product4Desc: "Guide détaillé sur les protocoles de vaccination et de médication pour les poulets de chair de la naissance à 8 semaines. Inclut les calendriers de vaccination et les dosages.",
+    product5Title: "MANAGEMENT DE LA PONTE - DU POINT DE PONTE AU MANAGEMENT MENSUEL",
+    product5Desc: "Guide spécialisé sur la gestion des poules pondeuses, du début de la ponte jusqu'à la gestion mensuelle optimale. Techniques de maximisation de la production d'œufs.",
+    product6Title: "ÉLEVAGE DE CHÈVRES ET MOUTONS - GUIDE PRATIQUE",
+    product6Desc: "Manuel complet sur l'élevage caprin et ovin. Couvre la sélection des races, l'alimentation, les soins vétérinaires, la reproduction et la gestion des pâturages.",
+    product7Title: "GESTION SANITAIRE EN ÉLEVAGE - PRÉVENTION ET TRAITEMENT",
+    product7Desc: "Guide complet sur la prévention et le traitement des maladies courantes en élevage. Inclut les protocoles de biosécurité et les plans de vaccination.",
+    product8Title: "ALIMENTATION ANIMALE - FORMULATION ET GESTION",
+    product8Desc: "Guide pratique sur la formulation des rations alimentaires pour différents types d'élevage. Techniques de gestion des stocks et optimisation des coûts.",
     
     // Product Detail
     productNotFound: 'Produit non trouvé',
@@ -111,10 +131,73 @@ const translations = {
     download: 'Télécharger',
     noFilesAvailable: 'Aucun fichier disponible pour le moment.',
     
+    // Profile/Bio
+    profileName: 'TCHOUALA FODEM BODRIC',
+    profileBio: 'TCHOUALA FODEM BODRIC ( Élève Docteur en Médecine Vétérinaire, Ingénieur en production animale, Promoteur de l\'Académie des Éleveurs, Fabriquant du produit Accélérateur de Croissance Bio et Auteur de la collection des livres "TOUT SUR L\'ÉLEVAGE").\n\nCi dessous vous avez une liste de quelques documents qui vous permettrons de maîtriser au maximum le secteur de l\'élevage👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇',
+    
+    // Services
+    services: 'Nos Services',
+    servicesDescription: 'Découvrez nos services professionnels pour l\'élevage et l\'agriculture',
+    viewService: 'Voir le service',
+    contactForPricing: 'Contactez-nous pour le prix',
+    learnMore: 'En savoir plus',
+    
+    // Service Titles
+    formationEnLigneEtPratique: 'Formation en Ligne et Pratique',
+    venteAnimaux: 'Vente d\'Animaux d\'un Jour et Matures',
+    accelerateurCroissance: 'Accélérateur de Croissance Bio',
+    constructionBatiments: 'Construction des Bâtiments d\'Élevage',
+    projetsElevage: 'Projets d\'Élevage et Consultation',
+    
+    // Service Descriptions
+    formationEnLigneEtPratiqueDesc: 'Formation complète en ligne et pratique sur les techniques modernes d\'élevage. Cours théoriques et sessions pratiques pour maîtriser tous les aspects de l\'élevage.',
+    venteAnimauxDesc: 'Vente d\'animaux d\'un jour et matures de qualité : poulets, canards, lapins, cailles, dindes, porcs et autres animaux d\'élevage.',
+    accelerateurCroissanceDesc: 'Produit bio pour accélérer la croissance des animaux. Convient pour les lapins, volailles, porcs, poissons et ruminants. Améliore la santé et la productivité.',
+    constructionBatimentsDesc: 'Conception et construction de bâtiments d\'élevage modernes et fonctionnels. Solutions adaptées à tous les types d\'élevage.',
+    projetsElevageDesc: 'Consultation et accompagnement pour vos projets d\'élevage. De la planification à la mise en œuvre, nous vous guidons à chaque étape.',
+    
+    // Service Features
+    formationFeature1: 'Cours en ligne accessibles 24/7',
+    formationFeature2: 'Sessions pratiques sur le terrain',
+    formationFeature3: 'Support continu via WhatsApp',
+    formationFeature4: 'Certificats de formation',
+    
+    venteFeature1: 'Animaux d\'un jour disponibles',
+    venteFeature2: 'Animaux matures de qualité',
+    venteFeature3: 'Large variété d\'espèces',
+    venteFeature4: 'Livraison possible',
+    
+    accelerateurFeature1: '100% Bio et naturel',
+    accelerateurFeature2: 'Pour tous types d\'animaux',
+    accelerateurFeature3: 'Améliore la croissance',
+    accelerateurFeature4: 'Renforce le système immunitaire',
+    
+    constructionFeature1: 'Conception personnalisée',
+    constructionFeature2: 'Matériaux de qualité',
+    constructionFeature3: 'Respect des normes',
+    constructionFeature4: 'Suivi et maintenance',
+    
+    projetsFeature1: 'Étude de faisabilité',
+    projetsFeature2: 'Planification détaillée',
+    projetsFeature3: 'Accompagnement technique',
+    projetsFeature4: 'Suivi post-lancement',
+    
     // Footer
     quickLinks: 'Liens rapides',
     allRightsReserved: 'Tous droits réservés',
     footerDescription: 'Votre partenaire pour réussir dans l\'élevage. Guides, articles et documents professionnels pour l\'élevage.',
+    developedBy: 'Développé par',
+    store: 'Magasin',
+    paymentMethodsSupported: 'Plusieurs options de paiement prises en charge',
+    
+    // Categories
+    allCategories: 'Toutes les catégories',
+    training: 'Formation',
+    sales: 'Vente',
+    construction: 'Construction',
+    consulting: 'Consultation',
+    noServicesFound: 'Aucun service trouvé dans cette catégorie',
+    featured: 'Populaire',
     
     // Common
     loading: 'Chargement...',
@@ -147,6 +230,8 @@ const translations = {
     register: 'Register',
     logout: 'Logout',
     admin: 'Admin',
+    cart: 'Your Cart',
+    search: 'Search',
     
     // Homepage
     heroTitle: 'Reduce 70% of your medication expenses',
@@ -232,10 +317,44 @@ const translations = {
     download: 'Download',
     noFilesAvailable: 'No files available at the moment.',
     
+    // Profile/Bio
+    profileName: 'TCHOUALA FODEM BODRIC',
+    profileBio: 'TCHOUALA FODEM BODRIC (Veterinary Medicine Student Doctor, Animal Production Engineer, Promoter of the Breeders Academy, Manufacturer of the Bio Growth Accelerator product and Author of the book collection "EVERYTHING ABOUT LIVESTOCK FARMING").\n\nBelow you have a list of some documents that will allow you to master the livestock farming sector to the maximum👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇',
+    
+    // Product Titles & Descriptions
+    product1Title: "COMPLETE GUIDE TO LAYING HEN FARMING",
+    product1Desc: "Complete practical guide for laying hen farming, from breed selection to egg production management. Includes advice on feeding, health, and facility management.",
+    product2Title: "EVERYTHING ABOUT PIG FARMING - COMPLETE GUIDE",
+    product2Desc: "Complete manual on modern pig farming. Covers genetic selection, feeding, veterinary care, health management and breeding techniques.",
+    product3Title: "POULTRY FARMING STARTER KIT - SPECIAL EDITION",
+    product3Desc: "Complete kit to get started in poultry farming. Includes guides on building chicken coops, chick selection, feeding, and disease prevention.",
+    product4Title: "VACCINATION AND MEDICATION GUIDE - BROILER CHICKENS (0-8 WEEKS)",
+    product4Desc: "Detailed guide on vaccination and medication protocols for broiler chickens from birth to 8 weeks. Includes vaccination schedules and dosages.",
+    product5Title: "LAYING MANAGEMENT - FROM LAYING POINT TO MONTHLY MANAGEMENT",
+    product5Desc: "Specialized guide on laying hen management, from the start of laying to optimal monthly management. Techniques for maximizing egg production.",
+    product6Title: "GOAT AND SHEEP FARMING - PRACTICAL GUIDE",
+    product6Desc: "Complete manual on goat and sheep farming. Covers breed selection, feeding, veterinary care, reproduction and pasture management.",
+    product7Title: "HEALTH MANAGEMENT IN FARMING - PREVENTION AND TREATMENT",
+    product7Desc: "Complete guide on prevention and treatment of common farming diseases. Includes biosecurity protocols and vaccination plans.",
+    product8Title: "ANIMAL FEEDING - FORMULATION AND MANAGEMENT",
+    product8Desc: "Practical guide on feed ration formulation for different types of farming. Stock management techniques and cost optimization.",
+    
     // Footer
     quickLinks: 'Quick Links',
     allRightsReserved: 'All rights reserved',
     footerDescription: 'Your partner to succeed in agriculture. Guides, articles and professional documents for agriculture.',
+    developedBy: 'Developed by',
+    store: 'Store',
+    paymentMethodsSupported: 'Multiple payment options supported',
+    
+    // Categories
+    allCategories: 'All Categories',
+    training: 'Training',
+    sales: 'Sales',
+    construction: 'Construction',
+    consulting: 'Consulting',
+    noServicesFound: 'No services found in this category',
+    featured: 'Featured',
     
     // Common
     loading: 'Loading...',
@@ -293,15 +412,19 @@ export const LanguageProvider = ({ children }) => {
     return 'en'
   }
 
-  const [language, setLanguage] = useState(getInitialLanguage)
+  const [language, setLanguage] = useState(() => getInitialLanguage())
 
   // Save language preference
   useEffect(() => {
-    localStorage.setItem('language', language)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', language)
+    }
   }, [language])
 
   const t = (key) => {
-    return translations[language]?.[key] || key
+    if (!key) return ''
+    const translation = translations[language]?.[key]
+    return translation || key
   }
 
   const changeLanguage = (langCode) => {

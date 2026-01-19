@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { productService } from '../services/productService'
+import { productService, setTranslationFunction } from '../services/productService'
 import { useAuth } from '../contexts/AuthContext'
 import { useApp } from '../contexts/AppContext'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -18,6 +18,11 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Set translation function for productService
+    setTranslationFunction(t)
+  }, [t])
+
+  useEffect(() => {
     const loadProduct = async () => {
       try {
         const data = await productService.getProductById(id)
@@ -29,7 +34,7 @@ const ProductDetailPage = () => {
       }
     }
     loadProduct()
-  }, [id])
+  }, [id, t])
 
   const handlePurchase = () => {
     if (!isAuthenticated) {
@@ -39,19 +44,25 @@ const ProductDetailPage = () => {
     navigate(`/checkout/${id}`)
   }
 
+  // Handle both API format and mock format
+  const originalPrice = product?.original_price || product?.originalPrice
+  const imageUrl = product?.image_url || product?.imageUrl
+  const price = product?.price
+  const description = product?.description
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="flex justify-center items-center min-h-screen bg-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     )
   }
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{t('productNotFound')}</p>
-        <Link to="/products" className="btn-primary inline-flex items-center space-x-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center bg-white min-h-screen">
+        <p className="text-gray-600 text-lg mb-4">{t('productNotFound')}</p>
+        <Link to="/products" className="inline-flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
           <FiArrowLeft className="w-4 h-4" />
           <span>{t('backToProducts')}</span>
         </Link>
@@ -59,35 +70,35 @@ const ProductDetailPage = () => {
     )
   }
 
-  const discountPercentage = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discountPercentage = originalPrice
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0
 
-  const offerEndDate = product.offerEndDate || new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString()
+  const offerEndDate = product.offer_end_date || product.offerEndDate || new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString()
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8 bg-white min-h-screen">
       <Link
         to="/products"
-        className="inline-flex items-center space-x-2 text-gray-600 hover:text-primary-600 mb-4 md:mb-6 transition-colors text-sm md:text-base"
+        className="inline-flex items-center space-x-2 text-gray-600 hover:text-green-600 mb-6 transition-colors text-sm md:text-base group"
       >
-        <FiArrowLeft className="w-4 h-4" />
+        <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
         <span>{t('backToProducts')}</span>
       </Link>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Product Image */}
-        <div>
-          <div className="bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden mb-4">
-            {product.imageUrl ? (
+        <div className="sticky top-20 self-start">
+          <div className="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+            {imageUrl ? (
               <img
-                src={product.imageUrl}
+                src={imageUrl}
                 alt={product.title}
-                className="w-full h-64 md:h-96 object-cover"
+                className="w-full h-64 md:h-96 lg:h-[500px] object-cover"
               />
             ) : (
-              <div className="w-full h-64 md:h-96 flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800">
-                <span className="text-primary-600 dark:text-primary-400 text-6xl md:text-8xl">📚</span>
+              <div className="w-full h-64 md:h-96 lg:h-[500px] flex items-center justify-center bg-gradient-to-br from-green-100 to-green-200">
+                <span className="text-green-600 text-6xl md:text-8xl">📚</span>
               </div>
             )}
           </div>
@@ -95,34 +106,34 @@ const ProductDetailPage = () => {
 
         {/* Product Details */}
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
             {product.title}
           </h1>
 
-          <div className="flex items-center space-x-4 mb-4 md:mb-6 text-sm md:text-base">
-            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+          <div className="flex items-center space-x-4 mb-6 text-sm md:text-base">
+            <div className="flex items-center space-x-2 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-lg">
               <FiDownload className="w-4 h-4 md:w-5 md:h-5" />
               <span>{t('downloadable')}</span>
             </div>
-            {product.purchaseCount && (
-              <span className="text-gray-600 dark:text-gray-300 border-l pl-4">
-                {product.purchaseCount} {t('purchases')}
+            {(product.purchase_count || product.purchaseCount) && (
+              <span className="text-gray-600 bg-gray-50 px-3 py-1.5 rounded-lg">
+                {product.purchase_count || product.purchaseCount} {t('purchases')}
               </span>
             )}
           </div>
 
           {/* Sales Progress */}
-          {product.stock && (
-            <div className="mb-4 md:mb-6">
+          {(product.stock || product.stock === 0) && (
+            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600 dark:text-gray-300 font-medium">{t('sold')}: {product.sold || 0}</span>
-                <span className="text-gray-600 dark:text-gray-300 font-medium">{t('remaining')}: {product.stock}</span>
+                <span className="text-gray-700 font-medium">{t('sold')}: {product.sold || 0}</span>
+                <span className="text-gray-700 font-medium">{t('remaining')}: {product.stock}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 md:h-3">
+              <div className="w-full bg-gray-200 rounded-full h-3">
                 <div
-                  className="bg-accent-400 h-2 md:h-3 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500"
                   style={{
-                    width: `${((product.sold || 0) / (product.sold + product.stock)) * 100}%`,
+                    width: `${((product.sold || 0) / ((product.sold || 0) + product.stock)) * 100}%`,
                   }}
                 ></div>
               </div>
@@ -130,9 +141,9 @@ const ProductDetailPage = () => {
           )}
 
           {/* Limited Time Offer */}
-          {product.offerEndDate && (
-            <div className="mb-4 md:mb-6">
-              <span className="inline-block bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 px-3 py-1 rounded text-xs md:text-sm font-semibold mb-3 md:mb-4">
+          {offerEndDate && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <span className="inline-block bg-red-600 text-white px-3 py-1 rounded text-xs md:text-sm font-semibold mb-3">
                 {t('limitedOffer')}
               </span>
               <CountdownTimer targetDate={offerEndDate} />
@@ -140,17 +151,24 @@ const ProductDetailPage = () => {
           )}
 
           {/* Pricing */}
-          <div className="mb-4 md:mb-6">
-            {product.originalPrice && (
-              <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 line-through mb-1">
-                {formatCurrency(product.originalPrice)}
+          <div className="mb-6 p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+            {originalPrice && (
+              <p className="text-lg text-gray-500 line-through mb-2">
+                {formatCurrency(originalPrice)}
               </p>
             )}
-            <p className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 mb-1">
-              {formatCurrency(product.price)}
-            </p>
+            <div className="flex items-baseline space-x-3">
+              <p className="text-4xl md:text-5xl font-bold text-green-600">
+                {formatCurrency(price)}
+              </p>
+              {discountPercentage > 0 && (
+                <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  -{discountPercentage}%
+                </span>
+              )}
+            </div>
             {discountPercentage > 0 && (
-              <p className="text-green-600 dark:text-green-400 font-semibold text-sm md:text-base">
+              <p className="text-green-600 font-semibold text-sm mt-2">
                 {t('saveMoney')} {discountPercentage}%
               </p>
             )}
@@ -159,7 +177,7 @@ const ProductDetailPage = () => {
           {/* Purchase Button */}
           <button
             onClick={handlePurchase}
-            className="w-full btn-primary flex items-center justify-center space-x-2 mb-4"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 mb-4 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             <FiShoppingCart className="w-5 h-5" />
             <span>{t('downloadNow')}</span>
@@ -171,7 +189,7 @@ const ProductDetailPage = () => {
               href={socialLinks.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <FiMessageCircle className="w-5 h-5" />
               <span>{t('contactWhatsApp')}</span>
@@ -179,10 +197,10 @@ const ProductDetailPage = () => {
           )}
 
           {/* Description */}
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">{t('description')}</h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-              {product.description || t('noDescriptionAvailable')}
+          <div className="mt-8 p-6 bg-gray-50 rounded-xl">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">{t('description')}</h2>
+            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+              {description || t('noDescriptionAvailable')}
             </p>
           </div>
         </div>
