@@ -85,6 +85,23 @@ export const mockServices = [
     ],
     price: null, // Consulting pricing
     featured: true
+  },
+  {
+    id: 6,
+    title: 'venteLivresGuides',
+    titleKey: 'venteLivresGuides',
+    description: 'venteLivresGuidesDesc',
+    icon: '📖',
+    imageUrl: '/services/vente-livres.jpg',
+    category: 'sales',
+    features: [
+      'venteLivresFeature1',
+      'venteLivresFeature2',
+      'venteLivresFeature3',
+      'venteLivresFeature4'
+    ],
+    price: null, // Prices vary by book
+    featured: true
   }
 ]
 

@@ -148,6 +148,7 @@ const translations = {
     accelerateurCroissance: 'Accélérateur de Croissance Bio',
     constructionBatiments: 'Construction des Bâtiments d\'Élevage',
     projetsElevage: 'Projets d\'Élevage et Consultation',
+    venteLivresGuides: 'Vente des Livres et Guides d\'Élevage',
     
     // Service Descriptions
     formationEnLigneEtPratiqueDesc: 'Formation complète en ligne et pratique sur les techniques modernes d\'élevage. Cours théoriques et sessions pratiques pour maîtriser tous les aspects de l\'élevage.',
@@ -155,6 +156,7 @@ const translations = {
     accelerateurCroissanceDesc: 'Produit bio pour accélérer la croissance des animaux. Convient pour les lapins, volailles, porcs, poissons et ruminants. Améliore la santé et la productivité.',
     constructionBatimentsDesc: 'Conception et construction de bâtiments d\'élevage modernes et fonctionnels. Solutions adaptées à tous les types d\'élevage.',
     projetsElevageDesc: 'Consultation et accompagnement pour vos projets d\'élevage. De la planification à la mise en œuvre, nous vous guidons à chaque étape.',
+    venteLivresGuidesDesc: 'Vente de livres et guides professionnels sur l\'élevage. Collection complète "TOUT SUR L\'ÉLEVAGE" et autres documents spécialisés pour maîtriser tous les aspects de l\'élevage.',
     
     // Service Features
     formationFeature1: 'Cours en ligne accessibles 24/7',
@@ -182,6 +184,11 @@ const translations = {
     projetsFeature3: 'Accompagnement technique',
     projetsFeature4: 'Suivi post-lancement',
     
+    venteLivresFeature1: 'Collection complète "TOUT SUR L\'ÉLEVAGE"',
+    venteLivresFeature2: 'Guides pratiques et professionnels',
+    venteLivresFeature3: 'Documents téléchargeables',
+    venteLivresFeature4: 'Livraison et support disponible',
+    
     // Footer
     quickLinks: 'Liens rapides',
     allRightsReserved: 'Tous droits réservés',
@@ -198,6 +205,13 @@ const translations = {
     consulting: 'Consultation',
     noServicesFound: 'Aucun service trouvé dans cette catégorie',
     featured: 'Populaire',
+    serviceNotFound: 'Service non trouvé',
+    backToServices: 'Retour aux services',
+    features: 'Caractéristiques',
+    interestedInThisService: 'Intéressé par ce service ?',
+    contactUsForMoreInfo: 'Contactez-nous pour plus d\'informations et les détails de prix.',
+    otherServices: 'Autres services',
+    viewAllServices: 'Voir tous les services',
     
     // Common
     loading: 'Chargement...',
@@ -273,6 +287,60 @@ const translations = {
     saveMoney: 'Save',
     downloadNow: 'Download Now',
     contactWhatsApp: 'Contact Us on WhatsApp',
+    
+    // Services
+    services: 'Our Services',
+    servicesDescription: 'Discover our professional services for livestock farming and agriculture',
+    viewService: 'View Service',
+    contactForPricing: 'Contact us for pricing',
+    learnMore: 'Learn More',
+    
+    // Service Titles
+    formationEnLigneEtPratique: 'Online and Practical Training',
+    venteAnimaux: 'Sale of One-Day-Old and Mature Animals',
+    accelerateurCroissance: 'Bio Growth Accelerator',
+    constructionBatiments: 'Construction of Breeding Buildings',
+    projetsElevage: 'Livestock Projects and Consulting',
+    venteLivresGuides: 'Sale of Books and Livestock Farming Guides',
+    
+    // Service Descriptions
+    formationEnLigneEtPratiqueDesc: 'Complete online and practical training on modern livestock farming techniques. Theoretical courses and practical sessions to master all aspects of farming.',
+    venteAnimauxDesc: 'Sale of quality one-day-old and mature animals: chickens, ducks, rabbits, quails, turkeys, pigs and other livestock.',
+    accelerateurCroissanceDesc: 'Bio product to accelerate animal growth. Suitable for rabbits, poultry, pigs, fish and ruminants. Improves health and productivity.',
+    constructionBatimentsDesc: 'Design and construction of modern and functional livestock buildings. Solutions adapted to all types of farming.',
+    projetsElevageDesc: 'Consulting and support for your livestock projects. From planning to implementation, we guide you at every step.',
+    venteLivresGuidesDesc: 'Sale of professional books and guides on livestock farming. Complete collection "EVERYTHING ABOUT LIVESTOCK FARMING" and other specialized documents to master all aspects of farming.',
+    
+    // Service Features
+    formationFeature1: 'Online courses accessible 24/7',
+    formationFeature2: 'Practical sessions in the field',
+    formationFeature3: 'Continuous support via WhatsApp',
+    formationFeature4: 'Training certificates',
+    
+    venteFeature1: 'One-day-old animals available',
+    venteFeature2: 'Quality mature animals',
+    venteFeature3: 'Wide variety of species',
+    venteFeature4: 'Delivery possible',
+    
+    accelerateurFeature1: '100% Bio and natural',
+    accelerateurFeature2: 'For all types of animals',
+    accelerateurFeature3: 'Improves growth',
+    accelerateurFeature4: 'Strengthens immune system',
+    
+    constructionFeature1: 'Custom design',
+    constructionFeature2: 'Quality materials',
+    constructionFeature3: 'Compliance with standards',
+    constructionFeature4: 'Follow-up and maintenance',
+    
+    projetsFeature1: 'Feasibility study',
+    projetsFeature2: 'Detailed planning',
+    projetsFeature3: 'Technical support',
+    projetsFeature4: 'Post-launch follow-up',
+    
+    venteLivresFeature1: 'Complete collection "EVERYTHING ABOUT LIVESTOCK FARMING"',
+    venteLivresFeature2: 'Practical and professional guides',
+    venteLivresFeature3: 'Downloadable documents',
+    venteLivresFeature4: 'Delivery and support available',
     
     // Auth
     loginTitle: 'Login to your account',
@@ -355,6 +423,13 @@ const translations = {
     consulting: 'Consulting',
     noServicesFound: 'No services found in this category',
     featured: 'Featured',
+    serviceNotFound: 'Service not found',
+    backToServices: 'Back to Services',
+    features: 'Features',
+    interestedInThisService: 'Interested in this service?',
+    contactUsForMoreInfo: 'Contact us for more information and pricing details.',
+    otherServices: 'Other Services',
+    viewAllServices: 'View All Services',
     
     // Common
     loading: 'Loading...',

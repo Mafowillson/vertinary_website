@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import ProductsPage from './pages/ProductsPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ServicesPage from './pages/ServicesPage'
+import ServiceDetailPage from './pages/ServiceDetailPage'
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
 import CheckoutPage from './pages/CheckoutPage'
@@ -30,6 +31,7 @@ function App() {
                   <Route path="products" element={<ProductsPage />} />
                   <Route path="products/:id" element={<ProductDetailPage />} />
                   <Route path="services" element={<ServicesPage />} />
+                  <Route path="services/:id" element={<ServiceDetailPage />} />
                   <Route path="login" element={<LoginPage />} />
                   <Route path="register" element={<RegisterPage />} />
                   <Route path="checkout/:productId" element={

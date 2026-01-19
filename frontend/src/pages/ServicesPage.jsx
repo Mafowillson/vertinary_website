@@ -9,8 +9,10 @@ const ServicesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [loading] = useState(false)
 
-  // Get services with translations
-  const services = useMemo(() => getServices(t), [t, language])
+  // Get services with translations - ensure it updates when language changes
+  const services = useMemo(() => {
+    return getServices(t)
+  }, [t, language])
 
   // Categories
   const categories = [
