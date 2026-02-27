@@ -44,8 +44,19 @@ const filterMockProducts = (products, params = {}) => {
 export const productService = {
   async getAllProducts(params = {}) {
     try {
-    const response = await api.get('/products', { params })
-    return response.data
+      const response = await api.get('/products', { params })
+      const data = response.data
+      // If API returns empty array, fall back to mock data
+      if (Array.isArray(data) && data.length === 0) {
+        console.warn('API returned empty products, using mock data')
+        const mockProducts = translationFunction ? getMockProducts(translationFunction) : getMockProducts((key) => key)
+        const filtered = filterMockProducts(mockProducts, params)
+        return {
+          data: filtered,
+          total: filtered.length
+        }
+      }
+      return data
     } catch (error) {
       console.warn('API unavailable, using mock data:', error.message)
       // Use mock data when API is unavailable
@@ -76,8 +87,16 @@ export const productService = {
 
   async searchProducts(query) {
     try {
-    const response = await api.get('/products/search', { params: { q: query } })
-    return response.data
+      const response = await api.get('/products/search', { params: { q: query } })
+      const data = response.data
+      // If API returns empty array, fall back to mock data
+      if (Array.isArray(data) && data.length === 0) {
+        console.warn('API returned empty search results, using mock data')
+        const mockProducts = translationFunction ? getMockProducts(translationFunction) : getMockProducts((key) => key)
+        const filtered = filterMockProducts(mockProducts, { search: query })
+        return filtered
+      }
+      return data
     } catch (error) {
       console.warn('API unavailable, using mock data:', error.message)
       // Search in mock data

@@ -10,6 +10,11 @@ export const useCountdown = (targetDate) => {
   const [isExpired, setIsExpired] = useState(false)
 
   useEffect(() => {
+    if (!targetDate) {
+      setIsExpired(true)
+      return
+    }
+
     const calculateTimeLeft = () => {
       const now = new Date().getTime()
       const target = new Date(targetDate).getTime()

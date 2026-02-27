@@ -1,18 +1,40 @@
 import { useState, useEffect } from 'react'
 import { productService } from '../../services/productService'
 import { formatCurrency } from '../../utils/formatters'
-import { FiEdit, FiTrash2, FiPlus } from 'react-icons/fi'
+import {
+  FiEdit,
+  FiTrash2,
+  FiPlus,
+  FiSearch,
+  FiGrid,
+  FiList,
+  FiPackage,
+  FiDollarSign,
+  FiTrendingUp,
+  FiFilter,
+  FiX,
+  FiEye,
+} from 'react-icons/fi'
 import ProductForm from '../../components/Admin/ProductForm'
 
 const ProductsManagement = () => {
   const [products, setProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState('grid') // 'grid' or 'list'
+  const [showFilters, setShowFilters] = useState(false)
+  const [sortBy, setSortBy] = useState('recent') // 'recent', 'price', 'sales', 'name'
 
   useEffect(() => {
     loadProducts()
   }, [])
+
+  useEffect(() => {
+    filterAndSortProducts()
+  }, [products, searchQuery, sortBy])
 
   const loadProducts = async () => {
     try {
@@ -23,6 +45,37 @@ const ProductsManagement = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const filterAndSortProducts = () => {
+    let filtered = [...products]
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter(
+        (p) =>
+          p.title?.toLowerCase().includes(query) ||
+          p.description?.toLowerCase().includes(query)
+      )
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price':
+          return b.price - a.price
+        case 'sales':
+          return (b.purchaseCount || 0) - (a.purchaseCount || 0)
+        case 'name':
+          return (a.title || '').localeCompare(b.title || '')
+        case 'recent':
+        default:
+          return (b.id || 0) - (a.id || 0)
+      }
+    })
+
+    setFilteredProducts(filtered)
   }
 
   const handleEdit = (product) => {
@@ -47,6 +100,17 @@ const ProductsManagement = () => {
     loadProducts()
   }
 
+  // Calculate statistics
+  const stats = {
+    total: products.length,
+    featured: products.filter((p) => p.featured).length,
+    totalSales: products.reduce((sum, p) => sum + (p.purchaseCount || 0), 0),
+    totalRevenue: products.reduce(
+      (sum, p) => sum + (p.price || 0) * (p.purchaseCount || 0),
+      0
+    ),
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -56,99 +120,325 @@ const ProductsManagement = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Gestion des produits</h2>
+    <div className="space-y-6">
+      {/* Header Section */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">Content Management</h1>
+          <p className="text-gray-600">Manage your products and digital content</p>
+        </div>
         <button
           onClick={() => setShowForm(true)}
-          className="btn-primary flex items-center space-x-2"
+          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 shadow-sm"
         >
-          <FiPlus className="w-4 h-4" />
-          <span>Ajouter un produit</span>
+          <FiPlus className="w-5 h-5" />
+          <span>Add New Product</span>
         </button>
       </div>
 
-      {showForm && (
-        <ProductForm
-          product={editingProduct}
-          onClose={handleFormClose}
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          label="Total Products"
+          value={stats.total}
+          icon={FiPackage}
+          color="bg-blue-100 text-blue-600"
+          change="+2 this month"
         />
+        <StatCard
+          label="Featured Products"
+          value={stats.featured}
+          icon={FiTrendingUp}
+          color="bg-purple-100 text-purple-600"
+        />
+        <StatCard
+          label="Total Sales"
+          value={stats.totalSales}
+          icon={FiTrendingUp}
+          color="bg-green-100 text-green-600"
+          change="+12.5%"
+        />
+        <StatCard
+          label="Total Revenue"
+          value={formatCurrency(stats.totalRevenue)}
+          icon={FiDollarSign}
+          color="bg-orange-100 text-orange-600"
+        />
+      </div>
+
+      {/* Search and Filter Bar */}
+      <div className="bg-white rounded-lg shadow-sm p-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          {/* Search */}
+          <div className="flex-1 relative">
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search products by name or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <FiX className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* Sort */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+          >
+            <option value="recent">Most Recent</option>
+            <option value="name">Name (A-Z)</option>
+            <option value="price">Price (High-Low)</option>
+            <option value="sales">Best Selling</option>
+          </select>
+
+          {/* View Toggle */}
+          <div className="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`p-2 rounded transition-colors ${
+                viewMode === 'grid'
+                  ? 'bg-white text-primary-600 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <FiGrid className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`p-2 rounded transition-colors ${
+                viewMode === 'list'
+                  ? 'bg-white text-primary-600 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <FiList className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Products Display */}
+      {showForm && (
+        <ProductForm product={editingProduct} onClose={handleFormClose} />
       )}
 
-      <div className="card overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Produit
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Prix
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Ventes
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.length > 0 ? (
-              products.map((product) => (
-                <tr key={product.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      {product.imageUrl ? (
-                        <img
-                          src={product.imageUrl}
-                          alt={product.title}
-                          className="w-10 h-10 rounded-lg mr-3 object-cover"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 bg-gray-200 rounded-lg mr-3 flex items-center justify-center">
-                          <span>📚</span>
-                        </div>
-                      )}
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">{product.title}</div>
-                        <div className="text-sm text-gray-500">{product.description?.substring(0, 50)}...</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatCurrency(product.price)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {product.purchaseCount || 0}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center space-x-3">
-                      <button
-                        onClick={() => handleEdit(product)}
-                        className="text-primary-600 hover:text-primary-900"
-                      >
-                        <FiEdit className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        <FiTrash2 className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
-                  Aucun produit trouvé
-                </td>
-              </tr>
+      {filteredProducts.length > 0 ? (
+        viewMode === 'grid' ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                formatCurrency={formatCurrency}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="divide-y divide-gray-200">
+              {filteredProducts.map((product) => (
+                <ProductListItem
+                  key={product.id}
+                  product={product}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  formatCurrency={formatCurrency}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      ) : (
+        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+          <FiPackage className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>
+          <p className="text-gray-600 mb-6">
+            {searchQuery
+              ? 'Try adjusting your search terms'
+              : 'Get started by adding your first product'}
+          </p>
+          {!searchQuery && (
+            <button
+              onClick={() => setShowForm(true)}
+              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors inline-flex items-center space-x-2"
+            >
+              <FiPlus className="w-5 h-5" />
+              <span>Add Your First Product</span>
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Stat Card Component
+const StatCard = ({ label, value, icon: Icon, color, change }) => {
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between mb-4">
+        <div className={`${color} p-3 rounded-lg`}>
+          <Icon className="w-6 h-6" />
+        </div>
+        {change && (
+          <span className="text-sm font-medium text-green-600">{change}</span>
+        )}
+      </div>
+      <p className="text-sm text-gray-600 mb-1">{label}</p>
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
+    </div>
+  )
+}
+
+// Product Card Component (Grid View)
+const ProductCard = ({ product, onEdit, onDelete, formatCurrency }) => {
+  return (
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-200 group">
+      {/* Image */}
+      <div className="relative h-48 bg-gradient-to-br from-primary-50 to-primary-100 overflow-hidden">
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <FiPackage className="w-16 h-16 text-primary-300" />
+          </div>
+        )}
+        {product.featured && (
+          <div className="absolute top-3 right-3 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-semibold">
+            Featured
+          </div>
+        )}
+        {/* Action Buttons Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
+          <div className="flex space-x-2">
+            <button
+              onClick={() => onEdit(product)}
+              className="bg-white text-primary-600 p-2 rounded-lg hover:bg-primary-50 transition-colors"
+              title="Edit"
+            >
+              <FiEdit className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => onDelete(product.id)}
+              className="bg-white text-red-600 p-2 rounded-lg hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <FiTrash2 className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-5">
+        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h3>
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2">{product.description}</p>
+
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <div>
+            <p className="text-lg font-bold text-primary-600">
+              {formatCurrency(product.price)}
+            </p>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <p className="text-xs text-gray-500 line-through">
+                {formatCurrency(product.originalPrice)}
+              </p>
             )}
-          </tbody>
-        </table>
+          </div>
+          <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <div className="flex items-center space-x-1">
+              <FiTrendingUp className="w-4 h-4" />
+              <span>{product.purchaseCount || 0} sales</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Product List Item Component
+const ProductListItem = ({ product, onEdit, onDelete, formatCurrency }) => {
+  return (
+    <div className="p-6 hover:bg-gray-50 transition-colors group">
+      <div className="flex items-center space-x-4">
+        {/* Image */}
+        <div className="w-20 h-20 rounded-lg overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 flex-shrink-0">
+          {product.imageUrl ? (
+            <img
+              src={product.imageUrl}
+              alt={product.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <FiPackage className="w-8 h-8 text-primary-300" />
+            </div>
+          )}
+        </div>
+
+        {/* Product Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center space-x-2 mb-1">
+                <h3 className="font-semibold text-gray-900 truncate">{product.title}</h3>
+                {product.featured && (
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-semibold flex-shrink-0">
+                    Featured
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-gray-600 line-clamp-2 mb-3">{product.description}</p>
+              <div className="flex items-center space-x-6 text-sm">
+                <div>
+                  <span className="text-gray-500">Price: </span>
+                  <span className="font-semibold text-primary-600">
+                    {formatCurrency(product.price)}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-1 text-gray-600">
+                  <FiTrendingUp className="w-4 h-4" />
+                  <span>{product.purchaseCount || 0} sales</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center space-x-2 ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                onClick={() => onEdit(product)}
+                className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                title="Edit"
+              >
+                <FiEdit className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => onDelete(product.id)}
+                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                title="Delete"
+              >
+                <FiTrash2 className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

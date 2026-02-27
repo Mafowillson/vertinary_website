@@ -1,29 +1,19 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useApp } from '../../contexts/AppContext'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { FiMenu, FiX, FiUser, FiLogOut, FiSearch, FiShoppingCart } from 'react-icons/fi'
+import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi'
 import CurrencySelector from '../CurrencySelector/CurrencySelector'
 import LanguageSelector from '../LanguageSelector/LanguageSelector'
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const { isAuthenticated, user, logout, isAdmin } = useAuth()
   const { siteConfig } = useApp()
   const { t } = useLanguage()
   const navigate = useNavigate()
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchOpen(false)
-      setSearchQuery('')
-    }
-  }
+  const location = useLocation()
 
   const handleLogout = () => {
     logout()
@@ -31,100 +21,136 @@ const Header = () => {
     setMobileMenuOpen(false)
   }
 
+  const handleSectionClick = (sectionId, e) => {
+    e.preventDefault()
+    setMobileMenuOpen(false)
+    
+    if (location.pathname === '/') {
+      // Already on landing page, scroll to section
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    } else {
+      // Navigate to landing page first, then scroll
+      navigate('/')
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }
+
   return (
-    <>
-      <header className="bg-white shadow-sm sticky top-0 z-50 transition-all duration-200 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center group">
-              <span className="text-2xl md:text-3xl font-academy bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent group-hover:from-green-700 group-hover:to-green-900 transition-all">
-                {siteConfig.siteName || "L'Académie DES Éleveurs"}
-              </span>
+    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-[#dbe6df] dark:border-[#2a3a2e]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Main Header Bar */}
+        <div className="h-16 flex items-center justify-between">
+          {/* Logo - Left Side */}
+          <Link to="/" className="flex items-center gap-2">
+            {/* Pet/Paw Icon */}
+            <svg 
+              className="text-green-600 text-3xl" 
+              fill="currentColor" 
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ width: '2rem', height: '2rem' }}
+            >
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-2.5 6c.83 0 1.5.67 1.5 1.5S10.33 11 9.5 11 8 10.33 8 9.5 8.67 8 9.5 8zm5 0c.83 0 1.5.67 1.5 1.5S15.33 11 14.5 11 13 10.33 13 9.5 13.67 8 14.5 8zM12 7.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
+            </svg>
+            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Académie des Éleveurs
+            </span>
+          </Link>
+
+          {/* Center Navigation - Desktop */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link
+              to="/"
+              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
+            >
+              Home
             </Link>
+            <a
+              href="#categories"
+              onClick={(e) => handleSectionClick('categories', e)}
+              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
+            >
+              Categories
+            </a>
+            <a
+              href="#resources"
+              onClick={(e) => handleSectionClick('resources', e)}
+              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
+            >
+              Resources
+            </a>
+            <a
+              href="#services"
+              onClick={(e) => handleSectionClick('services', e)}
+              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
+            >
+              Services
+            </a>
+            <a
+              href="#about"
+              onClick={(e) => handleSectionClick('about', e)}
+              className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
+            >
+              About
+            </a>
+          </nav>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-3">
-              <Link
-                to="/products"
-                className="px-3 py-2 text-gray-700 hover:text-green-600 transition-colors text-sm font-medium"
-              >
-                {t('products')}
-              </Link>
-              <Link
-                to="/services"
-                className="px-3 py-2 text-gray-700 hover:text-green-600 transition-colors text-sm font-medium"
-              >
-                {t('services')}
-              </Link>
-              
-              {/* Search Icon */}
-              <button 
-                onClick={() => setSearchOpen(true)}
-                className="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-50"
-                aria-label="Search"
-              >
-                <FiSearch className="w-5 h-5" />
-              </button>
-
-            {/* Currency Selector */}
-            <CurrencySelector />
-
-            {/* Language Selector */}
-            <LanguageSelector />
-
-            {/* Cart */}
-            <button className="flex items-center space-x-1 px-3 py-2 text-gray-700 hover:text-gray-900 transition-colors">
-              <FiShoppingCart className="w-5 h-5" />
-              <span className="text-sm">{t('cart')}</span>
-            </button>
-
+          {/* Right Side Actions - Desktop */}
+          <div className="hidden md:flex items-center gap-4">
             {isAuthenticated ? (
               <>
                 {isAdmin() && (
                   <Link
                     to="/admin"
-                    className="px-3 py-2 text-gray-700 hover:text-gray-900 transition-colors text-sm"
+                    className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
                   >
-                    {t('admin')}
+                    Admin
                   </Link>
                 )}
-                <div className="flex items-center space-x-3 ml-2 pl-3 border-l border-gray-200">
-                  <span className="text-gray-700 flex items-center space-x-1 text-sm">
+                <div className="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+                  <span className="text-sm text-gray-900 dark:text-white flex items-center gap-1">
                     <FiUser className="w-4 h-4" />
                     <span className="hidden lg:inline">{user?.email}</span>
                   </span>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center space-x-1 text-gray-700 hover:text-red-600 transition-colors text-sm"
+                    className="text-sm font-semibold text-gray-900 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors"
                   >
-                    <FiLogOut className="w-4 h-4" />
-                    <span className="hidden lg:inline">{t('logout')}</span>
+                    Sign Out
                   </button>
                 </div>
               </>
             ) : (
-              <div className="flex items-center space-x-3 ml-2 pl-3 border-l border-gray-200">
+              <>
                 <Link
                   to="/login"
-                  className="px-3 py-2 text-gray-700 hover:text-gray-900 transition-colors text-sm"
+                  className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors px-4 py-2"
                 >
-                  {t('login')}
+                  Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium"
+                  className="bg-green-600 hover:brightness-105 text-white text-sm font-bold px-5 py-2 rounded-lg transition-all"
                 >
-                  {t('register')}
+                  Join Marketplace
                 </Link>
-              </div>
+              </>
             )}
-          </nav>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700"
+            className="md:hidden p-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
               <FiX className="w-6 h-6" />
@@ -134,85 +160,92 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Separate Container */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <nav className="flex flex-col space-y-4">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false)
-                  setSearchOpen(true)
-                }}
-                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors text-left"
-              >
-                <FiSearch className="w-5 h-5" />
-                <span>{t('search')}</span>
-              </button>
+          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+            <nav className="flex flex-col space-y-4 py-4">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-gray-900 transition-colors"
+                className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {t('home')}
+                Home
               </Link>
-              <Link
-                to="/products"
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+              <a
+                href="#categories"
+                onClick={(e) => handleSectionClick('categories', e)}
+                className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
               >
-                {t('products')}
-              </Link>
-              <Link
-                to="/services"
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                Categories
+              </a>
+              <a
+                href="#resources"
+                onClick={(e) => handleSectionClick('resources', e)}
+                className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
               >
-                {t('services')}
-              </Link>
-              <div className="flex items-center space-x-2 py-2">
-                <LanguageSelector />
-                <CurrencySelector />
+                Resources
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => handleSectionClick('services', e)}
+                className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
+              >
+                Services
+              </a>
+              <a
+                href="#about"
+                onClick={(e) => handleSectionClick('about', e)}
+                className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
+              >
+                About
+              </a>
+              
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 px-2 py-2">
+                  <LanguageSelector />
+                  <CurrencySelector />
+                </div>
               </div>
+
               {isAuthenticated ? (
                 <>
                   {isAdmin() && (
                     <Link
                       to="/admin"
-                      className="text-gray-700 hover:text-gray-900 transition-colors"
+                      className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      {t('admin')}
+                      Admin
                     </Link>
                   )}
-                  <div className="pt-4 border-t border-gray-200">
-                    <div className="flex items-center space-x-2 text-gray-700 mb-2">
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700 px-2">
+                    <div className="flex items-center space-x-2 text-gray-900 dark:text-white mb-2">
                       <FiUser className="w-4 h-4" />
-                      <span>{user?.email}</span>
+                      <span className="text-sm">{user?.email}</span>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors"
+                      className="text-gray-900 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors text-sm font-medium"
                     >
-                      <FiLogOut className="w-4 h-4" />
-                      <span>{t('logout')}</span>
+                      Sign Out
                     </button>
                   </div>
                 </>
               ) : (
-                <div className="pt-4 border-t border-gray-200 space-y-2">
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2 px-2">
                   <Link
                     to="/login"
-                    className="block text-gray-700 hover:text-gray-900 transition-colors"
+                    className="block text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {t('login')}
+                    Sign In
                   </Link>
                   <Link
                     to="/register"
-                    className="block px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-center"
+                    className="block px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-center text-sm font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {t('register')}
+                    Join Marketplace
                   </Link>
                 </div>
               )}
@@ -221,47 +254,7 @@ const Header = () => {
         )}
       </div>
     </header>
-
-    {/* Search Modal */}
-    {searchOpen && (
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20 px-4 animate-fadeIn"
-        onClick={() => setSearchOpen(false)}
-      >
-        <div 
-          className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 relative animate-slideDown"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            onClick={() => setSearchOpen(false)}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close search"
-          >
-            <FiX className="w-6 h-6" />
-          </button>
-          <form onSubmit={handleSearch} className="relative">
-            <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t('searchPlaceholder')}
-              className="w-full pl-12 pr-24 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-lg"
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
-            >
-              {t('search')}
-            </button>
-          </form>
-        </div>
-      </div>
-    )}
-    </>
   )
 }
 
 export default Header
-

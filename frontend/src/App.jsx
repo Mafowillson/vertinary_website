@@ -3,14 +3,19 @@ import { AuthProvider } from './contexts/AuthContext'
 import { AppProvider } from './contexts/AppContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { CartProvider } from './contexts/CartContext'
 import Layout from './components/Layout/Layout'
-import HomePage from './pages/HomePage'
+import LandingPage from './pages/LandingPage'
 import ProductsPage from './pages/ProductsPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ServicesPage from './pages/ServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
+import AboutPage from './pages/AboutPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsOfServicePage from './pages/TermsOfServicePage'
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
+import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage'
 import CheckoutPage from './pages/CheckoutPage'
 import PurchaseConfirmationPage from './pages/PurchaseConfirmationPage'
 import DownloadPage from './pages/DownloadPage'
@@ -23,41 +28,47 @@ function App() {
     <ThemeProvider>
       <LanguageProvider>
         <AuthProvider>
-          <AppProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<HomePage />} />
-                  <Route path="products" element={<ProductsPage />} />
-                  <Route path="products/:id" element={<ProductDetailPage />} />
-                  <Route path="services" element={<ServicesPage />} />
-                  <Route path="services/:id" element={<ServiceDetailPage />} />
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="register" element={<RegisterPage />} />
-                  <Route path="checkout/:productId" element={
-                    <ProtectedRoute>
-                      <CheckoutPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="purchase-confirmation/:orderId" element={
-                    <ProtectedRoute>
-                      <PurchaseConfirmationPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="download/:orderId" element={
-                    <ProtectedRoute>
-                      <DownloadPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="admin/*" element={
-                    <ProtectedRoute requireAdmin>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  } />
-                </Route>
-              </Routes>
-            </Router>
-          </AppProvider>
+          <CartProvider>
+            <AppProvider>
+              <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<LandingPage />} />
+                    <Route path="products" element={<ProductsPage />} />
+                    <Route path="products/:id" element={<ProductDetailPage />} />
+                    <Route path="services" element={<ServicesPage />} />
+                    <Route path="services/:id" element={<ServiceDetailPage />} />
+                    <Route path="about" element={<AboutPage />} />
+                    <Route path="privacy" element={<PrivacyPolicyPage />} />
+                    <Route path="terms" element={<TermsOfServicePage />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="checkout/:productId" element={
+                      <ProtectedRoute>
+                        <CheckoutPage />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="purchase-confirmation/:orderId" element={
+                      <ProtectedRoute>
+                        <PurchaseConfirmationPage />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="download/:orderId" element={
+                      <ProtectedRoute>
+                        <DownloadPage />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="admin/*" element={
+                      <ProtectedRoute requireAdmin>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    } />
+                  </Route>
+                </Routes>
+              </Router>
+            </AppProvider>
+          </CartProvider>
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>

@@ -20,6 +20,7 @@ export const getMockProducts = (t) => [
     description: t('product2Desc'),
     price: 7019.84,
     originalPrice: 18115.72,
+    discountEndDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days from now
     imageUrl: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",
     stock: 75,
     sold: 32,
@@ -34,6 +35,7 @@ export const getMockProducts = (t) => [
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
     price: 3849.59,
     originalPrice: 9057.86,
+    discountEndDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
     stock: 120,
     sold: 67,
     purchaseCount: 67,
@@ -46,6 +48,7 @@ export const getMockProducts = (t) => [
     description: t('product4Desc'),
     price: 2264.47,
     originalPrice: 4528.93,
+    discountEndDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day from now (urgent!)
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
     stock: 90,
     sold: 28,
@@ -72,6 +75,7 @@ export const getMockProducts = (t) => [
     description: t('product6Desc'),
     price: 4500.00,
     originalPrice: 8000.00,
+    discountEndDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
     imageUrl: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",
     stock: 60,
     sold: 23,
@@ -145,4 +149,6 @@ export const mapMockProductToAPI = (product) => ({
   featured: product.featured,
   created_at: product.createdAt,
   updated_at: null,
+  discount_end_date: product.discountEndDate || null,
+  offer_end_date: product.discountEndDate || null, // Also map to backend field name
 })

@@ -64,10 +64,10 @@ const ServiceDetailPage = () => {
           <span>{t('back')}</span>
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Service Image */}
           <div className="relative">
-            <div className="relative h-96 bg-gradient-to-br from-green-50 to-green-100 rounded-xl overflow-hidden">
+            <div className="relative h-64 sm:h-80 lg:h-96 bg-gradient-to-br from-green-50 to-green-100 rounded-xl overflow-hidden">
               {service.imageUrl && !imageError ? (
                 <img
                   src={service.imageUrl}
@@ -90,7 +90,7 @@ const ServiceDetailPage = () => {
 
           {/* Service Details */}
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               {service.title}
             </h1>
             
@@ -104,7 +104,7 @@ const ServiceDetailPage = () => {
             {service.price ? (
               <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold text-green-600">
+                  <span className="text-2xl sm:text-3xl font-bold text-green-600">
                     {formatCurrency(service.price)}
                   </span>
                 </div>
