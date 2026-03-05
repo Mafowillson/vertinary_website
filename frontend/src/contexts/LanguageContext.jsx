@@ -89,7 +89,8 @@ const translations = {
     addToCart: 'Ajouter au panier',
     inCart: 'Dans le panier',
     addedToCart: 'Ajouté!',
-    contactWhatsApp: 'Nous contacter sur WhatsApp',
+    loginToAddToCart: 'Connectez-vous pour ajouter au panier',
+    loginRequired: 'Connexion requise',
     
     // Auth
     loginTitle: 'Connexion à votre compte',
@@ -344,7 +345,8 @@ const translations = {
     addToCart: 'Add to Cart',
     inCart: 'In Cart',
     addedToCart: 'Added!',
-    contactWhatsApp: 'Contact Us on WhatsApp',
+    loginToAddToCart: 'Login to Add to Cart',
+    loginRequired: 'Login Required',
     
     // Services
     services: 'Our Services',

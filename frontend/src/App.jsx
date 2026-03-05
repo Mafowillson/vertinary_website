@@ -17,6 +17,7 @@ import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage'
 import CheckoutPage from './pages/CheckoutPage'
+import CartPage from './pages/CartPage'
 import PurchaseConfirmationPage from './pages/PurchaseConfirmationPage'
 import DownloadPage from './pages/DownloadPage'
 import AdminDashboard from './pages/Admin/AdminDashboard'
@@ -44,6 +45,7 @@ function App() {
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="cart" element={<CartPage />} />
                     <Route path="checkout/:productId" element={
                       <ProtectedRoute>
                         <CheckoutPage />

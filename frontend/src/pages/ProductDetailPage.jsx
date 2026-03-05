@@ -68,6 +68,12 @@ const ProductDetailPage = () => {
   const handleAddToCart = () => {
     if (!product) return
     
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      navigate('/login', { state: { returnTo: `/products/${id}` } })
+      return
+    }
+    
     // Prepare product data for cart (handle both API and mock formats)
     const cartProduct = {
       id: product.id,
@@ -368,9 +374,9 @@ const ProductDetailPage = () => {
 
                 <button
                   onClick={handleAddToCart}
-                  disabled={!product || cartAdded || isInCart(product?.id)}
+                  disabled={!product || cartAdded || (product && isInCart(product.id))}
                   className={`w-full font-bold py-5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg ${
-                    !product || cartAdded || isInCart(product?.id)
+                    !product || cartAdded || (product && isInCart(product.id))
                       ? 'bg-gray-400 text-white cursor-not-allowed'
                       : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white'
                   }`}

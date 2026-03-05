@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useApp } from '../../contexts/AppContext'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi'
+import { useCart } from '../../contexts/CartContext'
+import { FiMenu, FiX, FiUser, FiLogOut, FiShoppingCart } from 'react-icons/fi'
 import CurrencySelector from '../CurrencySelector/CurrencySelector'
 import LanguageSelector from '../LanguageSelector/LanguageSelector'
 
@@ -12,8 +13,11 @@ const Header = () => {
   const { isAuthenticated, user, logout, isAdmin } = useAuth()
   const { siteConfig } = useApp()
   const { t } = useLanguage()
+  const { getCartItemCount } = useCart()
   const navigate = useNavigate()
   const location = useLocation()
+  
+  const cartItemCount = getCartItemCount()
 
   const handleLogout = () => {
     logout()
@@ -115,6 +119,19 @@ const Header = () => {
                     Admin
                   </Link>
                 )}
+                {/* Cart Button */}
+                <Link
+                  to="/cart"
+                  className="relative p-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
+                  title={t('cart')}
+                >
+                  <FiShoppingCart className="w-5 h-5" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartItemCount > 9 ? '9+' : cartItemCount}
+                    </span>
+                  )}
+                </Link>
                 <div className="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
                   <span className="text-sm text-gray-900 dark:text-white flex items-center gap-1">
                     <FiUser className="w-4 h-4" />
@@ -218,6 +235,22 @@ const Header = () => {
                       Admin
                     </Link>
                   )}
+                  {/* Cart Button - Mobile */}
+                  <Link
+                    to="/cart"
+                    className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium flex items-center gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <div className="relative">
+                      <FiShoppingCart className="w-5 h-5" />
+                      {cartItemCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                          {cartItemCount > 9 ? '9+' : cartItemCount}
+                        </span>
+                      )}
+                    </div>
+                    <span>{t('cart')} {cartItemCount > 0 && `(${cartItemCount})`}</span>
+                  </Link>
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-700 px-2">
                     <div className="flex items-center space-x-2 text-gray-900 dark:text-white mb-2">
                       <FiUser className="w-4 h-4" />
