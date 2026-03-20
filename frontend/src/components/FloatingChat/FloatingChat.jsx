@@ -10,7 +10,7 @@ const FloatingChat = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 z-50"
-        aria-label="Open chat"
+        aria-label="Ouvrir le chat"
       >
         {isOpen ? (
           <FiX className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -30,20 +30,20 @@ const FloatingChat = () => {
           <div className="bg-green-600 text-white p-3 sm:p-4 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <FiMessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="font-semibold text-sm sm:text-base">Chat Support</span>
+              <span className="font-semibold text-sm sm:text-base">Support Chat</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
               className="text-white hover:text-gray-200 p-1"
-              aria-label="Close chat"
+              aria-label="Fermer le chat"
             >
               <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
           <div className="flex-1 p-3 sm:p-4 overflow-y-auto">
             <div className="text-center text-gray-500 text-xs sm:text-sm py-6 sm:py-8">
-              <p>Chat support coming soon!</p>
-              <p className="mt-2">Feel free to contact us via our social media links.</p>
+              <p>Le support chat arrive bientôt !</p>
+              <p className="mt-2">N'hésitez pas à nous contacter via nos réseaux sociaux.</p>
             </div>
           </div>
         </div>

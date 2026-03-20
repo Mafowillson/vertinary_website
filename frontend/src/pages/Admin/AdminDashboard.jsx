@@ -62,12 +62,12 @@ const AdminDashboard = () => {
   }
 
   const menuItems = [
-    { path: '', label: 'Dashboard Overview', icon: FiGrid, section: 'main' },
-    { path: 'products', label: 'Content Management', icon: FiFolder, section: 'management' },
-    { path: 'orders', label: 'Orders & Payments', icon: FiFileText, section: 'management' },
-    { path: 'users', label: 'User Management', icon: FiUsers, section: 'management' },
-    { path: 'analytics', label: 'Analytics', icon: FiBarChart2, section: 'management' },
-    { path: 'settings', label: 'Settings', icon: FiSettings, section: 'system' },
+    { path: '', label: 'Tableau de bord', icon: FiGrid, section: 'main' },
+    { path: 'products', label: 'Gestion du contenu', icon: FiFolder, section: 'management' },
+    { path: 'orders', label: 'Commandes & Paiements', icon: FiFileText, section: 'management' },
+    { path: 'users', label: 'Gestion des utilisateurs', icon: FiUsers, section: 'management' },
+    { path: 'analytics', label: 'Analytique', icon: FiBarChart2, section: 'management' },
+    { path: 'settings', label: 'Paramètres', icon: FiSettings, section: 'system' },
   ]
 
   const mainMenuItem = menuItems.find((item) => item.section === 'main')
@@ -80,21 +80,21 @@ const AdminDashboard = () => {
       customer: { name: 'Marc Kasem', initials: 'MK' },
       product: 'Advanced Cattle Breeding',
       price: 120000,
-      status: 'PAID',
+      status: 'PAYÉ',
     },
     {
       id: 'ORD-9451',
       customer: { name: 'Sarah Johnson', initials: 'SJ' },
       product: 'Poultry Management Guide',
       price: 85000,
-      status: 'PAID',
+      status: 'PAYÉ',
     },
     {
       id: 'ORD-9450',
       customer: { name: 'Ahmed Hassan', initials: 'AH' },
       product: 'Veterinary Basics',
       price: 95000,
-      status: 'PENDING',
+      status: 'EN ATTENTE',
     },
   ]
 
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
               </div>
               <div>
                 <h2 className="text-sm font-bold text-gray-900">ACADÉMIE DES ÉLEVEURS</h2>
-                <p className="text-xs text-gray-500">ADMIN DASHBOARD</p>
+                <p className="text-xs text-gray-500">TABLEAU DE BORD</p>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@ const AdminDashboard = () => {
             {/* MANAGEMENT Section */}
             <div>
               <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
-                MANAGEMENT
+                GESTION
               </h3>
               <div className="space-y-1">
                 {managementItems.map((item) => {
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
             {/* SYSTEM Section */}
             <div>
               <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
-                SYSTEM
+                SYSTÈME
               </h3>
               <div className="space-y-1">
                 {systemItems.map((item) => {
@@ -236,7 +236,7 @@ const AdminDashboard = () => {
               className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors w-full"
             >
               <FiLogOut className="w-5 h-5" />
-              <span className="font-medium text-sm">Logout</span>
+              <span className="font-medium text-sm">Déconnexion</span>
             </button>
           </div>
         </aside>
@@ -252,7 +252,7 @@ const AdminDashboard = () => {
                   <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
-                    placeholder="Search orders, customers, or content..."
+                    placeholder="Rechercher commandes, clients ou contenu..."
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
@@ -271,7 +271,7 @@ const AdminDashboard = () => {
                     <p className="text-sm font-medium text-gray-900">
                       {user?.name || 'Jean Dupont'}
                     </p>
-                    <p className="text-xs text-gray-500">{user?.role || 'Super Admin'}</p>
+                    <p className="text-xs text-gray-500">{user?.role || 'Super Administrateur'}</p>
                   </div>
                   <div className="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center">
                     <span className="text-sm font-semibold text-amber-800">
@@ -310,13 +310,13 @@ const AdminDashboard = () => {
                 element={
                   <div className="flex items-center justify-center h-64">
                     <div className="text-center">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h2>
-                      <p className="text-gray-600 mb-4">The page you're looking for doesn't exist.</p>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Page non trouvée</h2>
+                      <p className="text-gray-600 mb-4">La page que vous recherchez n'existe pas.</p>
                       <Link
                         to="/admin"
                         className="text-primary-600 hover:text-primary-700 font-medium"
                       >
-                        Go to Dashboard
+                        Retour au tableau de bord
                       </Link>
                     </div>
                   </div>
@@ -342,28 +342,28 @@ const DashboardOverview = ({
 }) => {
   const metricCards = [
     {
-      label: 'Total Sales',
+      label: 'Ventes totales',
       value: formatCurrency(dashboardData.totalSales),
       change: `+${dashboardData.salesGrowth}%`,
       icon: FiDollarSign,
       iconColor: 'bg-green-100 text-green-600',
     },
     {
-      label: 'Total Downloads',
+      label: 'Téléchargements',
       value: dashboardData.totalDownloads.toLocaleString(),
       change: `+${dashboardData.downloadsGrowth}%`,
       icon: FiDownload,
       iconColor: 'bg-blue-100 text-blue-600',
     },
     {
-      label: 'Active Products',
+      label: 'Produits actifs',
       value: dashboardData.activeProducts,
       change: 'Stable',
       icon: FiPackage,
       iconColor: 'bg-orange-100 text-orange-600',
     },
     {
-      label: 'New Customers',
+      label: 'Nouveaux clients',
       value: dashboardData.newCustomers,
       change: `+${dashboardData.customersGrowth}%`,
       icon: FiUsers,
@@ -371,7 +371,7 @@ const DashboardOverview = ({
     },
   ]
 
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
   
   // Get sales data based on timeframe
   const getSalesData = () => {
@@ -379,13 +379,13 @@ const DashboardOverview = ({
       case 'monthly':
         // Monthly data - weeks of the month
         return {
-          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          labels: ['Sem. 1', 'Sem. 2', 'Sem. 3', 'Sem. 4'],
           data: [85000, 92000, 110000, 98000],
         }
       case 'yearly':
         // Yearly data - months
         return {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
           data: [850000, 920000, 1100000, 980000, 1250000, 1180000],
         }
       case 'weekly':
@@ -405,10 +405,10 @@ const DashboardOverview = ({
     <div className="space-y-6">
       {/* Title and Welcome */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Tableau de bord</h1>
         <p className="text-gray-600">
-          Welcome back, {user?.name?.split(' ')[0] || 'Jean'}. Here's what's happening today at
-          the academy.
+          Bienvenue, {user?.name?.split(' ')[0] || 'Jean'}. Voici ce qui se passe aujourd'hui à
+          l'académie.
         </p>
       </div>
 
@@ -442,9 +442,11 @@ const DashboardOverview = ({
         {/* Sales Over Time Chart */}
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">Sales Over Time</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Ventes au fil du temps</h2>
             <div className="flex space-x-2">
-              {['Weekly', 'Monthly', 'Yearly'].map((period) => (
+              {['Weekly', 'Monthly', 'Yearly'].map((period) => {
+                const periodLabels = { Weekly: 'Hebdo', Monthly: 'Mensuel', Yearly: 'Annuel' }
+                return (
                 <button
                   key={period}
                   onClick={() => setTimeframe(period.toLowerCase())}
@@ -454,9 +456,10 @@ const DashboardOverview = ({
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {period}
+                  {periodLabels[period]}
                 </button>
-              ))}
+                )
+              })}
             </div>
           </div>
           <div className="relative">
@@ -527,7 +530,7 @@ const DashboardOverview = ({
 
         {/* Target Progress Card */}
         <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Target Progress</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">Progression des objectifs</h2>
           <div className="flex flex-col items-center mb-6">
             <div className="relative w-32 h-32">
               <svg className="transform -rotate-90 w-32 h-32">
@@ -558,7 +561,7 @@ const DashboardOverview = ({
                   <p className="text-2xl font-bold text-primary-600">
                     {dashboardData.monthlyProgress}%
                   </p>
-                  <p className="text-xs text-gray-500">MONTHLY</p>
+                  <p className="text-xs text-gray-500">MENSUEL</p>
                 </div>
               </div>
             </div>
@@ -566,7 +569,7 @@ const DashboardOverview = ({
           <div className="space-y-4 mb-6">
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">Courses Sold</span>
+                <span className="text-gray-600">Cours vendus</span>
                 <span className="font-medium text-gray-900">
                   {dashboardData.coursesSold.current} / {dashboardData.coursesSold.target}
                 </span>
@@ -584,7 +587,7 @@ const DashboardOverview = ({
             </div>
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">New Leads</span>
+                <span className="text-gray-600">Nouveaux prospects</span>
                 <span className="font-medium text-gray-900">
                   {dashboardData.newLeads.current} / {dashboardData.newLeads.target}
                 </span>
@@ -603,7 +606,7 @@ const DashboardOverview = ({
           </div>
           <button className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2">
             <FiPackage className="w-5 h-5" />
-            <span>Upload New Content</span>
+            <span>Ajouter du contenu</span>
           </button>
         </div>
       </div>
@@ -611,12 +614,12 @@ const DashboardOverview = ({
       {/* Recent Orders Table */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Orders</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Commandes récentes</h2>
           <Link
             to="/admin/orders"
             className="text-primary-600 hover:text-primary-700 font-medium text-sm"
           >
-            View All Orders
+            Voir toutes les commandes
           </Link>
         </div>
         <div className="overflow-x-auto">
@@ -624,19 +627,19 @@ const DashboardOverview = ({
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  ORDER ID
+                  N° COMMANDE
                 </th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  CUSTOMER
+                  CLIENT
                 </th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  PRODUCT
+                  PRODUIT
                 </th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  PRICE
+                  PRIX
                 </th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  STATUS
+                  STATUT
                 </th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   ACTIONS
@@ -664,7 +667,7 @@ const DashboardOverview = ({
                   <td className="py-4 px-4">
                     <span
                       className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                        order.status === 'PAID'
+                        order.status === 'PAYÉ'
                           ? 'bg-green-100 text-green-700'
                           : 'bg-yellow-100 text-yellow-700'
                       }`}

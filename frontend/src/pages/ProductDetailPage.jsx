@@ -13,7 +13,6 @@ import {
   FiMessageCircle, 
   FiArrowLeft, 
   FiStar,
-  FiUsers,
   FiCheck,
   FiShield,
   FiClock,
@@ -148,6 +147,13 @@ const ProductDetailPage = () => {
   // Calculate rating (mock - would come from reviews)
   const rating = 4.8
   const reviewCount = product.purchase_count || product.purchaseCount || 0
+  const downloadCount =
+    product.download_count ??
+    product.downloadCount ??
+    product.sold ??
+    product.purchase_count ??
+    product.purchaseCount ??
+    0
 
   return (
     <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50 min-h-screen">
@@ -240,10 +246,9 @@ const ProductDetailPage = () => {
                   ))}
                   <span className="ml-2 text-gray-700 font-semibold">{rating}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <FiUsers className="w-4 h-4" />
-                  <span className="text-sm">{reviewCount} {reviewCount === 1 ? 'achat' : 'achats'}</span>
-                </div>
+                <span className="text-sm text-gray-600 tabular-nums">
+                  {downloadCount.toLocaleString()} vendus
+                </span>
               </div>
 
               {/* Category Badge */}
@@ -338,28 +343,6 @@ const ProductDetailPage = () => {
                 <p className="text-gray-600 text-xs">{format}</p>
               </div>
             </div>
-
-            {/* Stock Progress */}
-            {(product.stock || product.stock === 0) && (
-              <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-gray-700 font-semibold">Disponibilité</span>
-                  <span className="text-gray-600 text-sm">{product.stock} en stock</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                  <div
-                    className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 shadow-sm"
-                    style={{
-                      width: `${Math.min(100, ((product.sold || 0) / ((product.sold || 0) + product.stock)) * 100)}%`,
-                    }}
-                  ></div>
-                </div>
-                <div className="flex justify-between text-xs text-gray-500 mt-2">
-                  <span>{product.sold || 0} vendus</span>
-                  <span>{product.stock} restants</span>
-                </div>
-              </div>
-            )}
 
             {/* Action Buttons */}
             <div className="space-y-4">
@@ -494,10 +477,10 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <FiUsers className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <FiDownload className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-gray-900">Achats</p>
-                      <p className="text-gray-600">{reviewCount} {reviewCount === 1 ? 'personne' : 'personnes'} ont acheté ce produit</p>
+                      <p className="font-semibold text-gray-900">Ventes</p>
+                      <p className="text-gray-600 tabular-nums">{downloadCount.toLocaleString()}</p>
                     </div>
                   </div>
                 </div>

@@ -130,13 +130,13 @@ const LandingPage = () => {
               <div className="mb-3 sm:mb-4">
                 <button className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-green-50 hover:bg-green-100 border border-green-200 rounded-full text-xs sm:text-sm font-semibold text-green-700 transition-colors">
                   <FiCheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  <span>Verified Content Expert</span>
+                  <span>Expert de Contenu Vérifié</span>
                 </button>
               </div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-                Expert Veterinary Resources at Your{' '}
-                <span className="text-green-600">Fingertips</span>
+                Ressources Vétérinaires Expertes à Portée de{' '}
+                <span className="text-green-600">Main</span>
               </h1>
               <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 Partageons nos connaissances en élevage avec les Camerounais et le monde entier. Accédez à des livres spécialisés, des formations en ligne et des ressources certifiées en médecine vétérinaire pour éleveurs et professionnels, où que vous soyez.

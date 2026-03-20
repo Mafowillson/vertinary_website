@@ -12,10 +12,11 @@ const Footer = () => {
           {/* Column 1 - Logo & Description */}
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="text-green-600 text-2xl">🐾</span>
-              <span className="text-xl font-semibold text-gray-800">
-                Académie des Éleveurs
-              </span>
+              <img
+                src="/academydeseleveurs.png"
+                alt="Académie des Éleveurs"
+                className="h-20 w-auto"
+              />
             </Link>
             <p className="text-gray-600 text-sm mb-4 leading-relaxed">
               Partageons nos connaissances en élevage avec les Camerounais et le monde entier. Plateforme dédiée au partage de savoir en médecine vétérinaire à travers des livres, formations et ressources accessibles à tous, partout.
@@ -140,7 +141,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-green-600 transition-colors text-sm"
                 >
-                  YouTube Channel
+                  Chaîne YouTube
                 </a>
               </li>
               <li className="flex items-center space-x-3">

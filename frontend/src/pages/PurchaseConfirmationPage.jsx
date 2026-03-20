@@ -110,7 +110,7 @@ const PurchaseConfirmationPage = () => {
                   title={t('copyOrderNumber')}
                 >
                   <FiCopy className={`w-4 h-4 ${copied ? 'text-green-600' : ''}`} />
-                  {copied && <span className="text-xs text-green-600">{t('copied') || 'Copied!'}</span>}
+                  {copied && <span className="text-xs text-green-600">{t('copied')}</span>}
                 </button>
               </div>
               
@@ -118,7 +118,7 @@ const PurchaseConfirmationPage = () => {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600 flex items-center space-x-2">
                     <FiCalendar className="w-4 h-4" />
-                    <span>{t('orderDate') || 'Order Date'}</span>
+                    <span>{t('orderDate')}</span>
                   </span>
                   <span className="font-medium text-gray-900">
                     {order.created_at ? new Date(order.created_at).toLocaleDateString() : 'N/A'}
@@ -127,7 +127,7 @@ const PurchaseConfirmationPage = () => {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600 flex items-center space-x-2">
                     <FiCreditCard className="w-4 h-4" />
-                    <span>{t('paymentMethod') || 'Payment Method'}</span>
+                    <span>{t('paymentMethod')}</span>
                   </span>
                   <span className="font-medium text-gray-900 capitalize">
                     {order.payment_method || 'Online'}
@@ -147,7 +147,7 @@ const PurchaseConfirmationPage = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
                 <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center space-x-2">
                   <FiBook className="w-5 h-5 text-green-600" />
-                  <span>{t('purchasedProduct') || 'Purchased Product'}</span>
+                  <span>{t('purchasedProduct')}</span>
                 </h2>
                 <div className="flex items-start space-x-4">
                   {order.product.imageUrl ? (
@@ -172,12 +172,12 @@ const PurchaseConfirmationPage = () => {
                       {order.product.pages && (
                         <span className="flex items-center space-x-1">
                           <FiBook className="w-3 h-3" />
-                          <span>{order.product.pages} {t('pages') || 'Pages'}</span>
+                          <span>{order.product.pages} {t('pages')}</span>
                         </span>
                       )}
                       <span className="flex items-center space-x-1">
                         <FiCheckCircle className="w-3 h-3 text-green-600" />
-                        <span>{t('digitalAccess') || 'Digital Access'}</span>
+                        <span>{t('digitalAccess')}</span>
                       </span>
                     </div>
                   </div>
@@ -198,8 +198,8 @@ const PurchaseConfirmationPage = () => {
                     {t('congratulations')}!
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
-                    {t('congratulations')} {order.product?.title || t('thisProduct') || 'this product'}.{' '}
-                    {t('purchaseSuccessMessage') || 'You now have instant access to download your purchase.'}
+                    {t('congratulations')} {order.product?.title || t('thisProduct')}.{' '}
+                    {t('purchaseSuccessMessage')}
                   </p>
                 </div>
               </div>
@@ -251,7 +251,7 @@ const PurchaseConfirmationPage = () => {
                       className="inline-flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
                     >
                       <FiMessageCircle className="w-4 h-4" />
-                      <span>{t('contactWhatsApp') || 'Contact WhatsApp'}</span>
+                      <span>{t('contactWhatsApp')}</span>
                     </a>
                   </div>
                 </div>
@@ -262,10 +262,10 @@ const PurchaseConfirmationPage = () => {
             <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
               <div className="flex items-center space-x-3 mb-3">
                 <FiShield className="w-6 h-6 text-green-600" />
-                <h3 className="font-semibold text-gray-900">{t('securePurchase') || 'Secure Purchase'}</h3>
+                <h3 className="font-semibold text-gray-900">{t('securePurchase')}</h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                {t('securePurchaseMessage') || 'Your purchase is secure and protected. All transactions are encrypted.'}
+                {t('securePurchaseMessage')}
               </p>
             </div>
 
@@ -281,20 +281,20 @@ const PurchaseConfirmationPage = () => {
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm p-6 border border-blue-200">
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
                 <FiCheckCircle className="w-5 h-5 text-blue-600" />
-                <span>{t('nextSteps') || 'Next Steps'}</span>
+                <span>{t('nextSteps')}</span>
               </h3>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li className="flex items-start space-x-2">
                   <FiCheck className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span>{t('step1') || 'Click the download button above'}</span>
+                  <span>{t('step1')}</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <FiCheck className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span>{t('step2') || 'Save the file to your device'}</span>
+                  <span>{t('step2')}</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <FiCheck className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span>{t('step3') || 'Start learning and applying'}</span>
+                  <span>{t('step3')}</span>
                 </li>
               </ul>
             </div>

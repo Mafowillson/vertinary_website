@@ -21,7 +21,7 @@ const ForgotPasswordPage = () => {
       // Simulate success
       setSuccess(true)
     } catch (err) {
-      setError(err.message || 'An error occurred. Please try again.')
+      setError(err.message || 'Une erreur est survenue. Veuillez réessayer.')
     } finally {
       setLoading(false)
     }
@@ -41,10 +41,10 @@ const ForgotPasswordPage = () => {
             </div>
             <div>
               <h2 className="text-3xl font-bold text-gray-900">
-                Reset your password
+                Réinitialiser votre mot de passe
               </h2>
               <p className="mt-2 text-sm text-gray-500">
-                Enter your email address and we will send you a link to reset your password.
+                Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
               </p>
             </div>
           </div>
@@ -61,7 +61,7 @@ const ForgotPasswordPage = () => {
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Email Address
+                  Adresse Email
                 </label>
                 <input
                   id="email"
@@ -81,14 +81,14 @@ const ForgotPasswordPage = () => {
                 disabled={loading}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Sending...' : 'Send Reset Link'}
+                {loading ? 'Envoi en cours...' : 'Envoyer le lien de réinitialisation'}
               </button>
             </form>
           ) : (
             <div className="text-center space-y-4">
               <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
                 <p className="text-sm">
-                  If an account exists with that email, we've sent you a password reset link.
+                  Si un compte existe avec cette adresse email, nous vous avons envoyé un lien de réinitialisation du mot de passe.
                 </p>
               </div>
             </div>
@@ -101,7 +101,7 @@ const ForgotPasswordPage = () => {
               className="text-sm text-gray-700 hover:text-gray-900 font-medium flex items-center justify-center space-x-2"
             >
               <FiArrowLeft className="w-4 h-4" />
-              <span>Back to Login</span>
+              <span>Retour à la connexion</span>
             </Link>
           </div>
 
@@ -109,12 +109,12 @@ const ForgotPasswordPage = () => {
           <div className="flex items-center justify-center space-x-4 pt-6 border-t border-gray-200">
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiCheckCircle className="w-4 h-4 text-green-600" />
-              <span className="font-medium">HIPAA COMPLIANT</span>
+              <span className="font-medium">CONFORME HIPAA</span>
             </div>
             <span className="text-gray-400">•</span>
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiLock className="w-4 h-4 text-green-600" />
-              <span className="font-medium">256-BIT ENCRYPTION</span>
+              <span className="font-medium">CRYPTAGE 256 BITS</span>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@ const ForgotPasswordPage = () => {
         {/* Footer */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500">
-            © 2024 Académie des Éleveurs. All rights reserved.
+            © {new Date().getFullYear()} Académie des Éleveurs. Tous droits réservés.
           </p>
         </div>
       </div>

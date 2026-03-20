@@ -9,39 +9,39 @@ const PrivacyPolicyPage = () => {
       content: (
         <div className="space-y-4">
           <p>
-            Welcome to Académie des Éleveurs ("we," "our," or "us"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
+            Bienvenue chez Académie des Éleveurs (« nous », « notre » ou « nos »). Nous nous engageons à protéger votre vie privée et à assurer la sécurité de vos informations personnelles. Cette Politique de Confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous visitez notre site web et utilisez nos services.
           </p>
           <p>
-            By using our services, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our services.
+            En utilisant nos services, vous acceptez la collecte et l'utilisation des informations conformément à cette politique. Si vous n'êtes pas d'accord avec nos politiques et pratiques, veuillez ne pas utiliser nos services.
           </p>
         </div>
       )
     },
     {
       id: 'information-collection',
-      title: '2. Information We Collect',
+      title: '2. Informations que nous collectons',
       content: (
         <div className="space-y-4">
           <div>
-            <h4 className="font-semibold text-gray-900 mb-2">2.1 Personal Information</h4>
-            <p className="mb-2">We may collect the following types of personal information:</p>
+            <h4 className="font-semibold text-gray-900 mb-2">2.1 Informations personnelles</h4>
+            <p className="mb-2">Nous pouvons collecter les types d'informations personnelles suivants :</p>
             <ul className="list-disc list-inside space-y-1 ml-4 text-gray-700">
-              <li>Name and contact information (email address, phone number)</li>
-              <li>Account credentials (username, password)</li>
-              <li>Payment information (credit card details, billing address)</li>
-              <li>Professional information (veterinary license number, clinic information)</li>
-              <li>Purchase history and transaction records</li>
+              <li>Nom et coordonnées (adresse email, numéro de téléphone)</li>
+              <li>Identifiants de compte (nom d'utilisateur, mot de passe)</li>
+              <li>Informations de paiement (détails de carte de crédit, adresse de facturation)</li>
+              <li>Informations professionnelles (numéro de licence vétérinaire, informations sur la clinique)</li>
+              <li>Historique des achats et enregistrements de transactions</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-gray-900 mb-2">2.2 Automatically Collected Information</h4>
-            <p className="mb-2">When you visit our website, we automatically collect certain information:</p>
+            <h4 className="font-semibold text-gray-900 mb-2">2.2 Informations collectées automatiquement</h4>
+            <p className="mb-2">Lorsque vous visitez notre site web, nous collectons automatiquement certaines informations :</p>
             <ul className="list-disc list-inside space-y-1 ml-4 text-gray-700">
-              <li>IP address and device information</li>
-              <li>Browser type and version</li>
-              <li>Pages visited and time spent on pages</li>
-              <li>Referring website addresses</li>
-              <li>Cookies and similar tracking technologies</li>
+              <li>Adresse IP et informations sur l'appareil</li>
+              <li>Type et version du navigateur</li>
+              <li>Pages visitées et temps passé sur les pages</li>
+              <li>Adresses des sites web de référence</li>
+              <li>Cookies et technologies de suivi similaires</li>
             </ul>
           </div>
         </div>
@@ -49,41 +49,41 @@ const PrivacyPolicyPage = () => {
     },
     {
       id: 'how-we-use',
-      title: '3. How We Use Your Information',
+      title: '3. Comment nous utilisons vos informations',
       content: (
         <div className="space-y-4">
-          <p>We use the collected information for the following purposes:</p>
+          <p>Nous utilisons les informations collectées aux fins suivantes :</p>
           <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700">
-            <li>To provide, maintain, and improve our services</li>
-            <li>To process transactions and send related information</li>
-            <li>To send administrative information and updates</li>
-            <li>To respond to your inquiries and provide customer support</li>
-            <li>To send marketing communications (with your consent)</li>
-            <li>To detect, prevent, and address technical issues</li>
-            <li>To comply with legal obligations and enforce our terms</li>
-            <li>To protect the rights, property, and safety of our users</li>
+            <li>Fournir, maintenir et améliorer nos services</li>
+            <li>Traiter les transactions et envoyer les informations associées</li>
+            <li>Envoyer des informations administratives et des mises à jour</li>
+            <li>Répondre à vos demandes et fournir un support client</li>
+            <li>Envoyer des communications marketing (avec votre consentement)</li>
+            <li>Détecter, prévenir et résoudre les problèmes techniques</li>
+            <li>Se conformer aux obligations légales et faire respecter nos conditions</li>
+            <li>Protéger les droits, la propriété et la sécurité de nos utilisateurs</li>
           </ul>
         </div>
       )
     },
     {
       id: 'information-sharing',
-      title: '4. Information Sharing and Disclosure',
+      title: '4. Partage et divulgation des informations',
       content: (
         <div className="space-y-4">
-          <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
+          <p>Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des tiers. Nous ne pouvons partager vos informations que dans les circonstances suivantes :</p>
           <div className="space-y-3">
             <div>
-              <h4 className="font-semibold text-gray-900 mb-2">4.1 Service Providers</h4>
-              <p>We may share information with third-party service providers who perform services on our behalf, such as payment processing, data analysis, and email delivery.</p>
+              <h4 className="font-semibold text-gray-900 mb-2">4.1 Prestataires de services</h4>
+              <p>Nous pouvons partager des informations avec des prestataires de services tiers qui effectuent des services en notre nom, tels que le traitement des paiements, l'analyse de données et la livraison d'emails.</p>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-2">4.2 Legal Requirements</h4>
-              <p>We may disclose information if required by law or in response to valid requests by public authorities.</p>
+              <h4 className="font-semibold text-gray-900 mb-2">4.2 Exigences légales</h4>
+              <p>Nous pouvons divulguer des informations si la loi l'exige ou en réponse à des demandes valides des autorités publiques.</p>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-2">4.3 Business Transfers</h4>
-              <p>In the event of a merger, acquisition, or sale of assets, your information may be transferred to the acquiring entity.</p>
+              <h4 className="font-semibold text-gray-900 mb-2">4.3 Transferts d'entreprise</h4>
+              <p>En cas de fusion, d'acquisition ou de vente d'actifs, vos informations peuvent être transférées à l'entité acquéreuse.</p>
             </div>
           </div>
         </div>
@@ -91,134 +91,134 @@ const PrivacyPolicyPage = () => {
     },
     {
       id: 'data-security',
-      title: '5. Data Security',
+      title: '5. Sécurité des données',
       content: (
         <div className="space-y-4">
           <p>
-            We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:
+            Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos informations personnelles contre l'accès, la modification, la divulgation ou la destruction non autorisés. Ces mesures comprennent :
           </p>
           <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700">
-            <li>256-bit SSL encryption for data transmission</li>
-            <li>Secure server infrastructure with regular security audits</li>
-            <li>Access controls and authentication mechanisms</li>
-            <li>Regular backups and disaster recovery procedures</li>
-            <li>HIPAA-compliant data handling practices</li>
+            <li>Cryptage SSL 256 bits pour la transmission des données</li>
+            <li>Infrastructure de serveurs sécurisée avec des audits de sécurité réguliers</li>
+            <li>Contrôles d'accès et mécanismes d'authentification</li>
+            <li>Sauvegardes régulières et procédures de reprise après sinistre</li>
+            <li>Pratiques de traitement des données conformes aux normes HIPAA</li>
           </ul>
           <p className="text-sm text-gray-600 italic">
-            However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your information, we cannot guarantee absolute security.
+            Cependant, aucune méthode de transmission sur Internet ou de stockage électronique n'est sûre à 100%. Bien que nous nous efforçons d'utiliser des moyens commercialement acceptables pour protéger vos informations, nous ne pouvons garantir une sécurité absolue.
           </p>
         </div>
       )
     },
     {
       id: 'cookies',
-      title: '6. Cookies and Tracking Technologies',
+      title: '6. Cookies et technologies de suivi',
       content: (
         <div className="space-y-4">
           <p>
-            We use cookies and similar tracking technologies to track activity on our website and store certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.
+            Nous utilisons des cookies et des technologies de suivi similaires pour suivre l'activité sur notre site web et stocker certaines informations. Les cookies sont des fichiers contenant une petite quantité de données pouvant inclure un identifiant unique anonyme.
           </p>
           <div>
-            <h4 className="font-semibold text-gray-900 mb-2">Types of Cookies We Use:</h4>
+            <h4 className="font-semibold text-gray-900 mb-2">Types de cookies que nous utilisons :</h4>
             <ul className="list-disc list-inside space-y-1 ml-4 text-gray-700">
-              <li><strong>Essential Cookies:</strong> Required for the website to function properly</li>
-              <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website</li>
-              <li><strong>Preference Cookies:</strong> Remember your preferences and settings</li>
-              <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements</li>
+              <li><strong>Cookies essentiels :</strong> Nécessaires au bon fonctionnement du site web</li>
+              <li><strong>Cookies analytiques :</strong> Nous aident à comprendre comment les visiteurs interagissent avec notre site web</li>
+              <li><strong>Cookies de préférences :</strong> Mémorisent vos préférences et paramètres</li>
+              <li><strong>Cookies marketing :</strong> Utilisés pour diffuser des publicités pertinentes</li>
             </ul>
           </div>
           <p>
-            You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our website.
+            Vous pouvez configurer votre navigateur pour refuser tous les cookies ou pour indiquer quand un cookie est envoyé. Cependant, si vous n'acceptez pas les cookies, vous pourriez ne pas pouvoir utiliser certaines parties de notre site web.
           </p>
         </div>
       )
     },
     {
       id: 'your-rights',
-      title: '7. Your Rights and Choices',
+      title: '7. Vos droits et choix',
       content: (
         <div className="space-y-4">
-          <p>You have the following rights regarding your personal information:</p>
+          <p>Vous disposez des droits suivants concernant vos informations personnelles :</p>
           <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700">
-            <li><strong>Access:</strong> Request access to your personal information</li>
-            <li><strong>Correction:</strong> Request correction of inaccurate information</li>
-            <li><strong>Deletion:</strong> Request deletion of your personal information</li>
-            <li><strong>Objection:</strong> Object to processing of your personal information</li>
-            <li><strong>Portability:</strong> Request transfer of your data to another service</li>
-            <li><strong>Withdrawal:</strong> Withdraw consent for data processing</li>
+            <li><strong>Accès :</strong> Demander l'accès à vos informations personnelles</li>
+            <li><strong>Correction :</strong> Demander la correction d'informations inexactes</li>
+            <li><strong>Suppression :</strong> Demander la suppression de vos informations personnelles</li>
+            <li><strong>Opposition :</strong> Vous opposer au traitement de vos informations personnelles</li>
+            <li><strong>Portabilité :</strong> Demander le transfert de vos données vers un autre service</li>
+            <li><strong>Retrait :</strong> Retirer votre consentement au traitement des données</li>
           </ul>
           <p>
-            To exercise these rights, please contact us using the information provided in the "Contact Us" section below.
+            Pour exercer ces droits, veuillez nous contacter en utilisant les informations fournies dans la section « Nous contacter » ci-dessous.
           </p>
         </div>
       )
     },
     {
       id: 'data-retention',
-      title: '8. Data Retention',
+      title: '8. Conservation des données',
       content: (
         <div className="space-y-4">
           <p>
-            We will retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+            Nous ne conserverons vos informations personnelles que pendant la durée nécessaire pour atteindre les objectifs décrits dans cette Politique de Confidentialité, sauf si une période de conservation plus longue est requise ou autorisée par la loi.
           </p>
           <p>
-            When we no longer need your personal information, we will securely delete or anonymize it in accordance with our data retention policies.
+            Lorsque nous n'avons plus besoin de vos informations personnelles, nous les supprimerons ou les anonymiserons de manière sécurisée conformément à nos politiques de conservation des données.
           </p>
         </div>
       )
     },
     {
       id: 'children-privacy',
-      title: '9. Children\'s Privacy',
+      title: '9. Confidentialité des mineurs',
       content: (
         <div className="space-y-4">
           <p>
-            Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.
+            Nos services ne sont pas destinés aux personnes de moins de 18 ans. Nous ne collectons pas sciemment d'informations personnelles auprès de mineurs. Si vous êtes un parent ou un tuteur et pensez que votre enfant nous a fourni des informations personnelles, veuillez nous contacter immédiatement.
           </p>
         </div>
       )
     },
     {
       id: 'international-transfers',
-      title: '10. International Data Transfers',
+      title: '10. Transferts internationaux de données',
       content: (
         <div className="space-y-4">
           <p>
-            Your information may be transferred to and maintained on computers located outside of your state, province, country, or other governmental jurisdiction where data protection laws may differ from those in your jurisdiction.
+            Vos informations peuvent être transférées vers et conservées sur des ordinateurs situés en dehors de votre état, province, pays ou autre juridiction gouvernementale où les lois sur la protection des données peuvent différer de celles de votre juridiction.
           </p>
           <p>
-            By using our services, you consent to the transfer of your information to facilities located outside your jurisdiction. We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy.
+            En utilisant nos services, vous consentez au transfert de vos informations vers des installations situées en dehors de votre juridiction. Nous prendrons toutes les mesures raisonnablement nécessaires pour garantir que vos données sont traitées de manière sécurisée et conformément à cette Politique de Confidentialité.
           </p>
         </div>
       )
     },
     {
       id: 'changes',
-      title: '11. Changes to This Privacy Policy',
+      title: '11. Modifications de cette Politique de Confidentialité',
       content: (
         <div className="space-y-4">
           <p>
-            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+            Nous pouvons mettre à jour notre Politique de Confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle Politique de Confidentialité sur cette page et en mettant à jour la date de « Dernière mise à jour ».
           </p>
           <p>
-            You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
+            Il vous est conseillé de consulter périodiquement cette Politique de Confidentialité pour tout changement. Les modifications apportées à cette Politique de Confidentialité prennent effet dès leur publication sur cette page.
           </p>
         </div>
       )
     },
     {
       id: 'contact',
-      title: '12. Contact Us',
+      title: '12. Nous contacter',
       content: (
         <div className="space-y-4">
           <p>
-            If you have any questions about this Privacy Policy or our data practices, please contact us:
+            Si vous avez des questions concernant cette Politique de Confidentialité ou nos pratiques en matière de données, veuillez nous contacter :
           </p>
           <div className="bg-gray-50 rounded-lg p-4 space-y-2">
             <p><strong>Académie des Éleveurs</strong></p>
-            <p>Email: privacy@academie-eleveurs.com</p>
-            <p>Phone: +237 XXX XXX XXX</p>
-            <p>Address: [Your Business Address]</p>
+            <p>Email : privacy@academie-eleveurs.com</p>
+            <p>Téléphone : +237 699 933 135</p>
+            <p>Adresse : Cameroun</p>
           </div>
         </div>
       )
@@ -235,7 +235,7 @@ const PrivacyPolicyPage = () => {
             className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 mb-6 transition-colors"
           >
             <FiArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
+            <span>Retour à l'accueil</span>
           </Link>
           
           <div className="flex items-center gap-4 mb-4">
@@ -243,8 +243,8 @@ const PrivacyPolicyPage = () => {
               <FiShield className="w-8 h-8 text-green-600" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Privacy Policy</h1>
-              <p className="text-gray-600 mt-1">Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <h1 className="text-4xl font-bold text-gray-900">Politique de Confidentialité</h1>
+              <p className="text-gray-600 mt-1">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ const PrivacyPolicyPage = () => {
           <div className="bg-gray-50 rounded-lg p-6 mb-8 border border-gray-200">
             <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <FiFileText className="w-5 h-5" />
-              Quick Navigation
+              Navigation rapide
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {sections.map((section) => (
@@ -296,7 +296,7 @@ const PrivacyPolicyPage = () => {
           {/* Footer Note */}
           <div className="mt-12 bg-green-50 border border-green-200 rounded-lg p-6 text-center">
             <p className="text-gray-700">
-              By using our services, you acknowledge that you have read and understood this Privacy Policy.
+              En utilisant nos services, vous reconnaissez avoir lu et compris cette Politique de Confidentialité.
             </p>
           </div>
         </div>

@@ -9,24 +9,14 @@ import {
   FiTrash2,
   FiArrowLeft,
   FiArrowRight,
-  FiMinus,
-  FiPlus,
   FiX
 } from 'react-icons/fi'
 
 const CartPage = () => {
-  const { cartItems, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart()
+  const { cartItems, removeFromCart, getCartTotal, clearCart } = useCart()
   const { t } = useLanguage()
   const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
-
-  const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 1) {
-      removeFromCart(productId)
-    } else {
-      updateQuantity(productId, newQuantity)
-    }
-  }
 
   const handleCheckout = () => {
     if (!isAuthenticated) {
@@ -36,15 +26,8 @@ const CartPage = () => {
     
     if (cartItems.length === 0) return
     
-    // For now, if there's only one item, go to single product checkout
-    // Otherwise, we could create a multi-item checkout later
-    if (cartItems.length === 1) {
-      navigate(`/checkout/${cartItems[0].id}`)
-    } else {
-      // For multiple items, checkout the first one for now
-      // TODO: Implement multi-item checkout
-      navigate(`/checkout/${cartItems[0].id}`)
-    }
+    // Navigate to checkout (handles all cart items)
+    navigate('/checkout')
   }
 
   const subtotal = getCartTotal()
@@ -68,12 +51,12 @@ const CartPage = () => {
               <FiShoppingCart className="w-12 h-12 text-gray-400" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('cart')}</h2>
-            <p className="text-gray-600 mb-8">Your cart is empty</p>
+            <p className="text-gray-600 mb-8">Votre panier est vide</p>
             <Link
               to="/products"
               className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
-              <span>{t('viewProducts') || 'View Products'}</span>
+              <span>{t('viewProducts')}</span>
               <FiArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -108,7 +91,7 @@ const CartPage = () => {
                 className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
               >
                 <FiTrash2 className="w-4 h-4" />
-                <span>Clear Cart</span>
+                <span>Vider le panier</span>
               </button>
             </div>
 
@@ -117,7 +100,9 @@ const CartPage = () => {
               {cartItems.map((item) => {
                 const imageUrl = item.image_url || item.imageUrl
                 const price = item.price || item.original_price || item.originalPrice || 0
-                const quantity = item.quantity || 1
+                const originalUnit = item.original_price || item.originalPrice
+                const qty = item.quantity || 1
+                const lineTotal = price * qty
 
                 return (
                   <div
@@ -152,11 +137,11 @@ const CartPage = () => {
                             </p>
                             <div className="flex items-center gap-4">
                               <span className="text-lg font-bold text-green-600">
-                                {formatCurrency(price)}
+                                {formatCurrency(lineTotal)}
                               </span>
-                              {item.original_price && item.original_price > price && (
+                              {originalUnit && originalUnit > price && (
                                 <span className="text-sm text-gray-400 line-through">
-                                  {formatCurrency(item.original_price)}
+                                  {formatCurrency(originalUnit * qty)}
                                 </span>
                               )}
                             </div>
@@ -166,38 +151,10 @@ const CartPage = () => {
                           <button
                             onClick={() => removeFromCart(item.id)}
                             className="flex-shrink-0 p-2 text-gray-400 hover:text-red-600 transition-colors"
-                            title="Remove from cart"
+                            title="Retirer du panier"
                           >
                             <FiX className="w-5 h-5" />
                           </button>
-                        </div>
-
-                        {/* Quantity Controls */}
-                        <div className="flex items-center gap-3 mt-4">
-                          <span className="text-sm text-gray-600">Quantity:</span>
-                          <div className="flex items-center gap-2 border border-gray-300 rounded-lg">
-                            <button
-                              onClick={() => handleQuantityChange(item.id, quantity - 1)}
-                              className="p-2 hover:bg-gray-100 transition-colors"
-                              disabled={quantity <= 1}
-                            >
-                              <FiMinus className="w-4 h-4" />
-                            </button>
-                            <span className="px-4 py-2 text-gray-900 font-medium min-w-[3rem] text-center">
-                              {quantity}
-                            </span>
-                            <button
-                              onClick={() => handleQuantityChange(item.id, quantity + 1)}
-                              className="p-2 hover:bg-gray-100 transition-colors"
-                            >
-                              <FiPlus className="w-4 h-4" />
-                            </button>
-                          </div>
-                          <span className="text-sm text-gray-600 ml-auto">
-                            Subtotal: <span className="font-semibold text-gray-900">
-                              {formatCurrency(price * quantity)}
-                            </span>
-                          </span>
                         </div>
                       </div>
                     </div>
@@ -233,7 +190,7 @@ const CartPage = () => {
                 onClick={handleCheckout}
                 className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
-                <span>{t('payNow') || 'Proceed to Checkout'}</span>
+                <span>{t('payNow')}</span>
                 <FiArrowRight className="w-5 h-5" />
               </button>
 
@@ -242,7 +199,7 @@ const CartPage = () => {
                 to="/products"
                 className="block text-center text-gray-600 hover:text-green-600 transition-colors mt-4 text-sm font-medium"
               >
-                Continue Shopping
+                Continuer vos achats
               </Link>
             </div>
           </div>

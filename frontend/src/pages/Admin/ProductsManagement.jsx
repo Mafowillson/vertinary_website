@@ -124,42 +124,42 @@ const ProductsManagement = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Content Management</h1>
-          <p className="text-gray-600">Manage your products and digital content</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">Gestion du contenu</h1>
+          <p className="text-gray-600">Gérer vos produits et contenus numériques</p>
         </div>
         <button
           onClick={() => setShowForm(true)}
           className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 shadow-sm"
         >
           <FiPlus className="w-5 h-5" />
-          <span>Add New Product</span>
+          <span>Ajouter un produit</span>
         </button>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          label="Total Products"
+          label="Total produits"
           value={stats.total}
           icon={FiPackage}
           color="bg-blue-100 text-blue-600"
-          change="+2 this month"
+          change="+2 ce mois"
         />
         <StatCard
-          label="Featured Products"
+          label="Produits en vedette"
           value={stats.featured}
           icon={FiTrendingUp}
           color="bg-purple-100 text-purple-600"
         />
         <StatCard
-          label="Total Sales"
+          label="Ventes totales"
           value={stats.totalSales}
           icon={FiTrendingUp}
           color="bg-green-100 text-green-600"
           change="+12.5%"
         />
         <StatCard
-          label="Total Revenue"
+          label="Revenu total"
           value={formatCurrency(stats.totalRevenue)}
           icon={FiDollarSign}
           color="bg-orange-100 text-orange-600"
@@ -174,7 +174,7 @@ const ProductsManagement = () => {
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search products by name or description..."
+              placeholder="Rechercher des produits par nom ou description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -195,10 +195,10 @@ const ProductsManagement = () => {
             onChange={(e) => setSortBy(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
           >
-            <option value="recent">Most Recent</option>
-            <option value="name">Name (A-Z)</option>
-            <option value="price">Price (High-Low)</option>
-            <option value="sales">Best Selling</option>
+            <option value="recent">Plus récent</option>
+            <option value="name">Nom (A-Z)</option>
+            <option value="price">Prix (décroissant)</option>
+            <option value="sales">Meilleures ventes</option>
           </select>
 
           {/* View Toggle */}
@@ -263,11 +263,11 @@ const ProductsManagement = () => {
       ) : (
         <div className="bg-white rounded-lg shadow-sm p-12 text-center">
           <FiPackage className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun produit trouvé</h3>
           <p className="text-gray-600 mb-6">
             {searchQuery
-              ? 'Try adjusting your search terms'
-              : 'Get started by adding your first product'}
+              ? 'Essayez d\'ajuster vos termes de recherche'
+              : 'Commencez par ajouter votre premier produit'}
           </p>
           {!searchQuery && (
             <button
@@ -275,7 +275,7 @@ const ProductsManagement = () => {
               className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors inline-flex items-center space-x-2"
             >
               <FiPlus className="w-5 h-5" />
-              <span>Add Your First Product</span>
+              <span>Ajouter votre premier produit</span>
             </button>
           )}
         </div>
@@ -321,7 +321,7 @@ const ProductCard = ({ product, onEdit, onDelete, formatCurrency }) => {
         )}
         {product.featured && (
           <div className="absolute top-3 right-3 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-semibold">
-            Featured
+            En vedette
           </div>
         )}
         {/* Action Buttons Overlay */}
@@ -330,14 +330,14 @@ const ProductCard = ({ product, onEdit, onDelete, formatCurrency }) => {
             <button
               onClick={() => onEdit(product)}
               className="bg-white text-primary-600 p-2 rounded-lg hover:bg-primary-50 transition-colors"
-              title="Edit"
+              title="Modifier"
             >
               <FiEdit className="w-5 h-5" />
             </button>
             <button
               onClick={() => onDelete(product.id)}
               className="bg-white text-red-600 p-2 rounded-lg hover:bg-red-50 transition-colors"
-              title="Delete"
+              title="Supprimer"
             >
               <FiTrash2 className="w-5 h-5" />
             </button>
@@ -364,7 +364,7 @@ const ProductCard = ({ product, onEdit, onDelete, formatCurrency }) => {
           <div className="flex items-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center space-x-1">
               <FiTrendingUp className="w-4 h-4" />
-              <span>{product.purchaseCount || 0} sales</span>
+              <span>{product.purchaseCount || 0} ventes</span>
             </div>
           </div>
         </div>
@@ -401,21 +401,21 @@ const ProductListItem = ({ product, onEdit, onDelete, formatCurrency }) => {
                 <h3 className="font-semibold text-gray-900 truncate">{product.title}</h3>
                 {product.featured && (
                   <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-semibold flex-shrink-0">
-                    Featured
+                    En vedette
                   </span>
                 )}
               </div>
               <p className="text-sm text-gray-600 line-clamp-2 mb-3">{product.description}</p>
               <div className="flex items-center space-x-6 text-sm">
                 <div>
-                  <span className="text-gray-500">Price: </span>
+                  <span className="text-gray-500">Prix : </span>
                   <span className="font-semibold text-primary-600">
                     {formatCurrency(product.price)}
                   </span>
                 </div>
                 <div className="flex items-center space-x-1 text-gray-600">
                   <FiTrendingUp className="w-4 h-4" />
-                  <span>{product.purchaseCount || 0} sales</span>
+                  <span>{product.purchaseCount || 0} ventes</span>
                 </div>
               </div>
             </div>
@@ -425,14 +425,14 @@ const ProductListItem = ({ product, onEdit, onDelete, formatCurrency }) => {
               <button
                 onClick={() => onEdit(product)}
                 className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                title="Edit"
-              >
-                <FiEdit className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => onDelete(product.id)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                title="Delete"
+              title="Modifier"
+            >
+              <FiEdit className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => onDelete(product.id)}
+              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              title="Supprimer"
               >
                 <FiTrash2 className="w-5 h-5" />
               </button>

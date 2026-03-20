@@ -5,6 +5,7 @@ import { orderService } from '../services/orderService'
 import { formatCurrency } from '../utils/formatters'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
+import { useCart } from '../contexts/CartContext'
 import StripePaymentForm from '../components/PaymentForms/StripePaymentForm'
 import FlutterwavePaymentForm from '../components/PaymentForms/FlutterwavePaymentForm'
 import { 
@@ -23,33 +24,54 @@ const CheckoutPage = () => {
   const navigate = useNavigate()
   const { t } = useLanguage()
   const { user, isAuthenticated } = useAuth()
-  const [product, setProduct] = useState(null)
+  const { cartItems, getCartTotal, clearCart } = useCart()
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState('')
   const [email, setEmail] = useState(user?.email || '')
-  const [paymentMethod, setPaymentMethod] = useState('stripe') // 'stripe' or 'flutterwave'
+  const [paymentMethod, setPaymentMethod] = useState('stripe')
   const [paymentData, setPaymentData] = useState(null)
 
+  // Determine if this is a single-product or cart checkout
+  const isCartCheckout = !productId
+
   useEffect(() => {
-    const loadProduct = async () => {
+    const loadProducts = async () => {
       try {
-        const data = await productService.getProductById(productId)
-        setProduct(data)
+        if (isCartCheckout) {
+          // Cart checkout: use items from cart context
+          if (cartItems.length === 0) {
+            navigate('/cart')
+            return
+          }
+          setProducts(cartItems)
+        } else {
+          // Single product checkout
+          const data = await productService.getProductById(productId)
+          setProducts([data])
+        }
       } catch (err) {
         setError(t('productNotFound'))
       } finally {
         setLoading(false)
       }
     }
-    loadProduct()
-  }, [productId, t])
+    loadProducts()
+  }, [productId, t, isCartCheckout, cartItems.length])
 
   useEffect(() => {
     if (user?.email) {
       setEmail(user.email)
     }
   }, [user])
+
+  // Calculate totals
+  const subtotal = isCartCheckout
+    ? getCartTotal()
+    : products.reduce((total, p) => total + (p.price || 0), 0)
+  const taxes = 0
+  const total = subtotal + taxes
 
   const handlePaymentSubmit = async (data) => {
     setPaymentData(data)
@@ -59,34 +81,52 @@ const CheckoutPage = () => {
     try {
       // Validate email
       if (!email || !email.includes('@')) {
-        setError(t('invalidEmail') || 'Please enter a valid email address')
+        setError(t('invalidEmail'))
         setProcessing(false)
         return
       }
 
-      // Create order
-      const order = await orderService.createOrder({
-        productId: product.id,
-        amount: product.price,
-      })
+      // Process orders for all products
+      let lastOrderId = null
 
-      if (!order || !order.id) {
-        throw new Error('Failed to create order')
+      for (const product of products) {
+        const price = product.price || product.original_price || product.originalPrice || 0
+        const quantity = product.quantity || 1
+
+        // Create order for each product
+        const order = await orderService.createOrder({
+          productId: product.id,
+          amount: price * quantity,
+        })
+
+        if (!order || !order.id) {
+          throw new Error('Failed to create order')
+        }
+
+        // Process payment for each order
+        const paymentResult = await orderService.processPayment(order.id, {
+          paymentMethod: data.method === 'stripe' ? 'online' : 'mobile_money',
+          paymentProvider: data.method,
+          paymentData: data,
+          email: email,
+        })
+
+        if (!paymentResult || !paymentResult.success) {
+          setError(t('paymentFailed'))
+          setProcessing(false)
+          return
+        }
+
+        lastOrderId = order.id
       }
 
-      // Process payment based on method
-      const paymentResult = await orderService.processPayment(order.id, {
-        paymentMethod: data.method === 'stripe' ? 'online' : 'mobile_money',
-        paymentProvider: data.method,
-        paymentData: data,
-        email: email,
-      })
-
-      if (paymentResult && paymentResult.success) {
-        navigate(`/purchase-confirmation/${order.id}`)
-      } else {
-        setError(t('paymentFailed'))
+      // Clear cart after successful purchase (only for cart checkout)
+      if (isCartCheckout) {
+        clearCart()
       }
+
+      // Navigate to confirmation page of the last order
+      navigate(`/purchase-confirmation/${lastOrderId}`)
     } catch (err) {
       console.error('Payment error:', err)
       const errorMessage = err.response?.data?.message || err.message || t('paymentError')
@@ -104,7 +144,7 @@ const CheckoutPage = () => {
     )
   }
 
-  if (!product) {
+  if (products.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center bg-gray-50 min-h-screen">
         <p className="text-gray-600 text-lg mb-4">{error || t('productNotFound')}</p>
@@ -114,10 +154,6 @@ const CheckoutPage = () => {
       </div>
     )
   }
-
-  const subtotal = product.price
-  const taxes = 0
-  const total = subtotal + taxes
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -185,7 +221,7 @@ const CheckoutPage = () => {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {t('mobileMoney') || 'Mobile Money'}
+                  {t('mobileMoney')}
                 </button>
               </div>
 
@@ -231,25 +267,39 @@ const CheckoutPage = () => {
             <div className="bg-white rounded-xl shadow-sm p-6 lg:sticky lg:top-24">
               <h2 className="text-xl font-bold text-gray-900 mb-4">{t('orderSummary')}</h2>
               
-              {/* Product Info */}
-              <div className="flex items-start space-x-4 mb-6 pb-6 border-b">
-                {product.imageUrl ? (
-                  <img
-                    src={product.imageUrl}
-                    alt={product.title}
-                    className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
-                  />
-                ) : (
-                  <div className="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-3xl">📚</span>
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{product.title}</h3>
-                  <p className="text-xs text-gray-600">
-                    {product.type === 'digital' ? 'Digital Access' : 'Physical Product'} • {product.pages || '150+'} Pages
-                  </p>
-                </div>
+              {/* Product List */}
+              <div className="space-y-4 mb-6 pb-6 border-b">
+                {products.map((product) => {
+                  const imageUrl = product.image_url || product.imageUrl
+                  const price = product.price || product.original_price || product.originalPrice || 0
+                  const quantity = product.quantity || 1
+
+                  return (
+                    <div key={product.id} className="flex items-start space-x-4">
+                      {imageUrl ? (
+                        <img
+                          src={imageUrl}
+                          alt={product.title}
+                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <span className="text-2xl">📚</span>
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-2">{product.title}</h3>
+                        <p className="text-xs text-gray-600">
+                          {product.type === 'digital' ? 'Accès numérique' : product.format || 'Guide PDF'}
+                          {quantity > 1 && ` × ${quantity}`}
+                        </p>
+                        <p className="text-sm font-semibold text-gray-900 mt-1">
+                          {formatCurrency(price * quantity)}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
 
               {/* Error Display */}
@@ -263,17 +313,17 @@ const CheckoutPage = () => {
               {/* Price Breakdown */}
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-600">
-                  <span>{t('subtotal')}</span>
+                  <span>{t('subtotal')} ({products.length} {products.length === 1 ? 'article' : 'articles'})</span>
                   <span>{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>{t('taxes')}</span>
                   <span>{formatCurrency(taxes)}</span>
                 </div>
-                {product.originalPrice && product.originalPrice > product.price && (
+                {products.length === 1 && products[0].originalPrice && products[0].originalPrice > products[0].price && (
                   <div className="flex justify-between text-gray-500 text-sm">
                     <span>{t('reduction')}</span>
-                    <span className="text-green-600">-{formatCurrency(product.originalPrice - product.price)}</span>
+                    <span className="text-green-600">-{formatCurrency(products[0].originalPrice - products[0].price)}</span>
                   </div>
                 )}
                 <div className="border-t pt-3 flex justify-between font-bold text-lg">
@@ -293,7 +343,7 @@ const CheckoutPage = () => {
                   } else {
                     // If no form found, validate and submit directly
                     if (!email || !email.includes('@')) {
-                      setError(t('invalidEmail') || 'Please enter a valid email address')
+                      setError(t('invalidEmail'))
                       return
                     }
                     handlePaymentSubmit({

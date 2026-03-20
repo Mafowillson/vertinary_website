@@ -62,10 +62,10 @@ const RegisterPage = () => {
           {/* Header */}
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold text-gray-900">
-              Create your account
+              Créer votre compte
             </h2>
             <p className="text-sm text-gray-500">
-              Start your journey with professional training and support.
+              Commencez votre parcours avec une formation et un accompagnement professionnels.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ const RegisterPage = () => {
             <div className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Full Name
+                  Nom complet
                 </label>
                 <div className="relative">
                   <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -93,14 +93,14 @@ const RegisterPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Jean Dupont"
                   />
                 </div>
               </div>
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Email Address
+                  Adresse Email
                 </label>
                 <div className="relative">
                   <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -113,7 +113,7 @@ const RegisterPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-colors"
-                    placeholder="john@example.com"
+                    placeholder="jean@exemple.com"
                   />
                 </div>
               </div>
@@ -121,7 +121,7 @@ const RegisterPage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Password
+                    Mot de passe
                   </label>
                   <div className="relative">
                     <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -140,7 +140,7 @@ const RegisterPage = () => {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                     >
                       {showPassword ? (
                         <FiEyeOff className="w-5 h-5" />
@@ -153,7 +153,7 @@ const RegisterPage = () => {
                 
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Confirm Password
+                    Confirmer le mot de passe
                   </label>
                   <div className="relative">
                     <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -172,7 +172,7 @@ const RegisterPage = () => {
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                      aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showConfirmPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                     >
                       {showConfirmPassword ? (
                         <FiEyeOff className="w-5 h-5" />
@@ -190,19 +190,19 @@ const RegisterPage = () => {
               disabled={loading}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Inscription...' : 'Sign Up'}
+              {loading ? 'Inscription...' : "S'inscrire"}
             </button>
           </form>
 
           {/* Log In Link */}
           <div className="text-center pt-4">
             <p className="text-sm text-gray-600">
-              Already have an account?{' '}
+              Vous avez déjà un compte ?{' '}
               <Link
                 to="/login"
                 className="font-medium text-green-600 hover:text-green-700"
               >
-                Log In
+                Se Connecter
               </Link>
             </p>
           </div>
@@ -211,11 +211,11 @@ const RegisterPage = () => {
           <div className="flex items-center justify-center space-x-6 pt-6 border-t border-gray-200">
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiCheckCircle className="w-4 h-4" />
-              <span className="font-medium">HIPAA Compliant</span>
+              <span className="font-medium">CONFORME HIPAA</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiLock className="w-4 h-4" />
-              <span className="font-medium">256-bit encryption</span>
+              <span className="font-medium">CRYPTAGE 256 BITS</span>
             </div>
           </div>
         </div>

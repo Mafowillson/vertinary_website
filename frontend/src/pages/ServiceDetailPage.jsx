@@ -44,9 +44,9 @@ const ServiceDetailPage = () => {
   if (!service) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <p className="text-gray-600 text-lg mb-4">{t('serviceNotFound') || 'Service not found'}</p>
+        <p className="text-gray-600 text-lg mb-4">{t('serviceNotFound')}</p>
         <button onClick={() => navigate('/services')} className="btn-primary">
-          {t('backToServices') || 'Back to Services'}
+          {t('backToServices')}
         </button>
       </div>
     )
@@ -121,7 +121,7 @@ const ServiceDetailPage = () => {
             {service.features && service.features.length > 0 && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  {t('features') || 'Features'}
+                  {t('features')}
                 </h2>
                 <ul className="space-y-3">
                   {service.features.map((feature, index) => (
@@ -137,10 +137,10 @@ const ServiceDetailPage = () => {
             {/* Contact Section */}
             <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                {t('interestedInThisService') || 'Interested in this service?'}
+                {t('interestedInThisService')}
               </h3>
               <p className="text-gray-600 mb-4">
-                {t('contactUsForMoreInfo') || 'Contact us for more information and pricing details.'}
+                {t('contactUsForMoreInfo')}
               </p>
               {socialLinks.whatsapp && (
                 <a
@@ -150,7 +150,7 @@ const ServiceDetailPage = () => {
                   className="inline-flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
                 >
                   <FiMessageCircle className="w-5 h-5" />
-                  <span>{t('contactWhatsApp') || 'Contact Us on WhatsApp'}</span>
+                  <span>{t('contactWhatsApp')}</span>
                 </a>
               )}
             </div>
@@ -161,13 +161,13 @@ const ServiceDetailPage = () => {
         <div className="mt-12 pt-12 border-t border-gray-200">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
-              {t('otherServices') || 'Other Services'}
+              {t('otherServices')}
             </h2>
             <Link
               to="/services"
               className="text-green-600 hover:text-green-700 font-semibold transition-colors"
             >
-              {t('viewAllServices') || 'View All Services'}
+              {t('viewAllServices')}
             </Link>
           </div>
         </div>

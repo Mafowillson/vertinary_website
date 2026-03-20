@@ -54,19 +54,11 @@ const Header = () => {
         <div className="h-16 flex items-center justify-between">
           {/* Logo - Left Side */}
           <Link to="/" className="flex items-center gap-2">
-            {/* Pet/Paw Icon */}
-            <svg 
-              className="text-green-600 text-3xl" 
-              fill="currentColor" 
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ width: '2rem', height: '2rem' }}
-            >
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-2.5 6c.83 0 1.5.67 1.5 1.5S10.33 11 9.5 11 8 10.33 8 9.5 8.67 8 9.5 8zm5 0c.83 0 1.5.67 1.5 1.5S15.33 11 14.5 11 13 10.33 13 9.5 13.67 8 14.5 8zM12 7.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
-            </svg>
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Académie des Éleveurs
-            </span>
+            <img
+              src="/academydeseleveurs.png"
+              alt="Académie des Éleveurs"
+              className="h-16 w-auto"
+            />
           </Link>
 
           {/* Center Navigation - Desktop */}
@@ -75,21 +67,21 @@ const Header = () => {
               to="/"
               className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
             >
-              Home
+              Accueil
             </Link>
             <a
               href="#categories"
               onClick={(e) => handleSectionClick('categories', e)}
               className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
             >
-              Categories
+              Catégories
             </a>
             <a
               href="#resources"
               onClick={(e) => handleSectionClick('resources', e)}
               className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
             >
-              Resources
+              Ressources
             </a>
             <a
               href="#services"
@@ -103,7 +95,7 @@ const Header = () => {
               onClick={(e) => handleSectionClick('about', e)}
               className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors cursor-pointer"
             >
-              About
+              À Propos
             </a>
           </nav>
 
@@ -141,7 +133,7 @@ const Header = () => {
                     onClick={handleLogout}
                     className="text-sm font-semibold text-gray-900 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors"
                   >
-                    Sign Out
+                    Déconnexion
                   </button>
                 </div>
               </>
@@ -151,13 +143,13 @@ const Header = () => {
                   to="/login"
                   className="text-sm font-semibold text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors px-4 py-2"
                 >
-                  Sign In
+                  Se Connecter
                 </Link>
                 <Link
                   to="/register"
                   className="bg-green-600 hover:brightness-105 text-white text-sm font-bold px-5 py-2 rounded-lg transition-all"
                 >
-                  Join Marketplace
+                  Rejoindre
                 </Link>
               </>
             )}
@@ -186,21 +178,21 @@ const Header = () => {
                 className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Home
+                Accueil
               </Link>
               <a
                 href="#categories"
                 onClick={(e) => handleSectionClick('categories', e)}
                 className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
               >
-                Categories
+                Catégories
               </a>
               <a
                 href="#resources"
                 onClick={(e) => handleSectionClick('resources', e)}
                 className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
               >
-                Resources
+                Ressources
               </a>
               <a
                 href="#services"
@@ -214,7 +206,7 @@ const Header = () => {
                 onClick={(e) => handleSectionClick('about', e)}
                 className="px-2 text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium cursor-pointer"
               >
-                About
+                À Propos
               </a>
               
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -260,7 +252,7 @@ const Header = () => {
                       onClick={handleLogout}
                       className="text-gray-900 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors text-sm font-medium"
                     >
-                      Sign Out
+                      Déconnexion
                     </button>
                   </div>
                 </>
@@ -271,14 +263,14 @@ const Header = () => {
                     className="block text-gray-900 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors text-sm font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Sign In
+                    Se Connecter
                   </Link>
                   <Link
                     to="/register"
                     className="block px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-center text-sm font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Join Marketplace
+                    Rejoindre
                   </Link>
                 </div>
               )}

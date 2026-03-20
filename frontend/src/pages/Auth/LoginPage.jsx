@@ -40,10 +40,10 @@ const LoginPage = () => {
           {/* Header */}
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold text-gray-900">
-              Log in to Académie des Éleveurs
+              Connexion à l'Académie des Éleveurs
             </h2>
             <p className="text-sm text-gray-500">
-              Secure login for veterinary professionals
+              Connexion sécurisée pour les professionnels vétérinaires
             </p>
           </div>
 
@@ -69,7 +69,7 @@ const LoginPage = () => {
             <div className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Email Address
+                  Adresse Email
                 </label>
                 <input
                   id="email"
@@ -87,13 +87,13 @@ const LoginPage = () => {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Password
+                    Mot de passe
                   </label>
                   <Link
                     to="/forgot-password"
                     className="text-sm text-green-600 hover:text-green-700 font-medium"
                   >
-                    Forgot password?
+                    Mot de passe oublié ?
                   </Link>
                 </div>
                 <div className="relative">
@@ -129,7 +129,7 @@ const LoginPage = () => {
               disabled={loading}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
             >
-              <span>{loading ? t('processing') : 'Log In'}</span>
+              <span>{loading ? t('processing') : 'Se Connecter'}</span>
               {!loading && <FiArrowRight className="w-5 h-5" />}
             </button>
           </form>
@@ -137,12 +137,12 @@ const LoginPage = () => {
           {/* Sign Up Link */}
           <div className="text-center pt-4">
             <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
+              Vous n'avez pas de compte ?{' '}
               <Link
                 to="/register"
                 className="font-medium text-green-600 hover:text-green-700"
               >
-                Sign Up
+                S'inscrire
               </Link>
             </p>
           </div>
@@ -151,11 +151,11 @@ const LoginPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-6 border-t border-gray-200">
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiCheckCircle className="w-4 h-4" />
-              <span className="font-medium">HIPAA COMPLIANT</span>
+              <span className="font-medium">CONFORME HIPAA</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-500 text-xs">
               <FiLock className="w-4 h-4" />
-              <span className="font-medium">256-BIT ENCRYPTION</span>
+              <span className="font-medium">CRYPTAGE 256 BITS</span>
             </div>
           </div>
         </div>
@@ -163,15 +163,15 @@ const LoginPage = () => {
         {/* Footer */}
         <div className="mt-8 text-center space-y-2">
           <p className="text-xs text-gray-500">
-            © 2024 VetMarket Inc. All rights reserved.
+            © {new Date().getFullYear()} Académie des Éleveurs. Tous droits réservés.
           </p>
           <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
             <Link to="/privacy" className="hover:text-gray-700">
-              Privacy Policy
+              Politique de Confidentialité
             </Link>
             <span>•</span>
             <Link to="/terms" className="hover:text-gray-700">
-              Terms of Service
+              Conditions d'Utilisation
             </Link>
           </div>
         </div>

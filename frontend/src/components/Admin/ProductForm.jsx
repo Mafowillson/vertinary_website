@@ -59,19 +59,19 @@ const ProductForm = ({ product, onClose }) => {
 
   const validateForm = () => {
     if (!formData.title.trim()) {
-      setError('Title is required')
+      setError('Le titre est requis')
       return false
     }
     if (!formData.description?.trim()) {
-      setError('Description is required')
+      setError('La description est requise')
       return false
     }
     if (!formData.price || parseFloat(formData.price) <= 0) {
-      setError('Valid price is required')
+      setError('Un prix valide est requis')
       return false
     }
     if (formData.original_price && parseFloat(formData.original_price) <= parseFloat(formData.price)) {
-      setError('Original price must be greater than current price')
+      setError('Le prix original doit être supérieur au prix actuel')
       return false
     }
     return true
@@ -114,7 +114,7 @@ const ProductForm = ({ product, onClose }) => {
         }, 1000)
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Failed to save product. Please try again.')
+      setError(err.response?.data?.message || err.message || 'Échec de l\'enregistrement du produit. Veuillez réessayer.')
     } finally {
       setLoading(false)
     }
@@ -131,10 +131,10 @@ const ProductForm = ({ product, onClose }) => {
             </div>
             <div>
               <h2 className="text-xl font-bold text-gray-900">
-                {product ? 'Edit Product' : 'Create New Product'}
+                {product ? 'Modifier le produit' : 'Créer un nouveau produit'}
               </h2>
               <p className="text-sm text-gray-600">
-                {product ? 'Update product information' : 'Add a new product to your catalog'}
+                {product ? 'Mettre à jour les informations du produit' : 'Ajouter un nouveau produit à votre catalogue'}
               </p>
             </div>
           </div>
@@ -152,7 +152,7 @@ const ProductForm = ({ product, onClose }) => {
             <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center space-x-3">
               <FiCheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
               <span className="font-medium">
-                {product ? 'Product updated successfully!' : 'Product created successfully!'}
+                {product ? 'Produit mis à jour avec succès !' : 'Produit créé avec succès !'}
               </span>
             </div>
           )}
@@ -169,12 +169,12 @@ const ProductForm = ({ product, onClose }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
               <FiInfo className="w-5 h-5 text-primary-600" />
-              <span>Basic Information</span>
+              <span>Informations de base</span>
             </h3>
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Product Title <span className="text-red-500">*</span>
+                Titre du produit <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -182,7 +182,7 @@ const ProductForm = ({ product, onClose }) => {
                 required
                 value={formData.title}
                 onChange={handleChange}
-                placeholder="e.g., Advanced Cattle Breeding Guide"
+                placeholder="ex. Guide avancé d'élevage bovin"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
               />
             </div>
@@ -197,7 +197,7 @@ const ProductForm = ({ product, onClose }) => {
                 rows="4"
                 value={formData.description}
                 onChange={handleChange}
-                placeholder="Provide a detailed description of the product..."
+                placeholder="Fournissez une description détaillée du produit..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
               />
             </div>
@@ -207,13 +207,13 @@ const ProductForm = ({ product, onClose }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
               <FiDollarSign className="w-5 h-5 text-primary-600" />
-              <span>Pricing</span>
+              <span>Tarification</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Current Price (FCFA) <span className="text-red-500">*</span>
+                  Prix actuel (FCFA) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -234,8 +234,8 @@ const ProductForm = ({ product, onClose }) => {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Original Price (FCFA)
-                  <span className="text-xs text-gray-500 ml-2">(for discounts)</span>
+                  Prix original (FCFA)
+                  <span className="text-xs text-gray-500 ml-2">(pour les réductions)</span>
                 </label>
                 <div className="relative">
                   <input
@@ -254,7 +254,7 @@ const ProductForm = ({ product, onClose }) => {
                 </div>
                 {formData.original_price && parseFloat(formData.original_price) > 0 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Discount:{' '}
+                    Réduction :{' '}
                     {formData.price
                       ? `${(
                           ((parseFloat(formData.original_price) - parseFloat(formData.price)) /
@@ -272,30 +272,30 @@ const ProductForm = ({ product, onClose }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
               <FiImage className="w-5 h-5 text-primary-600" />
-              <span>Product Image</span>
+              <span>Image du produit</span>
             </h3>
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Image URL
+                URL de l'image
               </label>
               <input
                 type="url"
                 name="image_url"
                 value={formData.image_url}
                 onChange={handleChange}
-                placeholder="https://example.com/product-image.jpg"
+                placeholder="https://exemple.com/image-produit.jpg"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
               />
               <p className="text-xs text-gray-500 mt-1 flex items-center space-x-1">
                 <FiInfo className="w-3 h-3" />
-                <span>Enter a valid image URL. The image will be displayed on product cards.</span>
+                <span>Entrez une URL d'image valide. L'image sera affichée sur les cartes produit.</span>
               </p>
               {formData.image_url && (
                 <div className="mt-3">
                   <img
                     src={formData.image_url}
-                    alt="Preview"
+                    alt="Aperçu"
                     className="w-32 h-32 object-cover rounded-lg border border-gray-200"
                     onError={(e) => {
                       e.target.style.display = 'none'
@@ -310,13 +310,13 @@ const ProductForm = ({ product, onClose }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
               <FiPackage className="w-5 h-5 text-primary-600" />
-              <span>Inventory & Settings</span>
+              <span>Inventaire & Paramètres</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Stock Quantity
+                  Quantité en stock
                 </label>
                 <input
                   type="number"
@@ -327,12 +327,12 @@ const ProductForm = ({ product, onClose }) => {
                   placeholder="0"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                 />
-                <p className="text-xs text-gray-500 mt-1">Leave empty or 0 for unlimited stock</p>
+                <p className="text-xs text-gray-500 mt-1">Laissez vide ou 0 pour un stock illimité</p>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center space-x-2">
                   <FiCalendar className="w-4 h-4" />
-                  <span>Offer End Date</span>
+                  <span>Date de fin d'offre</span>
                 </label>
                 <input
                   type="datetime-local"
@@ -341,7 +341,7 @@ const ProductForm = ({ product, onClose }) => {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                 />
-                <p className="text-xs text-gray-500 mt-1">Set when the special offer expires</p>
+                <p className="text-xs text-gray-500 mt-1">Définir quand l'offre spéciale expire</p>
               </div>
             </div>
 
@@ -357,10 +357,10 @@ const ProductForm = ({ product, onClose }) => {
               <label htmlFor="featured" className="flex-1 cursor-pointer">
                 <div className="flex items-center space-x-2">
                   <FiTrendingUp className="w-4 h-4 text-primary-600" />
-                  <span className="text-sm font-semibold text-gray-900">Featured Product</span>
+                  <span className="text-sm font-semibold text-gray-900">Produit en vedette</span>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Featured products are highlighted and shown prominently on the website
+                  Les produits en vedette sont mis en avant et affichés de manière visible sur le site
                 </p>
               </label>
             </div>
@@ -373,7 +373,7 @@ const ProductForm = ({ product, onClose }) => {
               onClick={onClose}
               className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
             >
-              Cancel
+              Annuler
             </button>
             <button
               type="submit"
@@ -383,15 +383,15 @@ const ProductForm = ({ product, onClose }) => {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Saving...</span>
+                  <span>Enregistrement...</span>
                 </>
               ) : success ? (
                 <>
                   <FiCheckCircle className="w-5 h-5" />
-                  <span>Saved!</span>
+                  <span>Enregistré !</span>
                 </>
               ) : (
-                <span>{product ? 'Update Product' : 'Create Product'}</span>
+                <span>{product ? 'Mettre à jour le produit' : 'Créer le produit'}</span>
               )}
             </button>
           </div>

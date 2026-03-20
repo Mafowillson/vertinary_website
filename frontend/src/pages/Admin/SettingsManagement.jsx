@@ -64,13 +64,13 @@ const SettingsManagement = () => {
       await updateSocialLinks(formData)
       setMessage({
         type: 'success',
-        text: 'Settings updated successfully!',
+        text: 'Paramètres mis à jour avec succès !',
       })
       setTimeout(() => setMessage({ type: '', text: '' }), 5000)
     } catch (error) {
       setMessage({
         type: 'error',
-        text: 'Failed to update settings. Please try again.',
+        text: 'Échec de la mise à jour des paramètres. Veuillez réessayer.',
       })
     } finally {
       setLoading(false)
@@ -97,16 +97,16 @@ const SettingsManagement = () => {
   }
 
   const tabs = [
-    { id: 'social', label: 'Social Media', icon: FiLink },
-    { id: 'general', label: 'General', icon: FiSettings },
+    { id: 'social', label: 'Réseaux sociaux', icon: FiLink },
+    { id: 'general', label: 'Général', icon: FiSettings },
   ]
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Settings</h1>
-        <p className="text-gray-600">Manage your site configuration and social media links</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Paramètres</h1>
+        <p className="text-gray-600">Gérer la configuration du site et les liens des réseaux sociaux</p>
       </div>
 
       {/* Success/Error Message */}
@@ -168,10 +168,10 @@ const SettingsManagement = () => {
               <div className="bg-gradient-to-r from-primary-50 to-primary-100 px-6 py-4 border-b border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
                   <FiLink className="w-5 h-5 text-primary-600" />
-                  <span>Social Media Links</span>
+                  <span>Liens des réseaux sociaux</span>
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Update your social media links that appear throughout the site
+                  Mettez à jour vos liens de réseaux sociaux qui apparaissent sur tout le site
                 </p>
               </div>
 
@@ -215,12 +215,12 @@ const SettingsManagement = () => {
                   </div>
                   <div className="flex items-start space-x-2 text-xs text-gray-500">
                     <FiInfo className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <span>Format: https://wa.me/[country code][phone number]</span>
+                    <span>Format : https://wa.me/[indicatif pays][numéro de téléphone]</span>
                   </div>
                   {formData.whatsapp && !validateUrl(formData.whatsapp) && (
                     <p className="text-xs text-red-600 flex items-center space-x-1">
                       <FiAlertCircle className="w-4 h-4" />
-                      <span>Please enter a valid URL</span>
+                      <span>Veuillez entrer une URL valide</span>
                     </p>
                   )}
                 </div>
@@ -264,12 +264,12 @@ const SettingsManagement = () => {
                   </div>
                   <div className="flex items-start space-x-2 text-xs text-gray-500">
                     <FiInfo className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <span>Link to your Facebook page or group</span>
+                    <span>Lien vers votre page ou groupe Facebook</span>
                   </div>
                   {formData.facebook && !validateUrl(formData.facebook) && (
                     <p className="text-xs text-red-600 flex items-center space-x-1">
                       <FiAlertCircle className="w-4 h-4" />
-                      <span>Please enter a valid URL</span>
+                      <span>Veuillez entrer une URL valide</span>
                     </p>
                   )}
                 </div>
@@ -313,12 +313,12 @@ const SettingsManagement = () => {
                   </div>
                   <div className="flex items-start space-x-2 text-xs text-gray-500">
                     <FiInfo className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <span>Link to your YouTube channel</span>
+                    <span>Lien vers votre chaîne YouTube</span>
                   </div>
                   {formData.youtube && !validateUrl(formData.youtube) && (
                     <p className="text-xs text-red-600 flex items-center space-x-1">
                       <FiAlertCircle className="w-4 h-4" />
-                      <span>Please enter a valid URL</span>
+                      <span>Veuillez entrer une URL valide</span>
                     </p>
                   )}
                 </div>
@@ -333,7 +333,7 @@ const SettingsManagement = () => {
                   onClick={handleReset}
                   className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
                 >
-                  Reset
+                  Réinitialiser
                 </button>
               )}
               <button
@@ -342,7 +342,7 @@ const SettingsManagement = () => {
                 className="px-6 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
               >
                 <FiSave className="w-5 h-5" />
-                <span>{loading ? 'Saving...' : 'Save Changes'}</span>
+                <span>{loading ? 'Enregistrement...' : 'Enregistrer les modifications'}</span>
               </button>
             </div>
           </form>
@@ -353,9 +353,9 @@ const SettingsManagement = () => {
             <div className="bg-gradient-to-r from-primary-50 to-primary-100 px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
                 <FiSettings className="w-5 h-5 text-primary-600" />
-                <span>General Settings</span>
+                <span>Paramètres généraux</span>
               </h2>
-              <p className="text-sm text-gray-600 mt-1">Site-wide configuration settings</p>
+              <p className="text-sm text-gray-600 mt-1">Paramètres de configuration du site</p>
             </div>
 
             <div className="p-6 space-y-6">
@@ -363,11 +363,11 @@ const SettingsManagement = () => {
               <div className="space-y-2">
                 <label className="flex items-center space-x-2 text-sm font-semibold text-gray-900">
                   <FiGlobe className="w-5 h-5 text-primary-600" />
-                  <span>Site Name</span>
+                  <span>Nom du site</span>
                 </label>
                 <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
                   <p className="text-gray-900 font-medium">{siteConfig.siteName}</p>
-                  <p className="text-xs text-gray-500 mt-1">This setting cannot be changed</p>
+                  <p className="text-xs text-gray-500 mt-1">Ce paramètre ne peut pas être modifié</p>
                 </div>
               </div>
 
@@ -375,11 +375,11 @@ const SettingsManagement = () => {
               <div className="space-y-2">
                 <label className="flex items-center space-x-2 text-sm font-semibold text-gray-900">
                   <FiDollarSign className="w-5 h-5 text-primary-600" />
-                  <span>Currency</span>
+                  <span>Devise</span>
                 </label>
                 <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
                   <p className="text-gray-900 font-medium">{siteConfig.currency || 'FCFA'}</p>
-                  <p className="text-xs text-gray-500 mt-1">Default currency for all transactions</p>
+                  <p className="text-xs text-gray-500 mt-1">Devise par défaut pour toutes les transactions</p>
                 </div>
               </div>
 
@@ -389,8 +389,8 @@ const SettingsManagement = () => {
                   <div>
                     <p className="text-sm font-medium text-blue-900 mb-1">Information</p>
                     <p className="text-sm text-blue-700">
-                      General settings are managed by the system. Contact your administrator for
-                      changes to site name or currency.
+                      Les paramètres généraux sont gérés par le système. Contactez votre administrateur pour
+                      modifier le nom du site ou la devise.
                     </p>
                   </div>
                 </div>

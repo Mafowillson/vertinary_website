@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
   }[format] || { text: 'PDF', color: 'bg-green-600' }
 
   // Determine category (mock - would come from product data)
-  const category = product.category || 'LIVESTOCK HEALTH'
+  const category = product.category || 'SANTÉ ANIMALE'
   
   // Check if bestseller
   const isBestseller = product.bestseller || (product.purchase_count || product.sold || 0) > 50
@@ -70,7 +70,7 @@ const ProductCard = ({ product }) => {
           {isBestseller && (
             <div className="absolute top-3 right-3">
               <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                BESTSELLER
+                BEST-SELLER
               </span>
             </div>
           )}

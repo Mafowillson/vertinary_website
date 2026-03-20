@@ -190,21 +190,21 @@ const OrdersManagement = () => {
     switch (status) {
       case 'completed':
         return {
-          label: 'Completed',
+          label: 'Complétée',
           color: 'bg-green-100 text-green-700',
           icon: FiCheckCircle,
           iconColor: 'text-green-600',
         }
       case 'pending':
         return {
-          label: 'Pending',
+          label: 'En attente',
           color: 'bg-yellow-100 text-yellow-700',
           icon: FiClock,
           iconColor: 'text-yellow-600',
         }
       case 'failed':
         return {
-          label: 'Failed',
+          label: 'Échouée',
           color: 'bg-red-100 text-red-700',
           icon: FiAlertCircle,
           iconColor: 'text-red-600',
@@ -224,9 +224,9 @@ const OrdersManagement = () => {
       case 'mobile_money':
         return 'Mobile Money'
       case 'bank_transfer':
-        return 'Bank Transfer'
+        return 'Virement bancaire'
       default:
-        return 'Not Paid'
+        return 'Non payé'
     }
   }
 
@@ -252,33 +252,33 @@ const OrdersManagement = () => {
     <div className="space-y-6">
       {/* Header Section */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Orders & Payments</h1>
-        <p className="text-gray-600">Manage customer orders and track payments</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Commandes & Paiements</h1>
+        <p className="text-gray-600">Gérer les commandes clients et suivre les paiements</p>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          label="Total Orders"
+          label="Total commandes"
           value={stats.total}
           icon={FiPackage}
           color="bg-blue-100 text-blue-600"
         />
         <StatCard
-          label="Completed"
+          label="Complétées"
           value={stats.completed}
           icon={FiCheckCircle}
           color="bg-green-100 text-green-600"
           change={`${((stats.completed / stats.total) * 100).toFixed(1)}%`}
         />
         <StatCard
-          label="Pending"
+          label="En attente"
           value={stats.pending}
           icon={FiClock}
           color="bg-yellow-100 text-yellow-600"
         />
         <StatCard
-          label="Total Revenue"
+          label="Revenu total"
           value={formatCurrency(stats.totalRevenue)}
           icon={FiDollarSign}
           color="bg-purple-100 text-purple-600"
@@ -293,7 +293,7 @@ const OrdersManagement = () => {
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search by order number, customer, or product..."
+              placeholder="Rechercher par n° de commande, client ou produit..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -324,7 +324,7 @@ const OrdersManagement = () => {
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  <span className="capitalize">{status === 'all' ? 'All' : config.label}</span>
+                  <span className="capitalize">{status === 'all' ? 'Toutes' : config.label}</span>
                 </button>
               )
             })}
@@ -336,9 +336,9 @@ const OrdersManagement = () => {
             onChange={(e) => setSortBy(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
           >
-            <option value="recent">Most Recent</option>
-            <option value="date">Date (Newest)</option>
-            <option value="amount">Amount (High-Low)</option>
+            <option value="recent">Plus récent</option>
+            <option value="date">Date (récent)</option>
+            <option value="amount">Montant (décroissant)</option>
           </select>
         </div>
       </div>
@@ -391,11 +391,11 @@ const OrdersManagement = () => {
       ) : (
         <div className="bg-white rounded-lg shadow-sm p-12 text-center">
           <FiPackage className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No orders found</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucune commande trouvée</h3>
           <p className="text-gray-600">
             {searchQuery || statusFilter !== 'all'
-              ? 'Try adjusting your filters'
-              : 'Orders will appear here once customers make purchases'}
+              ? 'Essayez d\'ajuster vos filtres'
+              : 'Les commandes apparaîtront ici une fois que les clients effectueront des achats'}
           </p>
         </div>
       )}
@@ -486,18 +486,18 @@ const OrderCard = ({
 
         {/* Product Info */}
         <div className="mb-4">
-          <p className="text-sm text-gray-600 mb-1">Product</p>
+          <p className="text-sm text-gray-600 mb-1">Produit</p>
           <p className="text-sm font-semibold text-gray-900">{order.product?.title}</p>
         </div>
 
         {/* Payment Info */}
         <div className="flex items-center justify-between pt-4 border-t border-gray-100">
           <div>
-            <p className="text-xs text-gray-500 mb-1">Amount</p>
+            <p className="text-xs text-gray-500 mb-1">Montant</p>
             <p className="text-lg font-bold text-primary-600">{formatCurrency(order.amount)}</p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-gray-500 mb-1">Payment</p>
+            <p className="text-xs text-gray-500 mb-1">Paiement</p>
             <p className="text-sm font-medium text-gray-900 flex items-center justify-end space-x-1">
               <FiCreditCard className="w-4 h-4" />
               <span>{getPaymentMethodLabel(order.payment_method)}</span>
@@ -511,7 +511,7 @@ const OrderCard = ({
           className="w-full mt-4 bg-primary-50 text-primary-600 py-2 px-4 rounded-lg font-medium hover:bg-primary-100 transition-colors flex items-center justify-center space-x-2"
         >
           <FiEye className="w-4 h-4" />
-          <span>View Details</span>
+          <span>Voir les détails</span>
         </button>
       </div>
     </div>
@@ -556,16 +556,16 @@ const OrderListItem = ({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
-              <p className="text-gray-500 mb-1">Customer</p>
+              <p className="text-gray-500 mb-1">Client</p>
               <p className="font-medium text-gray-900">{order.user?.name}</p>
               <p className="text-xs text-gray-500">{order.user?.email}</p>
             </div>
             <div>
-              <p className="text-gray-500 mb-1">Product</p>
+              <p className="text-gray-500 mb-1">Produit</p>
               <p className="font-medium text-gray-900">{order.product?.title}</p>
             </div>
             <div>
-              <p className="text-gray-500 mb-1">Payment & Date</p>
+              <p className="text-gray-500 mb-1">Paiement & Date</p>
               <p className="font-medium text-gray-900 flex items-center space-x-1">
                 <FiCreditCard className="w-4 h-4" />
                 <span>{getPaymentMethodLabel(order.payment_method)}</span>
@@ -582,7 +582,7 @@ const OrderListItem = ({
         <button
           onClick={onView}
           className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
-          title="View Details"
+          title="Voir les détails"
         >
           <FiEye className="w-5 h-5" />
         </button>
@@ -607,7 +607,7 @@ const OrderDetailModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-900">Order Details</h2>
+          <h2 className="text-xl font-bold text-gray-900">Détails de la commande</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -620,7 +620,7 @@ const OrderDetailModal = ({
           {/* Order Header */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 mb-1">Order Number</p>
+              <p className="text-sm text-gray-500 mb-1">Numéro de commande</p>
               <p className="text-lg font-bold text-primary-600">#{order.order_number}</p>
             </div>
             <span
@@ -633,7 +633,7 @@ const OrderDetailModal = ({
 
           {/* Customer Info */}
           <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm font-semibold text-gray-900 mb-3">Customer Information</p>
+            <p className="text-sm font-semibold text-gray-900 mb-3">Informations client</p>
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
                 <span className="text-sm font-semibold text-primary-700">
@@ -649,7 +649,7 @@ const OrderDetailModal = ({
 
           {/* Product Info */}
           <div>
-            <p className="text-sm font-semibold text-gray-900 mb-3">Product</p>
+            <p className="text-sm font-semibold text-gray-900 mb-3">Produit</p>
             <div className="border border-gray-200 rounded-lg p-4">
               <p className="font-medium text-gray-900">{order.product?.title}</p>
             </div>
@@ -658,25 +658,25 @@ const OrderDetailModal = ({
           {/* Payment Details */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-500 mb-1">Amount</p>
+              <p className="text-sm text-gray-500 mb-1">Montant</p>
               <p className="text-xl font-bold text-primary-600">{formatCurrency(order.amount)}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 mb-1">Payment Method</p>
+              <p className="text-sm text-gray-500 mb-1">Mode de paiement</p>
               <p className="font-medium text-gray-900 flex items-center space-x-2">
                 <FiCreditCard className="w-4 h-4" />
                 <span>{getPaymentMethodLabel(order.payment_method)}</span>
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 mb-1">Order Date</p>
+              <p className="text-sm text-gray-500 mb-1">Date de commande</p>
               <p className="font-medium text-gray-900 flex items-center space-x-2">
                 <FiCalendar className="w-4 h-4" />
                 <span>{formatDate(order.created_at)}</span>
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 mb-1">Status</p>
+              <p className="text-sm text-gray-500 mb-1">Statut</p>
               <span
                 className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-semibold ${statusConfig.color}`}
               >
@@ -692,12 +692,12 @@ const OrderDetailModal = ({
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
             >
-              Close
+              Fermer
             </button>
             {order.status === 'completed' && (
               <button className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2">
                 <FiDownload className="w-4 h-4" />
-                <span>Download Invoice</span>
+                <span>Télécharger la facture</span>
               </button>
             )}
           </div>

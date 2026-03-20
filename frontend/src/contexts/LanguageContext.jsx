@@ -291,6 +291,18 @@ const translations = {
     loginError: 'Erreur lors de la connexion. Veuillez réessayer.',
     registerError: 'Erreur lors de l\'inscription. Veuillez réessayer.',
     offerExpired: 'L\'offre a expiré',
+    
+    // Additional Auth
+    secureLoginMessage: 'Connexion sécurisée à votre espace personnel',
+    testAccounts: 'Comptes de test',
+    forgotPassword: 'Mot de passe oublié ?',
+    hidePassword: 'Masquer le mot de passe',
+    showPassword: 'Afficher le mot de passe',
+    dontHaveAccount: 'Vous n\'avez pas de compte ?',
+    '256BitEncryption': 'CRYPTAGE 256 BITS',
+    
+    // Additional Services
+    allServices: 'Tous les services',
   },
   en: {
     // Navigation
@@ -565,6 +577,18 @@ const translations = {
     loginError: 'Error logging in. Please try again.',
     registerError: 'Error registering. Please try again.',
     offerExpired: 'The offer has expired',
+    
+    // Additional Auth
+    secureLoginMessage: 'Secure login to your personal space',
+    testAccounts: 'Test Accounts',
+    forgotPassword: 'Forgot password?',
+    hidePassword: 'Hide password',
+    showPassword: 'Show password',
+    dontHaveAccount: 'Don\'t have an account?',
+    '256BitEncryption': '256-BIT ENCRYPTION',
+    
+    // Additional Services
+    allServices: 'All Services',
   },
 }
 
@@ -587,16 +611,14 @@ export const LanguageProvider = ({ children }) => {
     return 'en'
   }
 
-  // Get initial language from localStorage or system preference
+  // Get initial language from localStorage or default to French
   const getInitialLanguage = () => {
     if (typeof window !== 'undefined') {
-      const savedLanguage = localStorage.getItem('language')
-      if (savedLanguage && Object.keys(SUPPORTED_LANGUAGES).includes(savedLanguage)) {
-        return savedLanguage
-      }
-      return getSystemLanguage()
+      // For now we force the site to French-only.
+      // If a user previously selected English, we still want a French UI by default.
+      return 'fr'
     }
-    return 'en'
+    return 'fr'
   }
 
   const [language, setLanguage] = useState(() => getInitialLanguage())

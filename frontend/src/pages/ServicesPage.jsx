@@ -19,42 +19,42 @@ const ServicesPage = () => {
   const categories = [
     { 
       id: 'all', 
-      name: t('allCategories') || 'Toutes les catégories', 
+      name: t('allCategories'), 
       key: 'allCategories',
       icon: '📋',
       color: 'from-green-500 to-green-600'
     },
     { 
       id: 'training', 
-      name: t('training') || 'Formation', 
+      name: t('training'), 
       key: 'training',
       icon: '📚',
       color: 'from-blue-500 to-blue-600'
     },
     { 
       id: 'sales', 
-      name: t('sales') || 'Vente', 
+      name: t('sales'), 
       key: 'sales',
       icon: '🛒',
       color: 'from-purple-500 to-purple-600'
     },
     { 
       id: 'products', 
-      name: t('products') || 'Produits', 
+      name: t('products'), 
       key: 'products',
       icon: '💊',
       color: 'from-orange-500 to-orange-600'
     },
     { 
       id: 'construction', 
-      name: t('construction') || 'Construction', 
+      name: t('construction'), 
       key: 'construction',
       icon: '🏗️',
       color: 'from-yellow-500 to-yellow-600'
     },
     { 
       id: 'consulting', 
-      name: t('consulting') || 'Consultation', 
+      name: t('consulting'), 
       key: 'consulting',
       icon: '🌾',
       color: 'from-teal-500 to-teal-600'
@@ -88,10 +88,10 @@ const ServicesPage = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              {t('services') || 'Nos Services'}
+              {t('services')}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {t('servicesDescription') || 'Découvrez notre gamme complète de services pour éleveurs et professionnels de l\'élevage. Des solutions adaptées à tous vos besoins.'}
+              {t('servicesDescription')}
             </p>
           </div>
         </div>
@@ -103,7 +103,7 @@ const ServicesPage = () => {
           <div className="flex items-center gap-3 mb-4">
             <FiFilter className="w-5 h-5 text-gray-600" />
             <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Filtrer par catégorie
+              Filtrer par catégorie 
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -139,7 +139,7 @@ const ServicesPage = () => {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   {selectedCategory === 'all' 
-                    ? t('allServices') || 'Tous les services'
+                    ? t('allServices')
                     : `${selectedCategoryData?.name || ''}`
                   }
                 </h2>
@@ -169,7 +169,7 @@ const ServicesPage = () => {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                  {t('noServicesFound') || 'Aucun service trouvé'}
+                  {t('noServicesFound')}
                 </h3>
                 <p className="text-gray-600 mb-6">
                   {selectedCategory === 'all'
