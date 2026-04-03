@@ -82,6 +82,7 @@ When the backend returns **snake_case**, normalize at the **API/service layer** 
 | `name` | string | yes | |
 | `role` | string | yes | e.g. `admin` \| `user` |
 | `isActive` | boolean | no | Admin-only |
+| `isVerified` | boolean | no | Email verification status |
 | `createdAt` | string | no | ISO |
 | `ordersCount` | number | no | Admin aggregates |
 
@@ -233,6 +234,19 @@ Use this when normalizing API responses or cleaning components.
 3. Replace component-level `x?.image_url || x?.imageUrl` with **`imageUrl` only**.
 4. Collapse duplicate date fields to **`offerEndDate`**.
 5. Align payment objects to **`ProcessPaymentInput`**.
+
+---
+
+## Backend (FastAPI) alignment
+
+The API under `backend/` is aligned with the frontend shapes:
+
+- **Products:** ORM stores `content_format` (DB column `format`); JSON exposes `format` plus camelCase mirrors (`imageUrl`, `originalPrice`, `discountEndDate`, `offerEndDate`, `purchaseCount`, `createdAt`, `updatedAt`) and `discount_end_date` / `download_count` computed fields. Added optional `category`, `pages`, `bestseller`.
+- **Orders:** Payment accepts **camelCase** `paymentMethod`, `paymentProvider`, `paymentData`, `email`. `online` (Stripe) maps to enum `online`; responses include nested **`user`** `{ id, name, email }` and camelCase mirrors (`orderNumber`, `total`, `paymentMethod`, `createdAt`, …).
+- **Config:** `GET /api/config` returns **camelCase** `siteName`, `currencySymbol`, `socialLinks`; `PUT` supports optional **`youtube`** on social links.
+- **Users:** `UserResponse` includes **`isActive`** and **`createdAt`** computed fields alongside snake_case.
+
+**PostgreSQL:** Use `DATABASE_URL=postgresql://...` in `backend/.env` (see `backend/.env.example`). Tables are created via `Base.metadata.create_all` / `init_db`; add new columns with Alembic or by recreating tables in dev.
 
 ---
 

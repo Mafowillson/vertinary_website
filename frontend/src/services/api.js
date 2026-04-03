@@ -9,6 +9,40 @@ const api = axios.create({
   },
 })
 
+const refreshClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+let refreshPromise = null
+
+function clearAuthAndRedirectToLogin() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('refreshToken')
+  window.location.href = '/login'
+}
+
+function refreshAccessToken() {
+  if (!refreshPromise) {
+    const refreshToken = localStorage.getItem('refreshToken')
+    if (!refreshToken) {
+      return Promise.reject(new Error('No refresh token'))
+    }
+    refreshPromise = refreshClient
+      .post('/auth/refresh', { refresh_token: refreshToken })
+      .then(({ data }) => {
+        localStorage.setItem('token', data.token)
+        return data.token
+      })
+      .finally(() => {
+        refreshPromise = null
+      })
+  }
+  return refreshPromise
+}
+
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
@@ -23,17 +57,41 @@ api.interceptors.request.use(
   }
 )
 
-// Response interceptor for error handling
+// Response interceptor: refresh access token on 401 when possible
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = '/login'
+  async (error) => {
+    const originalRequest = error.config
+    const status = error.response?.status
+
+    if (status !== 401 || !originalRequest || originalRequest._retry) {
+      return Promise.reject(error)
     }
-    return Promise.reject(error)
+
+    const reqUrl = String(originalRequest.url || '')
+    if (
+      reqUrl.includes('/auth/login') ||
+      reqUrl.includes('/auth/register') ||
+      reqUrl.includes('/auth/refresh')
+    ) {
+      if (reqUrl.includes('/auth/login') || reqUrl.includes('/auth/register')) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('refreshToken')
+      }
+      return Promise.reject(error)
+    }
+
+    originalRequest._retry = true
+
+    try {
+      const newToken = await refreshAccessToken()
+      originalRequest.headers.Authorization = `Bearer ${newToken}`
+      return api(originalRequest)
+    } catch {
+      clearAuthAndRedirectToLogin()
+      return Promise.reject(error)
+    }
   }
 )
 
 export default api
-

@@ -41,9 +41,11 @@ export const validatePassword = (user, password) => {
 // Helper to create user response
 export const createUserResponse = (user) => {
   const { password, ...userWithoutPassword } = user
+  const access = generateMockToken(user.id)
   return {
     user: userWithoutPassword,
-    token: generateMockToken(user.id),
+    token: access,
+    refresh_token: `mock_refresh_${user.id}_${Date.now()}`,
   }
 }
 

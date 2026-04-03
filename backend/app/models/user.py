@@ -17,6 +17,10 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     role = Column(Enum(UserRole), default=UserRole.USER, nullable=False)
     is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False, nullable=False)
+    email_verification_token = Column(String, unique=True, nullable=True, index=True)
+    email_verification_expires_at = Column(DateTime(timezone=True), nullable=True)
+    verification_email_last_sent_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 

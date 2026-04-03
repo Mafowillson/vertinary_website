@@ -11,6 +11,29 @@ from app.models.user import User
 
 router = APIRouter()
 
+
+def resolve_payment_method(payment_data: PaymentRequest) -> PaymentMethod:
+    """Map frontend checkout payload to stored enum (stripe -> online, etc.)."""
+    raw = (payment_data.payment_method or "").lower().strip()
+    provider = (payment_data.payment_provider or "").lower().strip()
+    mapping = {
+        "online": PaymentMethod.ONLINE,
+        "mobile_money": PaymentMethod.MOBILE_MONEY,
+        "orange_money": PaymentMethod.ORANGE_MONEY,
+        "bank_transfer": PaymentMethod.BANK_TRANSFER,
+    }
+    if raw in mapping:
+        return mapping[raw]
+    if provider == "stripe":
+        return PaymentMethod.ONLINE
+    if provider == "flutterwave":
+        return PaymentMethod.MOBILE_MONEY
+    try:
+        return PaymentMethod(raw)
+    except ValueError:
+        return PaymentMethod.ONLINE
+
+
 def generate_order_number() -> str:
     """Generate a unique order number."""
     return f"ORD-{uuid.uuid4().hex[:8].upper()}"
@@ -52,7 +75,8 @@ async def create_order(
     
     # Eager load product relationship
     order = db.query(Order).options(
-        joinedload(Order.product)
+        joinedload(Order.product),
+        joinedload(Order.user),
     ).filter(Order.id == db_order.id).first()
     
     return OrderResponse.model_validate(order)
@@ -65,7 +89,8 @@ async def get_order(
 ):
     """Get an order by ID."""
     order = db.query(Order).options(
-        joinedload(Order.product)
+        joinedload(Order.product),
+        joinedload(Order.user),
     ).filter(Order.id == order_id).first()
     if not order:
         raise HTTPException(
@@ -89,7 +114,8 @@ async def get_user_orders(
 ):
     """Get all orders for the current user."""
     orders = db.query(Order).options(
-        joinedload(Order.product)
+        joinedload(Order.product),
+        joinedload(Order.user),
     ).filter(Order.user_id == current_user.id).all()
     return [OrderResponse.model_validate(o) for o in orders]
 
@@ -117,7 +143,7 @@ async def process_payment(
     
     # Update order status and payment method
     order.status = OrderStatus.COMPLETED
-    order.payment_method = PaymentMethod(payment_data.payment_method)
+    order.payment_method = resolve_payment_method(payment_data)
     
     # Update product purchase count
     product = db.query(Product).filter(Product.id == order.product_id).first()
@@ -131,7 +157,8 @@ async def process_payment(
     
     # Reload order with product relationship
     order = db.query(Order).options(
-        joinedload(Order.product)
+        joinedload(Order.product),
+        joinedload(Order.user),
     ).filter(Order.id == order_id).first()
     
     return PaymentResponse(

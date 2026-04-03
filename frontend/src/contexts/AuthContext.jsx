@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
           setUser(userData)
         } catch (error) {
           localStorage.removeItem('token')
+          localStorage.removeItem('refreshToken')
           setToken(null)
         }
       }
@@ -37,14 +38,22 @@ export const AuthProvider = ({ children }) => {
     setToken(response.token)
     setUser(response.user)
     localStorage.setItem('token', response.token)
+    if (response.refresh_token) {
+      localStorage.setItem('refreshToken', response.refresh_token)
+    }
     return response
   }
 
   const register = async (userData) => {
     const response = await authService.register(userData)
-    setToken(response.token)
-    setUser(response.user)
-    localStorage.setItem('token', response.token)
+    if (response.token) {
+      setToken(response.token)
+      setUser(response.user)
+      localStorage.setItem('token', response.token)
+      if (response.refresh_token) {
+        localStorage.setItem('refreshToken', response.refresh_token)
+      }
+    }
     return response
   }
 
@@ -52,6 +61,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null)
     setUser(null)
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
   }
 
   const isAdmin = () => {

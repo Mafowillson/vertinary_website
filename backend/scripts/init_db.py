@@ -8,7 +8,7 @@ import os
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.db.database import SessionLocal, engine, Base
+from app.db.database import SessionLocal, engine, Base, ensure_auth_verification_columns
 from app.models.user import User, UserRole
 from app.models.config import SiteConfig
 from app.core.security import get_password_hash
@@ -17,6 +17,7 @@ def init_db():
     """Initialize database with default data."""
     # Create all tables
     Base.metadata.create_all(bind=engine)
+    ensure_auth_verification_columns()
     
     db = SessionLocal()
     
@@ -31,11 +32,14 @@ def init_db():
                 email=admin_email,
                 hashed_password=get_password_hash("admin123"),  # Change this in production!
                 role=UserRole.ADMIN,
-                is_active=True
+                is_active=True,
+                is_verified=True,
             )
             db.add(admin_user)
             print(f"✓ Created admin user: {admin_email} / admin123")
         else:
+            if not admin_user.is_verified:
+                admin_user.is_verified = True
             print(f"✓ Admin user already exists: {admin_email}")
         
         # Create default site config if it doesn't exist
@@ -47,7 +51,8 @@ def init_db():
                 currency_symbol="FCFA",
                 social_links={
                     "whatsapp": "https://wa.me/237699933135",
-                    "facebook": "https://web.facebook.com/search/top?q=l%27acad%C3%A9mie%20des%20%C3%A9leveurs"
+                    "facebook": "https://web.facebook.com/search/top?q=l%27acad%C3%A9mie%20des%20%C3%A9leveurs",
+                    "youtube": "",
                 }
             )
             db.add(config)

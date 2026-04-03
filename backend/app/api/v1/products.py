@@ -3,7 +3,12 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.db.database import get_db
 from app.models.product import Product
-from app.schemas.product import ProductCreate, ProductUpdate, ProductResponse
+from app.schemas.product import (
+    ProductCreate,
+    ProductUpdate,
+    ProductResponse,
+    product_payload_to_orm_dict,
+)
 from app.api.dependencies import get_current_user, get_current_admin_user
 from app.models.user import User
 
@@ -65,7 +70,7 @@ async def create_product(
     current_user: User = Depends(get_current_admin_user)
 ):
     """Create a new product (admin only)."""
-    db_product = Product(**product_data.model_dump())
+    db_product = Product(**product_payload_to_orm_dict(product_data.model_dump()))
     db.add(db_product)
     db.commit()
     db.refresh(db_product)
@@ -87,6 +92,7 @@ async def update_product(
         )
     
     update_data = product_data.model_dump(exclude_unset=True)
+    update_data = product_payload_to_orm_dict(update_data)
     for field, value in update_data.items():
         setattr(product, field, value)
     

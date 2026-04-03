@@ -52,7 +52,8 @@ async def get_all_orders(
     from sqlalchemy.orm import joinedload
     
     orders = db.query(Order).options(
-        joinedload(Order.product)
+        joinedload(Order.product),
+        joinedload(Order.user),
     ).offset(skip).limit(limit).all()
     return [OrderResponse.model_validate(o) for o in orders]
 

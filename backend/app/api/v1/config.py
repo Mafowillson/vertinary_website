@@ -44,6 +44,11 @@ async def update_social_links(
         if not config.social_links:
             config.social_links = {}
         config.social_links["facebook"] = links.facebook
+
+    if links.youtube is not None:
+        if not config.social_links:
+            config.social_links = {}
+        config.social_links["youtube"] = links.youtube
     
     db.commit()
     db.refresh(config)

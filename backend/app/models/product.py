@@ -14,6 +14,12 @@ class Product(Base):
     image_url = Column(String, nullable=True)
     stock = Column(Integer, default=0)
     sold = Column(Integer, default=0)
+    # Optional merchandising / catalog fields used by the frontend
+    category = Column(String, nullable=True)
+    # DB column name "format" — attribute avoids shadowing builtin `format`
+    content_format = Column("format", String, nullable=True)
+    pages = Column(Integer, nullable=True)
+    bestseller = Column(Boolean, default=False)
     offer_end_date = Column(DateTime(timezone=True), nullable=True)
     featured = Column(Boolean, default=False)
     purchase_count = Column(Integer, default=0)

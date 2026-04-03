@@ -57,13 +57,25 @@ Copy `.env.example` to `.env` and update the values:
 cp .env.example .env
 ```
 
-Edit `.env` with your database credentials:
+Edit `.env` with your database credentials (PostgreSQL only — use **pgAdmin 4** or `psql` to inspect data):
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/vertinary_db
 SECRET_KEY=your-secret-key-here-change-in-production
 CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-smtp-username
+SMTP_PASSWORD=your-smtp-password
+SMTP_FROM_EMAIL=noreply@your-domain.com
+VERIFICATION_URL_BASE=http://localhost:5173/verify-email
+VERIFICATION_RESEND_COOLDOWN_SECONDS=60
+VERIFICATION_EMAIL_MODE=console
 ```
+
+Do **not** use `sqlite:///...` URLs; the app validates that `DATABASE_URL` is PostgreSQL.
+
+**Email verification:** For local development, set `VERIFICATION_EMAIL_MODE=console` so registration succeeds without SMTP; copy the verification link from the server log. For production, set `VERIFICATION_EMAIL_MODE=smtp`, fill in `SMTP_*`, and use port **587** (STARTTLS) or **465** (SSL). Gmail requires an [app password](https://support.google.com/accounts/answer/185833), not your normal password.
 
 5. **Create the database:**
 
@@ -122,7 +134,9 @@ Once the server is running, you can access:
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
+- `POST /api/auth/register` - Register new user and send verification email
+- `POST /api/auth/verify-email` - Verify email after registration
+- `POST /api/auth/resend-verification-email` - Resend verification email (rate-limited)
 - `POST /api/auth/login` - Login
 - `GET /api/auth/me` - Get current user info
 

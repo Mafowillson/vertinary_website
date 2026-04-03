@@ -10,8 +10,10 @@ class OrderStatus(str, enum.Enum):
     FAILED = "failed"
 
 class PaymentMethod(str, enum.Enum):
-    ONLINE = "online"
+    """Aligned with checkout payloads (see frontend CheckoutPage)."""
+    ONLINE = "online"  # card / Stripe flow
     MOBILE_MONEY = "mobile_money"
+    ORANGE_MONEY = "orange_money"
     BANK_TRANSFER = "bank_transfer"
 
 class Order(Base):
