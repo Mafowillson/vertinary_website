@@ -33,8 +33,8 @@ const RegisterPage = () => {
       return
     }
 
-    if (formData.password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.')
+    if (formData.password.length < 8) {
+      setError('Le mot de passe doit contenir au moins 8 caractères.')
       return
     }
 
@@ -46,7 +46,10 @@ const RegisterPage = () => {
         email: formData.email,
         password: formData.password,
       })
-      navigate('/')
+      navigate('/login', {
+        replace: true,
+        state: { registrationSuccess: true, email: formData.email },
+      })
     } catch (err) {
       setError(err.message || err.response?.data?.message || 'Erreur lors de l\'inscription. Veuillez réessayer.')
     } finally {
@@ -66,6 +69,9 @@ const RegisterPage = () => {
             </h2>
             <p className="text-sm text-gray-500">
               Commencez votre parcours avec une formation et un accompagnement professionnels.
+            </p>
+            <p className="text-xs text-gray-500 text-left mt-2">
+              Mot de passe : au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.
             </p>
           </div>
 

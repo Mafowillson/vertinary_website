@@ -1,0 +1,21 @@
+{
+  "title": "My library",
+  "empty": "You have no purchased materials yet.",
+  "watchNow": "Watch now",
+  "downloadNow": "Download now",
+  "readNow": "Read now",
+  "progress": "Progress",
+  "completed": "Completed",
+  "module": "Module",
+  "of": "of",
+  "continueWatching": "Continue learning",
+  "recentlyAdded": "Recently added",
+  "files": "Files",
+  "howToDownload": "How do I download?",
+  "downloadInstruction": "Click Download below to save your file.",
+  "downloading": "Downloading…",
+  "download": "Download",
+  "noFilesAvailable": "No files available.",
+  "downloadHere": "Download your document here",
+  "downloadError": "Download failed. Please try again."
+}

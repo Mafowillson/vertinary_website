@@ -1,5 +1,33 @@
 // Mock order data for testing when API is unavailable
-import { getUserByToken } from './mockUsers'
+
+function base64UrlToJson(part) {
+  let base64 = part.replace(/-/g, '+').replace(/_/g, '/')
+  const pad = base64.length % 4
+  if (pad) base64 += '='.repeat(4 - pad)
+  return JSON.parse(atob(base64))
+}
+
+function getCurrentUserFromToken() {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    return null
+  }
+  try {
+    const part = token.split('.')[1]
+    if (!part) return null
+    const payload = base64UrlToJson(part)
+    const sub = payload.sub
+    if (!sub) return null
+    return {
+      id: sub,
+      email: sub,
+      name: sub.split('@')[0] || 'User',
+      role: payload.role || 'user',
+    }
+  } catch {
+    return null
+  }
+}
 
 // Generate a mock order number
 const generateOrderNumber = () => {
@@ -10,36 +38,9 @@ const generateOrderNumber = () => {
 let mockOrders = []
 let nextOrderId = 1
 
-// Get current user from token (using same method as authService)
-const getCurrentUser = () => {
-  try {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      return null
-    }
-    
-    // Get user from mockUsers using the token
-    const user = getUserByToken(token)
-    if (user) {
-      return user
-    }
-    
-    // Fallback: if token exists but user not found, return default user
-    // This handles cases where token format doesn't match
-    return {
-      id: 1,
-      email: 'user@example.com',
-      name: 'Test User',
-      role: 'user'
-    }
-  } catch {
-    return null
-  }
-}
-
 // Create a mock order
 export const createMockOrder = (orderData, product) => {
-  const user = getCurrentUser()
+  const user = getCurrentUserFromToken()
   if (!user) {
     throw new Error('User must be logged in to create an order')
   }
@@ -91,6 +92,7 @@ export const processMockPayment = (orderId, paymentData) => {
 
 // Get all orders for current user
 export const getMockUserOrders = () => {
-  const user = getCurrentUser()
+  const user = getCurrentUserFromToken()
+  if (!user) return []
   return mockOrders.filter(o => o.user_id === user.id)
 }

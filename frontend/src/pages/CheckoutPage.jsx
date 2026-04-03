@@ -23,6 +23,10 @@ const CheckoutPage = () => {
   const { productId } = useParams()
   const navigate = useNavigate()
   const { t } = useLanguage()
+  const tp = (k, o) => t(k, { ns: 'checkout', ...o })
+  const tc = (k, o) => t(k, { ns: 'common', ...o })
+  const tprod = (k, o) => t(k, { ns: 'product', ...o })
+  const tlib = (k, o) => t(k, { ns: 'library', ...o })
   const { user, isAuthenticated } = useAuth()
   const { cartItems, getCartTotal, clearCart } = useCart()
   const [products, setProducts] = useState([])
@@ -52,7 +56,7 @@ const CheckoutPage = () => {
           setProducts([data])
         }
       } catch (err) {
-        setError(t('productNotFound'))
+        setError(tprod('detail.productNotFound'))
       } finally {
         setLoading(false)
       }
@@ -81,7 +85,7 @@ const CheckoutPage = () => {
     try {
       // Validate email
       if (!email || !email.includes('@')) {
-        setError(t('invalidEmail'))
+        setError(tp('payment.invalidEmail'))
         setProcessing(false)
         return
       }
@@ -112,7 +116,7 @@ const CheckoutPage = () => {
         })
 
         if (!paymentResult || !paymentResult.success) {
-          setError(t('paymentFailed'))
+          setError(tp('payment.paymentFailed'))
           setProcessing(false)
           return
         }
@@ -129,7 +133,7 @@ const CheckoutPage = () => {
       navigate(`/purchase-confirmation/${lastOrderId}`)
     } catch (err) {
       console.error('Payment error:', err)
-      const errorMessage = err.response?.data?.message || err.message || t('paymentError')
+      const errorMessage = err.response?.data?.message || err.message || tp('payment.paymentError')
       setError(errorMessage)
     } finally {
       setProcessing(false)
@@ -147,9 +151,9 @@ const CheckoutPage = () => {
   if (products.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center bg-gray-50 min-h-screen">
-        <p className="text-gray-600 text-lg mb-4">{error || t('productNotFound')}</p>
-        <button onClick={() => navigate('/products')} className="btn-primary">
-          {t('backToProducts')}
+        <p className="text-gray-600 text-lg mb-4">{error || tprod('detail.productNotFound')}</p>
+        <button type="button" onClick={() => navigate('/products')} className="btn-primary">
+          {tp('cart.backToProducts')}
         </button>
       </div>
     )
@@ -159,11 +163,12 @@ const CheckoutPage = () => {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
+          type="button"
           onClick={() => navigate(-1)}
           className="inline-flex items-center space-x-2 text-gray-600 hover:text-green-600 mb-6 transition-colors"
         >
           <FiArrowLeft className="w-4 h-4" />
-          <span>{t('back')}</span>
+          <span>{tc('buttons.back')}</span>
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
@@ -172,13 +177,13 @@ const CheckoutPage = () => {
             {/* Contact Information */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">{t('contactInformation')}</h2>
+                <h2 className="text-xl font-bold text-gray-900">{tp('payment.contactInformation')}</h2>
                 {!isAuthenticated && (
                   <Link
                     to="/login"
                     className="text-sm text-green-600 hover:text-green-700 font-medium"
                   >
-                    {t('alreadyHaveAccount')} {t('logIn')}
+                    {tp('payment.alreadyHaveAccount')} {tp('payment.logIn')}
                   </Link>
                 )}
               </div>
@@ -199,11 +204,12 @@ const CheckoutPage = () => {
 
             {/* Payment Method */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('paymentMethod')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{tp('payment.paymentMethod')}</h2>
               
               {/* Payment Method Tabs */}
               <div className="flex space-x-2 mb-6">
                 <button
+                  type="button"
                   onClick={() => setPaymentMethod('stripe')}
                   className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
                     paymentMethod === 'stripe'
@@ -211,9 +217,10 @@ const CheckoutPage = () => {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {t('creditDebitCard')}
+                  {tp('payment.creditDebitCard')}
                 </button>
                 <button
+                  type="button"
                   onClick={() => setPaymentMethod('flutterwave')}
                   className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
                     paymentMethod === 'flutterwave'
@@ -221,7 +228,7 @@ const CheckoutPage = () => {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {t('mobileMoney')}
+                  {tp('payment.mobileMoney')}
                 </button>
               </div>
 
@@ -245,19 +252,19 @@ const CheckoutPage = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 pt-4">
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <FiShield className="w-5 h-5 text-green-600" />
-                <span className="font-semibold">{t('secureSslEncryption')}</span>
+                <span className="font-semibold">{tp('payment.secureSslEncryption')}</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <div className="w-5 h-5 flex items-center justify-center">
                   <span className="text-green-600 font-bold">+</span>
                 </div>
-                <span className="font-semibold">{t('hipaaCompliant')}</span>
+                <span className="font-semibold">{tp('payment.hipaaCompliant')}</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <div className="w-5 h-5 flex items-center justify-center">
                   <span className="text-green-600">★</span>
                 </div>
-                <span className="font-semibold">{t('moneyBackGuarantee')}</span>
+                <span className="font-semibold">{tp('payment.moneyBackGuarantee')}</span>
               </div>
             </div>
           </div>
@@ -265,7 +272,7 @@ const CheckoutPage = () => {
           {/* Right Column - Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 lg:sticky lg:top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('orderSummary')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{tp('cart.orderSummary')}</h2>
               
               {/* Product List */}
               <div className="space-y-4 mb-6 pb-6 border-b">
@@ -290,7 +297,9 @@ const CheckoutPage = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-2">{product.title}</h3>
                         <p className="text-xs text-gray-600">
-                          {product.type === 'digital' ? 'Accès numérique' : product.format || 'Guide PDF'}
+                          {product.type === 'digital'
+                            ? tlib('digitalAccess')
+                            : product.format || tprod('types.document')}
                           {quantity > 1 && ` × ${quantity}`}
                         </p>
                         <p className="text-sm font-semibold text-gray-900 mt-1">
@@ -313,21 +322,24 @@ const CheckoutPage = () => {
               {/* Price Breakdown */}
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-600">
-                  <span>{t('subtotal')} ({products.length} {products.length === 1 ? 'article' : 'articles'})</span>
+                  <span>
+                    {tp('cart.subtotal')} ({products.length}{' '}
+                    {products.length === 1 ? tc('misc.article') : tc('misc.articles')})
+                  </span>
                   <span>{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>{t('taxes')}</span>
+                  <span>{tp('cart.taxes')}</span>
                   <span>{formatCurrency(taxes)}</span>
                 </div>
                 {products.length === 1 && products[0].originalPrice && products[0].originalPrice > products[0].price && (
                   <div className="flex justify-between text-gray-500 text-sm">
-                    <span>{t('reduction')}</span>
+                    <span>{tp('payment.reduction')}</span>
                     <span className="text-green-600">-{formatCurrency(products[0].originalPrice - products[0].price)}</span>
                   </div>
                 )}
                 <div className="border-t pt-3 flex justify-between font-bold text-lg">
-                  <span>{t('total')}</span>
+                  <span>{tp('cart.total')}</span>
                   <span className="text-green-600">{formatCurrency(total)}</span>
                 </div>
               </div>
@@ -343,7 +355,7 @@ const CheckoutPage = () => {
                   } else {
                     // If no form found, validate and submit directly
                     if (!email || !email.includes('@')) {
-                      setError(t('invalidEmail'))
+                      setError(tp('payment.invalidEmail'))
                       return
                     }
                     handlePaymentSubmit({
@@ -356,19 +368,19 @@ const CheckoutPage = () => {
                 disabled={processing}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg flex items-center justify-center space-x-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
               >
-                <span>{processing ? t('processing') : t('completePurchase')}</span>
+                <span>{processing ? tp('payment.processing') : tp('payment.completePurchase')}</span>
                 {!processing && <FiArrowRight className="w-5 h-5" />}
               </button>
 
               {/* Legal Text */}
               <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                {t('byCompletingPurchase')}{' '}
+                {tp('payment.byCompletingPurchase')}{' '}
                 <Link to="/terms" className="text-green-600 hover:underline">
-                  {t('termsOfService')}
+                  {tp('payment.termsOfService')}
                 </Link>{' '}
-                {t('and')}{' '}
+                {tp('payment.and')}{' '}
                 <Link to="/privacy" className="text-green-600 hover:underline">
-                  {t('privacyPolicy')}
+                  {tp('payment.privacyPolicy')}
                 </Link>
                 .
               </p>
@@ -376,7 +388,7 @@ const CheckoutPage = () => {
               {/* Security Assurance */}
               <div className="mt-4 flex items-center justify-center space-x-2 text-xs text-gray-600 bg-green-50 rounded-lg p-3">
                 <FiLock className="w-4 h-4 text-green-600" />
-                <span className="text-center">{t('weNeverStoreCardDetails')}</span>
+                <span className="text-center">{tp('payment.weNeverStoreCardDetails')}</span>
               </div>
             </div>
           </div>

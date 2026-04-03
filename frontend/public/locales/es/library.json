@@ -1,0 +1,21 @@
+{
+  "title": "Mi biblioteca",
+  "empty": "Aún no tiene contenidos comprados.",
+  "watchNow": "Ver ahora",
+  "downloadNow": "Descargar ahora",
+  "readNow": "Leer ahora",
+  "progress": "Progreso",
+  "completed": "Completado",
+  "module": "Módulo",
+  "of": "de",
+  "continueWatching": "Continuar",
+  "recentlyAdded": "Recientes",
+  "files": "Archivos",
+  "howToDownload": "¿Cómo descargo?",
+  "downloadInstruction": "Pulse Descargar para guardar.",
+  "downloading": "Descargando…",
+  "download": "Descargar",
+  "noFilesAvailable": "Sin archivos.",
+  "downloadHere": "Descargue aquí",
+  "downloadError": "Error de descarga. Intente de nuevo."
+}

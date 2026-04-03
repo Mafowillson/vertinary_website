@@ -30,7 +30,7 @@ const ServiceCard = ({ service }) => {
         </div>
         {service.featured && (
           <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold z-10">
-            {t('featured')}
+            {t('services.featured', { ns: 'common' })}
           </div>
         )}
       </div>
@@ -64,14 +64,14 @@ const ServiceCard = ({ service }) => {
             </div>
           ) : (
             <div className="text-sm text-gray-500 italic">
-              {t('contactForPricing')}
+              {t('services.contactForPricing', { ns: 'common' })}
             </div>
           )}
           <Link
             to={`/services/${service.id}`}
             className="inline-flex items-center space-x-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
           >
-            <span>{t('learnMore')}</span>
+            <span>{t('services.learnMore', { ns: 'common' })}</span>
             <FiArrowRight className="w-4 h-4" />
           </Link>
         </div>

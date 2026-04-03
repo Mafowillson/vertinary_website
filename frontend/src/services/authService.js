@@ -1,92 +1,94 @@
-import api from './api'
-import { findUserByEmail, validatePassword, createUserResponse, getUserByToken, mockUsers } from '../data/mockUsers'
+import api, { getApiErrorMessage } from '../../axiosInterceptor'
 
-// Helper to check if API is available
-const isApiAvailable = async () => {
-  try {
-    await api.get('/health').catch(() => {})
-    return true
-  } catch {
-    return false
+function mapUserFromApi(user) {
+  if (!user || typeof user !== 'object') return user
+  return {
+    ...user,
+    isActive: user.isActive ?? user.is_active,
+    isVerified: user.isVerified ?? user.is_verified,
+    createdAt: user.createdAt ?? user.created_at,
   }
 }
 
 export const authService = {
   async login(email, password) {
     try {
-      const response = await api.post('/auth/login', { email, password })
-      return response.data
+      const { data } = await api.post('/auth/login', { email, password })
+      return {
+        token: data.token,
+        refresh_token: data.refresh_token,
+        user: mapUserFromApi(data.user),
+      }
     } catch (error) {
-      console.warn('API unavailable, using mock data:', error.message)
-      
-      // Use mock data
-      const user = findUserByEmail(email)
-      if (!user) {
-        throw new Error('Email ou mot de passe incorrect')
-      }
-      
-      if (!validatePassword(user, password)) {
-        throw new Error('Email ou mot de passe incorrect')
-      }
-      
-      return createUserResponse(user)
+      throw new Error(getApiErrorMessage(error))
     }
   },
 
+  /**
+   * Registration succeeds without tokens; user must verify email before login.
+   */
   async register(userData) {
     try {
-      const response = await api.post('/auth/register', userData)
-      return response.data
-    } catch (error) {
-      console.warn('API unavailable, using mock data:', error.message)
-      
-      // Check if user already exists
-      const existingUser = findUserByEmail(userData.email)
-      if (existingUser) {
-        throw new Error('Cet email est déjà utilisé')
-      }
-      
-      // Create new user
-      const newUser = {
-        id: mockUsers.length + 1,
-        email: userData.email,
+      const { data } = await api.post('/auth/register', {
         name: userData.name,
-        role: 'user',
+        email: userData.email,
         password: userData.password,
+      })
+      return {
+        message: data.message,
+        email: data.email,
       }
-      
-      // Add to mock users (in memory only)
-      mockUsers.push(newUser)
-      
-      return createUserResponse(newUser)
+    } catch (error) {
+      throw new Error(getApiErrorMessage(error))
     }
   },
 
   async getCurrentUser() {
     try {
-      const response = await api.get('/auth/me')
-      return response.data
+      const { data } = await api.get('/auth/me')
+      return mapUserFromApi(data)
     } catch (error) {
-      console.warn('API unavailable, using mock data:', error.message)
-      
-      // Get token from localStorage
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Non authentifié')
-      }
-      
-      const user = getUserByToken(token)
-      if (!user) {
-        throw new Error('Token invalide')
-      }
-      
-      return user
+      throw new Error(getApiErrorMessage(error))
     }
   },
 
-  async logout() {
-    // Token removal is handled client-side
+  async verifyEmail(token) {
+    try {
+      const { data } = await api.post('/auth/verify-email', { token })
+      return data
+    } catch (error) {
+      throw new Error(getApiErrorMessage(error))
+    }
+  },
+
+  async resendVerificationEmail(email) {
+    try {
+      const { data } = await api.post('/auth/resend-verification-email', { email })
+      return data
+    } catch (error) {
+      throw new Error(getApiErrorMessage(error))
+    }
+  },
+
+  async forgotPassword(email) {
+    try {
+      const { data } = await api.post('/auth/forgot-password', { email })
+      return data
+    } catch (error) {
+      throw new Error(getApiErrorMessage(error))
+    }
+  },
+
+  async resetPassword(token, password) {
+    try {
+      const { data } = await api.post('/auth/reset-password', { token, password })
+      return data
+    } catch (error) {
+      throw new Error(getApiErrorMessage(error))
+    }
+  },
+
+  logout() {
     return Promise.resolve()
   },
 }
-

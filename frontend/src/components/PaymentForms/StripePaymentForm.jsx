@@ -4,6 +4,7 @@ import { FiCreditCard, FiLock } from 'react-icons/fi'
 
 const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
   const { t } = useLanguage()
+  const tp = (k) => t(`payment.${k}`, { ns: 'checkout' })
   const [cardData, setCardData] = useState({
     cardNumber: '',
     expiryDate: '',
@@ -63,19 +64,19 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
     const newErrors = {}
     
     if (!cardData.cardNumber || cardData.cardNumber.replace(/\s/g, '').length < 13) {
-      newErrors.cardNumber = t('invalidCardNumber')
+      newErrors.cardNumber = tp('invalidCardNumber')
     }
     
     if (!cardData.expiryDate || cardData.expiryDate.length < 7) {
-      newErrors.expiryDate = t('invalidExpiryDate')
+      newErrors.expiryDate = tp('invalidExpiryDate')
     }
     
     if (!cardData.cvc || cardData.cvc.length < 3) {
-      newErrors.cvc = t('invalidCvc')
+      newErrors.cvc = tp('invalidCvc')
     }
     
     if (!cardData.cardholderName || cardData.cardholderName.length < 2) {
-      newErrors.cardholderName = t('invalidCardholderName')
+      newErrors.cardholderName = tp('invalidCardholderName')
     }
     
     setErrors(newErrors)
@@ -101,7 +102,7 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          {t('cardNumber')}
+          {tp('cardNumber')}
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -134,7 +135,7 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            {t('expiryDate')}
+            {tp('expiryDate')}
           </label>
           <input
             type="text"
@@ -153,13 +154,13 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-1">
-            <span>{t('cvc')}</span>
+            <span>{tp('cvc')}</span>
             <div className="group relative">
               <svg className="w-4 h-4 text-gray-400 cursor-help" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
               </svg>
               <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                {t('cvcHint')}
+                {tp('cvcHint')}
               </span>
             </div>
           </label>
@@ -181,7 +182,7 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          {t('cardholderName')}
+          {tp('cardholderName')}
         </label>
         <input
           type="text"
@@ -192,7 +193,7 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
               setErrors({ ...errors, cardholderName: '' })
             }
           }}
-          placeholder={t('cardholderNamePlaceholder')}
+          placeholder={tp('cardholderNamePlaceholder')}
           className={`w-full py-3 px-4 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
             errors.cardholderName ? 'border-red-500' : 'border-gray-300'
           }`}
@@ -204,7 +205,7 @@ const StripePaymentForm = ({ onPaymentSubmit, processing }) => {
 
       <div className="flex items-center space-x-2 text-sm text-gray-600 pt-2">
         <FiLock className="w-4 h-4 text-green-600" />
-        <span>{t('secureTransaction')}</span>
+        <span>{tp('secureTransaction')}</span>
       </div>
     </form>
   )

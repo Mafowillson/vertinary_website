@@ -1,0 +1,31 @@
+"""add preferred_language to users
+
+Revision ID: 20260403_pref_lang
+Revises:
+Create Date: 2026-04-03
+
+"""
+
+from alembic import op
+import sqlalchemy as sa
+
+revision = "20260403_pref_lang"
+down_revision = None
+branch_labels = None
+depends_on = None
+
+
+def upgrade() -> None:
+    op.add_column(
+        "users",
+        sa.Column(
+            "preferred_language",
+            sa.String(length=5),
+            nullable=False,
+            server_default="en",
+        ),
+    )
+
+
+def downgrade() -> None:
+    op.drop_column("users", "preferred_language")

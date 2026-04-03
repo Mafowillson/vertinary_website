@@ -9,7 +9,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
     if (onExpire) onExpire()
     return (
       <div className="text-center py-4">
-        <p className="text-red-600 dark:text-red-400 font-semibold">{t('offerExpired')}</p>
+        <p className="text-red-600 dark:text-red-400 font-semibold">{t('countdown.offerExpired', { ns: 'common' })}</p>
       </div>
     )
   }
@@ -17,7 +17,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-6 shadow-md">
       <p className="text-center text-gray-700 dark:text-gray-300 mb-3 md:mb-4 font-medium text-sm md:text-base">
-        {t('offerEndsIn')}
+        {t('countdown.offerEndsIn', { ns: 'common' })}
       </p>
       <div className="grid grid-cols-4 gap-2 md:gap-4">
         <div className="text-center">
@@ -26,7 +26,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
               {String(timeLeft.days).padStart(2, '0')}
             </span>
           </div>
-          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('days')}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('countdown.days', { ns: 'common' })}</p>
         </div>
         <div className="text-center">
           <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 md:p-4 mb-1 md:mb-2">
@@ -34,7 +34,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
               {String(timeLeft.hours).padStart(2, '0')}
             </span>
           </div>
-          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('hours')}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('countdown.hours', { ns: 'common' })}</p>
         </div>
         <div className="text-center">
           <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 md:p-4 mb-1 md:mb-2">
@@ -42,7 +42,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
               {String(timeLeft.minutes).padStart(2, '0')}
             </span>
           </div>
-          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('minutes')}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('countdown.minutes', { ns: 'common' })}</p>
         </div>
         <div className="text-center">
           <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 md:p-4 mb-1 md:mb-2">
@@ -50,7 +50,7 @@ const CountdownTimer = ({ targetDate, onExpire }) => {
               {String(timeLeft.seconds).padStart(2, '0')}
             </span>
           </div>
-          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('seconds')}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t('countdown.seconds', { ns: 'common' })}</p>
         </div>
       </div>
     </div>

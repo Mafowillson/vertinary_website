@@ -106,25 +106,27 @@ export const mockServices = [
 ]
 
 // Helper to get services with translations
+const ts = (t, key) => t(`services.${key}`, { ns: 'common' })
+
 export const getServices = (t) => {
-  return mockServices.map(service => ({
+  return mockServices.map((service) => ({
     ...service,
-    title: t(service.titleKey),
-    description: t(service.description),
-    features: service.features.map(featureKey => t(featureKey))
+    title: ts(t, service.titleKey),
+    description: ts(t, service.description),
+    features: service.features.map((featureKey) => ts(t, featureKey)),
   }))
 }
 
 // Helper to get service by ID
 export const getServiceById = (id, t) => {
-  const service = mockServices.find(s => s.id === parseInt(id))
+  const service = mockServices.find((s) => s.id === parseInt(id))
   if (!service) return null
-  
+
   return {
     ...service,
-    title: t(service.titleKey),
-    description: t(service.description),
-    features: service.features.map(featureKey => t(featureKey))
+    title: ts(t, service.titleKey),
+    description: ts(t, service.description),
+    features: service.features.map((featureKey) => ts(t, featureKey)),
   }
 }
 

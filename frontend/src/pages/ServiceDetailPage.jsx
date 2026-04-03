@@ -9,7 +9,7 @@ import { FiArrowLeft, FiMessageCircle, FiCheck } from 'react-icons/fi'
 const ServiceDetailPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
   const { socialLinks } = useApp()
   const [service, setService] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -31,7 +31,7 @@ const ServiceDetailPage = () => {
       }
     }
     loadService()
-  }, [id, t, language])
+  }, [id, t])
 
   if (loading) {
     return (
@@ -44,9 +44,9 @@ const ServiceDetailPage = () => {
   if (!service) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <p className="text-gray-600 text-lg mb-4">{t('serviceNotFound')}</p>
-        <button onClick={() => navigate('/services')} className="btn-primary">
-          {t('backToServices')}
+        <p className="text-gray-600 text-lg mb-4">{t('services.serviceNotFound', { ns: 'common' })}</p>
+        <button type="button" onClick={() => navigate('/services')} className="btn-primary">
+          {t('services.backToServices', { ns: 'common' })}
         </button>
       </div>
     )
@@ -61,7 +61,7 @@ const ServiceDetailPage = () => {
           className="inline-flex items-center space-x-2 text-gray-600 hover:text-green-600 mb-6 transition-colors"
         >
           <FiArrowLeft className="w-4 h-4" />
-          <span>{t('back')}</span>
+          <span>{t('buttons.back', { ns: 'common' })}</span>
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -82,7 +82,7 @@ const ServiceDetailPage = () => {
               )}
               {service.featured && (
                 <div className="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  {t('featured')}
+                  {t('services.featured', { ns: 'common' })}
                 </div>
               )}
             </div>
@@ -112,7 +112,7 @@ const ServiceDetailPage = () => {
             ) : (
               <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <p className="text-gray-600 italic">
-                  {t('contactForPricing')}
+                  {t('services.contactForPricing', { ns: 'common' })}
                 </p>
               </div>
             )}
@@ -121,7 +121,7 @@ const ServiceDetailPage = () => {
             {service.features && service.features.length > 0 && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  {t('features')}
+                  {t('services.features', { ns: 'common' })}
                 </h2>
                 <ul className="space-y-3">
                   {service.features.map((feature, index) => (
@@ -137,10 +137,10 @@ const ServiceDetailPage = () => {
             {/* Contact Section */}
             <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                {t('interestedInThisService')}
+                {t('services.interestedInThisService', { ns: 'common' })}
               </h3>
               <p className="text-gray-600 mb-4">
-                {t('contactUsForMoreInfo')}
+                {t('services.contactUsForMoreInfo', { ns: 'common' })}
               </p>
               {socialLinks.whatsapp && (
                 <a
@@ -150,7 +150,7 @@ const ServiceDetailPage = () => {
                   className="inline-flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
                 >
                   <FiMessageCircle className="w-5 h-5" />
-                  <span>{t('contactWhatsApp')}</span>
+                  <span>{t('services.contactWhatsApp', { ns: 'common' })}</span>
                 </a>
               )}
             </div>
@@ -161,13 +161,13 @@ const ServiceDetailPage = () => {
         <div className="mt-12 pt-12 border-t border-gray-200">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
-              {t('otherServices')}
+              {t('services.otherServices', { ns: 'common' })}
             </h2>
             <Link
               to="/services"
               className="text-green-600 hover:text-green-700 font-semibold transition-colors"
             >
-              {t('viewAllServices')}
+              {t('services.viewAllServices', { ns: 'common' })}
             </Link>
           </div>
         </div>

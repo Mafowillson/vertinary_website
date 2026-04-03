@@ -4,6 +4,7 @@ import { FiSmartphone, FiLock } from 'react-icons/fi'
 
 const FlutterwavePaymentForm = ({ onPaymentSubmit, processing }) => {
   const { t } = useLanguage()
+  const tp = (k) => t(`payment.${k}`, { ns: 'checkout' })
   const [selectedMethod, setSelectedMethod] = useState('mobile_money')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [errors, setErrors] = useState({})
@@ -32,11 +33,11 @@ const FlutterwavePaymentForm = ({ onPaymentSubmit, processing }) => {
     const newErrors = {}
     
     if (!phoneNumber || phoneNumber.length < 8) {
-      newErrors.phoneNumber = t('invalidPhoneNumber')
+      newErrors.phoneNumber = tp('invalidPhoneNumber')
     }
     
     if (!selectedMethod) {
-      newErrors.method = t('pleaseSelectPaymentMethod')
+      newErrors.method = tp('pleaseSelectPaymentMethod')
     }
     
     setErrors(newErrors)
@@ -58,7 +59,7 @@ const FlutterwavePaymentForm = ({ onPaymentSubmit, processing }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-3">
-          {t('selectMobileMoneyProvider')}
+          {tp('selectMobileMoneyProvider')}
         </label>
         <div className="grid grid-cols-2 gap-3">
           {mobileMoneyOptions.map((option) => (
@@ -92,13 +93,13 @@ const FlutterwavePaymentForm = ({ onPaymentSubmit, processing }) => {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
           <FiSmartphone className="w-4 h-4" />
-          <span>{t('phoneNumber')}</span>
+          <span>{tp('phoneNumber')}</span>
         </label>
         <input
           type="tel"
           value={phoneNumber}
           onChange={handlePhoneChange}
-          placeholder={t('phoneNumberPlaceholder')}
+          placeholder={tp('phoneNumberPlaceholder')}
           className={`w-full py-3 px-4 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
             errors.phoneNumber ? 'border-red-500' : 'border-gray-300'
           }`}
@@ -106,18 +107,18 @@ const FlutterwavePaymentForm = ({ onPaymentSubmit, processing }) => {
         {errors.phoneNumber && (
           <p className="mt-1 text-sm text-red-600">{errors.phoneNumber}</p>
         )}
-        <p className="mt-1 text-xs text-gray-500">{t('phoneNumberHint')}</p>
+        <p className="mt-1 text-xs text-gray-500">{tp('phoneNumberHint')}</p>
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
         <p className="text-sm text-blue-800">
-          <strong>{t('howItWorks')}:</strong> {t('mobileMoneyInstructions')}
+          <strong>{tp('howItWorks')}:</strong> {tp('mobileMoneyInstructions')}
         </p>
       </div>
 
       <div className="flex items-center space-x-2 text-sm text-gray-600 pt-2">
         <FiLock className="w-4 h-4 text-green-600" />
-        <span>{t('secureTransaction')}</span>
+        <span>{tp('secureTransaction')}</span>
       </div>
     </form>
   )

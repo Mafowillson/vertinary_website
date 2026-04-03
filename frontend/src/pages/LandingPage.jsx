@@ -258,7 +258,7 @@ const LandingPage = () => {
               to="/products"
               className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold text-xs sm:text-sm"
             >
-              <span>Voir tout</span>
+              <span>{t('products.seeAll', { ns: 'common' })}</span>
               <FiArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Link>
           </div>
@@ -270,10 +270,10 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              {t('services') || 'Nos Services'}
+              {t('services.pageTitle', { ns: 'common' })}
             </h2>
             <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
-              {t('servicesDescription') || 'Découvrez notre gamme complète de services pour éleveurs et professionnels de l\'élevage.'}
+              {t('services.pageDescription', { ns: 'common' })}
             </p>
           </div>
 
@@ -288,7 +288,7 @@ const LandingPage = () => {
               to="/services"
               className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base"
             >
-              <span>{t('viewAllServices') || 'Voir tous les services'}</span>
+              <span>{t('services.viewAllServices', { ns: 'common' })}</span>
               <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </div>

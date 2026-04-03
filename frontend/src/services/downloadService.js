@@ -1,4 +1,4 @@
-import api from './api'
+import api from '../../axiosInterceptor'
 
 export const downloadService = {
   async getDownloadFiles(orderId) {

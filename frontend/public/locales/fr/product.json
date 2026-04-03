@@ -1,0 +1,63 @@
+{
+  "types": { "course": "Cours", "document": "Document", "article": "Article", "audio": "Audio" },
+  "detail": {
+    "price": "Prix",
+    "currency": "Devise",
+    "buy": "Acheter",
+    "preview": "Aperçu",
+    "reviews": "Avis",
+    "noReviews": "Pas encore d'avis",
+    "addedToCart": "Ajouté !",
+    "inCart": "Dans le panier",
+    "addToCart": "Ajouter au panier",
+    "productNotFound": "Produit introuvable",
+    "backToProducts": "Retour aux produits",
+    "description": "Description",
+    "noDescriptionAvailable": "Aucune description disponible.",
+    "limitedOffer": "Offre limitée",
+    "saveMoney": "Économisez",
+    "downloadNow": "Télécharger maintenant",
+    "loginToAddToCart": "Connectez-vous pour ajouter au panier",
+    "loginRequired": "Connexion requise"
+  },
+  "upload": {
+    "title": "Téléverser un produit",
+    "titleLabel": "Titre",
+    "descriptionLabel": "Description",
+    "typeLabel": "Type",
+    "priceLabel": "Prix",
+    "categoryLabel": "Catégorie",
+    "coverLabel": "Image de couverture",
+    "fileLabel": "Fichier",
+    "publishButton": "Publier",
+    "uploadSuccess": "Téléversement réussi",
+    "publishSuccess": "Le produit est en ligne"
+  },
+  "filters": {
+    "all": "Tous",
+    "byType": "Par type",
+    "byAnimal": "Par espèce",
+    "sortBy": "Trier par",
+    "priceAsc": "Prix croissant",
+    "priceDesc": "Prix décroissant",
+    "newest": "Plus récent"
+  },
+  "mock": {
+    "product1Title": "Guide complet de l'élevage de poules pondeuses",
+    "product1Desc": "Guide pratique de la sélection des races à la gestion de la ponte : nutrition, santé et infra.",
+    "product2Title": "Tout sur l'élevage porcin — guide complet",
+    "product2Desc": "Élevage porcin moderne : génétique, alimentation, soins vétérinaires et reproduction.",
+    "product3Title": "Kit de démarrage en aviculture — édition spéciale",
+    "product3Desc": "Démarrer en volailles : poulailler, choix des sujets, alimentation et prévention.",
+    "product4Title": "Vaccination et médication — poulets de chair 0 à 8 semaines",
+    "product4Desc": "Protocoles, calendriers et dosages pour la santé des poulets de chair.",
+    "product5Title": "Gestion de la ponte — du début à la planification mensuelle",
+    "product5Desc": "Optimiser la performance et la gestion du troupeau pondeur.",
+    "product6Title": "Élevage caprin et ovins — guide pratique",
+    "product6Desc": "Races, alimentation, reproduction, pâturage et soins vétérinaires.",
+    "product7Title": "Gestion sanitaire à la ferme — prévention et traitement",
+    "product7Desc": "Biosecurité, plans de vaccination et maladies courantes.",
+    "product8Title": "Alimentation animale — formulation et gestion",
+    "product8Desc": "Rations, stocks et optimisation des coûts."
+  }
+}

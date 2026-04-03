@@ -1,0 +1,21 @@
+{
+  "title": "我的书库",
+  "empty": "您还没有购买任何内容。",
+  "watchNow": "立即观看",
+  "downloadNow": "立即下载",
+  "readNow": "立即阅读",
+  "progress": "进度",
+  "completed": "已完成",
+  "module": "模块",
+  "of": "/",
+  "continueWatching": "继续学习",
+  "recentlyAdded": "最近添加",
+  "files": "文件",
+  "howToDownload": "如何下载？",
+  "downloadInstruction": "点击下载保存文件。",
+  "downloading": "下载中…",
+  "download": "下载",
+  "noFilesAvailable": "暂无文件。",
+  "downloadHere": "在此下载您的文档",
+  "downloadError": "下载失败，请重试。"
+}

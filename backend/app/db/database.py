@@ -48,6 +48,53 @@ def ensure_auth_verification_columns() -> None:
         for statement in statements + index_statements:
             connection.execute(text(statement))
 
+
+def ensure_password_reset_columns() -> None:
+    """Sync password reset columns for existing PostgreSQL databases."""
+    inspector = inspect(engine)
+    if "users" not in inspector.get_table_names():
+        return
+
+    columns = {column["name"] for column in inspector.get_columns("users")}
+    statements = []
+
+    if "password_reset_token" not in columns:
+        statements.append(
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS password_reset_token VARCHAR"
+        )
+    if "password_reset_expires_at" not in columns:
+        statements.append(
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS password_reset_expires_at TIMESTAMPTZ"
+        )
+    if "password_reset_email_last_sent_at" not in columns:
+        statements.append(
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS password_reset_email_last_sent_at TIMESTAMPTZ"
+        )
+
+    index_statements = [
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_users_password_reset_token ON users (password_reset_token)",
+    ]
+
+    with engine.begin() as connection:
+        for statement in statements + index_statements:
+            connection.execute(text(statement))
+
+
+def ensure_preferred_language_column() -> None:
+    inspector = inspect(engine)
+    if "users" not in inspector.get_table_names():
+        return
+    columns = {column["name"] for column in inspector.get_columns("users")}
+    if "preferred_language" in columns:
+        return
+    with engine.begin() as connection:
+        connection.execute(
+            text(
+                "ALTER TABLE users ADD COLUMN preferred_language VARCHAR(5) NOT NULL DEFAULT 'en'"
+            )
+        )
+
+
 def get_db():
     """Dependency to get database session."""
     db = SessionLocal()

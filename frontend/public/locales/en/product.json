@@ -1,0 +1,68 @@
+{
+  "types": {
+    "course": "Course",
+    "document": "Document",
+    "article": "Article",
+    "audio": "Audio"
+  },
+  "detail": {
+    "price": "Price",
+    "currency": "Currency",
+    "buy": "Buy",
+    "preview": "Preview",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "addedToCart": "Added!",
+    "inCart": "In cart",
+    "addToCart": "Add to cart",
+    "productNotFound": "Product not found",
+    "backToProducts": "Back to products",
+    "description": "Description",
+    "noDescriptionAvailable": "No description available.",
+    "limitedOffer": "Limited-time offer",
+    "saveMoney": "Save",
+    "downloadNow": "Download now",
+    "loginToAddToCart": "Sign in to add to cart",
+    "loginRequired": "Sign-in required"
+  },
+  "upload": {
+    "title": "Upload product",
+    "titleLabel": "Title",
+    "descriptionLabel": "Description",
+    "typeLabel": "Type",
+    "priceLabel": "Price",
+    "categoryLabel": "Category",
+    "coverLabel": "Cover image",
+    "fileLabel": "File",
+    "publishButton": "Publish",
+    "uploadSuccess": "Upload successful",
+    "publishSuccess": "Product is now live"
+  },
+  "filters": {
+    "all": "All",
+    "byType": "By type",
+    "byAnimal": "By species",
+    "sortBy": "Sort by",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "newest": "Newest"
+  },
+  "mock": {
+    "product1Title": "Complete guide to laying hen farming",
+    "product1Desc": "Practical guide from breed selection to egg production: nutrition, health, and facility management.",
+    "product2Title": "Complete guide to pig farming",
+    "product2Desc": "Modern pig production: genetics, feeding, veterinary care, health management, and breeding.",
+    "product3Title": "Poultry farming starter kit — special edition",
+    "product3Desc": "Start poultry production: housing, chick selection, feeding, and disease prevention.",
+    "product4Title": "Vaccination and medication — broilers 0–8 weeks",
+    "product4Desc": "Protocols, schedules, and dosages for broiler health.",
+    "product5Title": "Layer management — from first egg to monthly planning",
+    "product5Desc": "Optimize laying performance and flock management.",
+    "product6Title": "Goat and sheep farming — practical guide",
+    "product6Desc": "Breeds, feeding, reproduction, pasture, and veterinary care.",
+    "product7Title": "Health management on the farm — prevention and treatment",
+    "product7Desc": "Biosecurity, vaccination plans, and common disease control.",
+    "product8Title": "Animal feeding — formulation and management",
+    "product8Desc": "Ration design, stock control, and cost optimization."
+  }
+}

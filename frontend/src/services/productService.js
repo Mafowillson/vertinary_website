@@ -1,4 +1,4 @@
-import api from './api'
+import api from '../../axiosInterceptor'
 import { getMockProducts, mapMockProductToAPI } from '../data/mockProducts'
 
 // Store translation function globally (set by components)

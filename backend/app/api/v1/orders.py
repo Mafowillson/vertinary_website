@@ -8,6 +8,8 @@ from app.models.product import Product
 from app.schemas.order import OrderCreate, OrderResponse, PaymentRequest, PaymentResponse
 from app.api.dependencies import get_current_user, get_current_admin_user
 from app.models.user import User
+from app.dependencies.locale import get_locale
+from app.i18n import get_translation
 
 router = APIRouter()
 
@@ -42,7 +44,8 @@ def generate_order_number() -> str:
 async def create_order(
     order_data: OrderCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    locale: str = Depends(get_locale),
 ):
     """Create a new order."""
     # Verify product exists
@@ -50,14 +53,14 @@ async def create_order(
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
+            detail=get_translation("errors.product_not_found", lang=locale),
         )
     
     # Check stock if applicable
     if product.stock and product.stock <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Product out of stock"
+            detail=get_translation("errors.out_of_stock", lang=locale),
         )
     
     # Create order
@@ -85,7 +88,8 @@ async def create_order(
 async def get_order(
     order_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    locale: str = Depends(get_locale),
 ):
     """Get an order by ID."""
     order = db.query(Order).options(
@@ -95,14 +99,14 @@ async def get_order(
     if not order:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Order not found"
+            detail=get_translation("errors.order_not_found", lang=locale),
         )
     
     # Check if user owns the order or is admin
     if order.user_id != current_user.id and current_user.role.value != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to view this order"
+            detail=get_translation("errors.forbidden_order", lang=locale),
         )
     
     return OrderResponse.model_validate(order)
@@ -124,21 +128,22 @@ async def process_payment(
     order_id: int,
     payment_data: PaymentRequest,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    locale: str = Depends(get_locale),
 ):
     """Process payment for an order."""
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Order not found"
+            detail=get_translation("errors.order_not_found", lang=locale),
         )
     
     # Check if user owns the order
     if order.user_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to process payment for this order"
+            detail=get_translation("errors.forbidden_payment", lang=locale),
         )
     
     # Update order status and payment method
@@ -163,7 +168,7 @@ async def process_payment(
     
     return PaymentResponse(
         success=True,
-        message="Payment processed successfully",
+        message=get_translation("success.payment_processed", lang=locale),
         order=OrderResponse.model_validate(order)
     )
 

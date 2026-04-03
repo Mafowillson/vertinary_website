@@ -43,20 +43,20 @@ const CartPage = () => {
             className="inline-flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors mb-8"
           >
             <FiArrowLeft className="w-5 h-5" />
-            <span>{t('backToProducts')}</span>
+            <span>{t('cart.backToProducts', { ns: 'checkout' })}</span>
           </Link>
           
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
             <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <FiShoppingCart className="w-12 h-12 text-gray-400" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('cart')}</h2>
-            <p className="text-gray-600 mb-8">Votre panier est vide</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('nav.cart', { ns: 'common' })}</h2>
+            <p className="text-gray-600 mb-8">{t('cart.empty', { ns: 'checkout' })}</p>
             <Link
               to="/products"
               className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
-              <span>{t('viewProducts')}</span>
+              <span>{t('landing.viewProducts', { ns: 'common' })}</span>
               <FiArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -75,9 +75,9 @@ const CartPage = () => {
             className="inline-flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors"
           >
             <FiArrowLeft className="w-5 h-5" />
-            <span>{t('backToProducts')}</span>
+            <span>{t('cart.backToProducts', { ns: 'checkout' })}</span>
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">{t('cart')}</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('nav.cart', { ns: 'common' })}</h1>
           <div className="w-24"></div> {/* Spacer for centering */}
         </div>
 
@@ -91,7 +91,7 @@ const CartPage = () => {
                 className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
               >
                 <FiTrash2 className="w-4 h-4" />
-                <span>Vider le panier</span>
+                <span>{t('cart.clear', { ns: 'checkout' })}</span>
               </button>
             </div>
 
@@ -151,7 +151,7 @@ const CartPage = () => {
                           <button
                             onClick={() => removeFromCart(item.id)}
                             className="flex-shrink-0 p-2 text-gray-400 hover:text-red-600 transition-colors"
-                            title="Retirer du panier"
+                            title={t('cart.removeTitle', { ns: 'checkout' })}
                           >
                             <FiX className="w-5 h-5" />
                           </button>
@@ -167,20 +167,20 @@ const CartPage = () => {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-xl p-6 lg:sticky lg:top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">{t('orderSummary')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-6">{t('cart.orderSummary', { ns: 'checkout' })}</h2>
 
               {/* Price Breakdown */}
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-700">
-                  <span>{t('subtotal')}</span>
+                  <span>{t('cart.subtotal', { ns: 'checkout' })}</span>
                   <span>{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>{t('taxes')}</span>
+                  <span>{t('cart.taxes', { ns: 'checkout' })}</span>
                   <span>{formatCurrency(taxes)}</span>
                 </div>
                 <div className="border-t pt-3 flex justify-between font-bold text-lg">
-                  <span>{t('total')}</span>
+                  <span>{t('cart.total', { ns: 'checkout' })}</span>
                   <span className="text-green-600">{formatCurrency(total)}</span>
                 </div>
               </div>
@@ -190,7 +190,7 @@ const CartPage = () => {
                 onClick={handleCheckout}
                 className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
-                <span>{t('payNow')}</span>
+                <span>{t('payment.payButton', { ns: 'checkout' })}</span>
                 <FiArrowRight className="w-5 h-5" />
               </button>
 
@@ -199,7 +199,7 @@ const CartPage = () => {
                 to="/products"
                 className="block text-center text-gray-600 hover:text-green-600 transition-colors mt-4 text-sm font-medium"
               >
-                Continuer vos achats
+                {t('cart.continueShopping', { ns: 'checkout' })}
               </Link>
             </div>
           </div>

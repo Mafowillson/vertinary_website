@@ -58,7 +58,7 @@ const PaymentMethods = () => {
   return (
     <div className="text-center">
       <p className="text-gray-700 mb-6 text-sm md:text-base font-medium">
-        {t('paymentMethodsSupported')}
+        {t('paymentMethodsSupported', { ns: 'common' })}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
         {paymentMethods.map((method, index) => (

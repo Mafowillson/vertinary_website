@@ -1,0 +1,17 @@
+{
+  "generic": "Something went wrong. Please try again.",
+  "notFound": "This page could not be found.",
+  "unauthorized": "You are not authorized to view this.",
+  "serverError": "Server error. Please try again later.",
+  "networkError": "Network error. Check your connection.",
+  "fileTooLarge": "The file is too large.",
+  "invalidFileType": "This file type is not allowed.",
+  "paymentFailed": "Payment could not be completed.",
+  "sessionExpired": "Your session has expired. Please sign in again.",
+  "requestFailed": "Request failed",
+  "noRefreshToken": "No refresh token",
+  "loginFailed": "Sign-in failed. Try again.",
+  "registerFailed": "Registration failed. Try again.",
+  "passwordsDoNotMatch": "Passwords do not match.",
+  "passwordTooShort": "Password must be at least 8 characters with required complexity."
+}

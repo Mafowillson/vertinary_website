@@ -1,16 +1,22 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List, Optional
 from app.db.database import get_db
 from app.models.product import Product
+from app.models.review import Review
+from app.models.product_like import ProductLike
 from app.schemas.product import (
     ProductCreate,
     ProductUpdate,
     ProductResponse,
+    ProductDetailResponse,
     product_payload_to_orm_dict,
 )
-from app.api.dependencies import get_current_user, get_current_admin_user
+from app.api.dependencies import get_current_admin_user, get_optional_current_user
 from app.models.user import User
+from app.dependencies.locale import get_locale
+from app.i18n import get_translation
 
 router = APIRouter()
 
@@ -49,19 +55,44 @@ async def search_products(
     ).all()
     return [ProductResponse.model_validate(p) for p in products]
 
-@router.get("/{product_id}", response_model=ProductResponse)
+@router.get("/{product_id}", response_model=ProductDetailResponse)
 async def get_product(
     product_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_optional_current_user),
+    locale: str = Depends(get_locale),
 ):
-    """Get a product by ID."""
+    """Get a product by ID (includes like/review counts; optional Bearer sets liked_by_me)."""
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
+            detail=get_translation("errors.product_not_found", lang=locale),
         )
-    return ProductResponse.model_validate(product)
+    like_count = (
+        db.query(func.count(ProductLike.id)).filter(ProductLike.product_id == product_id).scalar() or 0
+    )
+    review_count = (
+        db.query(func.count(Review.id)).filter(Review.product_id == product_id).scalar() or 0
+    )
+    liked_by_me: Optional[bool] = None
+    if current_user is not None:
+        liked_by_me = (
+            db.query(ProductLike.id)
+            .filter(
+                ProductLike.product_id == product_id,
+                ProductLike.user_id == current_user.id,
+            )
+            .first()
+            is not None
+        )
+    base = ProductResponse.model_validate(product).model_dump()
+    return ProductDetailResponse(
+        **base,
+        like_count=like_count,
+        review_count=review_count,
+        liked_by_me=liked_by_me,
+    )
 
 @router.post("", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
 async def create_product(
@@ -81,14 +112,15 @@ async def update_product(
     product_id: int,
     product_data: ProductUpdate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin_user)
+    current_user: User = Depends(get_current_admin_user),
+    locale: str = Depends(get_locale),
 ):
     """Update a product (admin only)."""
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
+            detail=get_translation("errors.product_not_found", lang=locale),
         )
     
     update_data = product_data.model_dump(exclude_unset=True)
@@ -104,14 +136,15 @@ async def update_product(
 async def delete_product(
     product_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin_user)
+    current_user: User = Depends(get_current_admin_user),
+    locale: str = Depends(get_locale),
 ):
     """Delete a product (admin only)."""
     product = db.query(Product).filter(Product.id == product_id).first()
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
+            detail=get_translation("errors.product_not_found", lang=locale),
         )
     
     db.delete(product)

@@ -6,110 +6,104 @@ import SkeletonLoader from '../components/LoadingSpinner/SkeletonLoader'
 import { FiFilter, FiCheckCircle } from 'react-icons/fi'
 
 const ServicesPage = () => {
-  const { t, language } = useLanguage()
+  const { t, i18n } = useLanguage()
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [loading] = useState(false)
 
-  // Get services with translations - ensure it updates when language changes
-  const services = useMemo(() => {
-    return getServices(t)
-  }, [t, language])
+  const tc = (key, opts) => t(key, { ns: 'common', ...opts })
 
-  // Categories with icons
+  const services = useMemo(() => getServices(t), [t, i18n.language])
+
   const categories = [
-    { 
-      id: 'all', 
-      name: t('allCategories'), 
+    {
+      id: 'all',
+      name: tc('services.allCategories'),
       key: 'allCategories',
       icon: '📋',
-      color: 'from-green-500 to-green-600'
+      color: 'from-green-500 to-green-600',
     },
-    { 
-      id: 'training', 
-      name: t('training'), 
+    {
+      id: 'training',
+      name: tc('services.training'),
       key: 'training',
       icon: '📚',
-      color: 'from-blue-500 to-blue-600'
+      color: 'from-blue-500 to-blue-600',
     },
-    { 
-      id: 'sales', 
-      name: t('sales'), 
+    {
+      id: 'sales',
+      name: tc('services.sales'),
       key: 'sales',
       icon: '🛒',
-      color: 'from-purple-500 to-purple-600'
+      color: 'from-purple-500 to-purple-600',
     },
-    { 
-      id: 'products', 
-      name: t('products'), 
+    {
+      id: 'products',
+      name: tc('services.products'),
       key: 'products',
       icon: '💊',
-      color: 'from-orange-500 to-orange-600'
+      color: 'from-orange-500 to-orange-600',
     },
-    { 
-      id: 'construction', 
-      name: t('construction'), 
+    {
+      id: 'construction',
+      name: tc('services.construction'),
       key: 'construction',
       icon: '🏗️',
-      color: 'from-yellow-500 to-yellow-600'
+      color: 'from-yellow-500 to-yellow-600',
     },
-    { 
-      id: 'consulting', 
-      name: t('consulting'), 
+    {
+      id: 'consulting',
+      name: tc('services.consulting'),
       key: 'consulting',
       icon: '🌾',
-      color: 'from-teal-500 to-teal-600'
+      color: 'from-teal-500 to-teal-600',
     },
   ]
 
-  // Filter services by category
   const filteredServices = useMemo(() => {
     if (selectedCategory === 'all') {
       return services
     }
-    return services.filter(service => service.category === selectedCategory)
+    return services.filter((service) => service.category === selectedCategory)
   }, [services, selectedCategory])
 
-  const selectedCategoryData = categories.find(cat => cat.id === selectedCategory)
+  const selectedCategoryData = categories.find((cat) => cat.id === selectedCategory)
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero Section */}
       <section className="relative py-16 md:py-24 bg-gradient-to-br from-green-50 via-white to-green-50 overflow-hidden">
-        {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-30 -mr-32 -mt-32"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-30 -ml-32 -mb-32"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 border border-green-200 rounded-full text-sm font-semibold text-green-700 mb-6">
               <FiCheckCircle className="w-4 h-4" />
-              <span>Services Professionnels</span>
+              <span>{tc('services.pageBadge')}</span>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              {t('services')}
+              {tc('services.pageTitle')}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {t('servicesDescription')}
+              {tc('services.pageDescription')}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Category Filter Section */}
       <section className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center gap-3 mb-4">
             <FiFilter className="w-5 h-5 text-gray-600" />
             <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Filtrer par catégorie 
+              {tc('services.filterByCategory')}
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
               <button
                 key={category.id}
+                type="button"
                 onClick={() => setSelectedCategory(category.id)}
                 className={`group relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   selectedCategory === category.id
@@ -130,27 +124,23 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* Services Grid Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Results Header */}
           {!loading && filteredServices.length > 0 && (
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
-                  {selectedCategory === 'all' 
-                    ? t('allServices')
-                    : `${selectedCategoryData?.name || ''}`
-                  }
+                  {selectedCategory === 'all'
+                    ? tc('services.allServices')
+                    : `${selectedCategoryData?.name || ''}`}
                 </h2>
                 <p className="text-gray-600 mt-1">
-                  {filteredServices.length} {filteredServices.length === 1 ? 'service disponible' : 'services disponibles'}
+                  {tc('services.availableCount', { count: filteredServices.length })}
                 </p>
               </div>
             </div>
           )}
 
-          {/* Loading State */}
           {loading ? (
             <SkeletonLoader count={6} />
           ) : filteredServices.length > 0 ? (
@@ -160,29 +150,31 @@ const ServicesPage = () => {
               ))}
             </div>
           ) : (
-            /* Empty State */
             <div className="text-center py-20">
               <div className="max-w-md mx-auto">
                 <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
                   <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                  {t('noServicesFound')}
-                </h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">{tc('services.noServicesFound')}</h3>
                 <p className="text-gray-600 mb-6">
                   {selectedCategory === 'all'
-                    ? 'Aucun service n\'est disponible pour le moment.'
-                    : `Aucun service trouvé dans la catégorie "${selectedCategoryData?.name}". Essayez une autre catégorie.`
-                  }
+                    ? tc('services.emptyAll')
+                    : tc('services.emptyCategory', { category: selectedCategoryData?.name || '' })}
                 </p>
                 {selectedCategory !== 'all' && (
                   <button
+                    type="button"
                     onClick={() => setSelectedCategory('all')}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
                   >
-                    <span>Voir tous les services</span>
+                    <span>{tc('services.showAllServicesCta')}</span>
                   </button>
                 )}
               </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FiMail, FiAlertCircle, FiCheckCircle, FiLock, FiRefreshCw, FiArrowLeft } from 'react-icons/fi'
+import { FiAlertCircle, FiCheckCircle, FiLock, FiRefreshCw, FiArrowLeft } from 'react-icons/fi'
+import { authService } from '../../services/authService'
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('')
@@ -14,11 +15,7 @@ const ForgotPasswordPage = () => {
     setLoading(true)
 
     try {
-      // TODO: Implement API call to send reset password email
-      // For now, simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Simulate success
+      await authService.forgotPassword(email.trim())
       setSuccess(true)
     } catch (err) {
       setError(err.message || 'Une erreur est survenue. Veuillez réessayer.')

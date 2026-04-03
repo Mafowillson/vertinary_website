@@ -21,9 +21,15 @@ class User(Base):
     email_verification_token = Column(String, unique=True, nullable=True, index=True)
     email_verification_expires_at = Column(DateTime(timezone=True), nullable=True)
     verification_email_last_sent_at = Column(DateTime(timezone=True), nullable=True)
+    password_reset_token = Column(String, unique=True, nullable=True, index=True)
+    password_reset_expires_at = Column(DateTime(timezone=True), nullable=True)
+    password_reset_email_last_sent_at = Column(DateTime(timezone=True), nullable=True)
+    preferred_language = Column(String(5), default="en", nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     # Relationships
     orders = relationship("Order", back_populates="user")
+    reviews = relationship("Review", back_populates="user")
+    product_likes = relationship("ProductLike", back_populates="user")
 

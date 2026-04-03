@@ -3,8 +3,8 @@
 export const getMockProducts = (t) => [
   {
     id: 1,
-    title: t('product1Title'),
-    description: t('product1Desc'),
+    title: t('mock.product1Title', { ns: 'product' }),
+    description: t('mock.product1Desc', { ns: 'product' }),
     price: 2490.91,
     originalPrice: null,
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
@@ -16,8 +16,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 2,
-    title: t('product2Title'),
-    description: t('product2Desc'),
+    title: t('mock.product2Title', { ns: 'product' }),
+    description: t('mock.product2Desc', { ns: 'product' }),
     price: 7019.84,
     originalPrice: 18115.72,
     discountEndDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days from now
@@ -30,8 +30,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 3,
-    title: t('product3Title'),
-    description: t('product3Desc'),
+    title: t('mock.product3Title', { ns: 'product' }),
+    description: t('mock.product3Desc', { ns: 'product' }),
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
     price: 3849.59,
     originalPrice: 9057.86,
@@ -44,8 +44,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 4,
-    title: t('product4Title'),
-    description: t('product4Desc'),
+    title: t('mock.product4Title', { ns: 'product' }),
+    description: t('mock.product4Desc', { ns: 'product' }),
     price: 2264.47,
     originalPrice: 4528.93,
     discountEndDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day from now (urgent!)
@@ -58,8 +58,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 5,
-    title: t('product5Title'),
-    description: t('product5Desc'),
+    title: t('mock.product5Title', { ns: 'product' }),
+    description: t('mock.product5Desc', { ns: 'product' }),
     price: 3500.00,
     originalPrice: null,
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
@@ -71,8 +71,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 6,
-    title: t('product6Title'),
-    description: t('product6Desc'),
+    title: t('mock.product6Title', { ns: 'product' }),
+    description: t('mock.product6Desc', { ns: 'product' }),
     price: 4500.00,
     originalPrice: 8000.00,
     discountEndDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
@@ -85,8 +85,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 7,
-    title: t('product7Title'),
-    description: t('product7Desc'),
+    title: t('mock.product7Title', { ns: 'product' }),
+    description: t('mock.product7Desc', { ns: 'product' }),
     price: 2800.00,
     originalPrice: null,
     imageUrl: "https://images.unsplash.com/photo-1548550023-2bdb3c94be19?w=400&h=300&fit=crop",
@@ -98,8 +98,8 @@ export const getMockProducts = (t) => [
   },
   {
     id: 8,
-    title: t('product8Title'),
-    description: t('product8Desc'),
+    title: t('mock.product8Title', { ns: 'product' }),
+    description: t('mock.product8Desc', { ns: 'product' }),
     price: 3200.00,
     originalPrice: 6000.00,
     imageUrl: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",

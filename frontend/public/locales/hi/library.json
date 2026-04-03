@@ -1,0 +1,21 @@
+{
+  "title": "मेरी लाइब्रेरी",
+  "empty": "अभी कोई सामग्री खरीदी नहीं।",
+  "watchNow": "अभी देखें",
+  "downloadNow": "अभी डाउनलोड",
+  "readNow": "अभी पढ़ें",
+  "progress": "प्रगति",
+  "completed": "पूर्ण",
+  "module": "मॉड्यूल",
+  "of": "/",
+  "continueWatching": "जारी रखें",
+  "recentlyAdded": "हाल ही में",
+  "files": "फ़ाइलें",
+  "howToDownload": "कैसे डाउनलोड करें?",
+  "downloadInstruction": "डाउनलोड दबाकर सहेजें।",
+  "downloading": "डाउनलोड…",
+  "download": "डाउनलोड",
+  "noFilesAvailable": "कोई फ़ाइल नहीं।",
+  "downloadHere": "यहाँ दस्तावेज़ डाउनलोड करें",
+  "downloadError": "डाउनलोड असफल, पुनः प्रयास करें।"
+}

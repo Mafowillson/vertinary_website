@@ -75,3 +75,36 @@ class RefreshRequest(BaseModel):
 class RefreshResponse(BaseModel):
     token: str
 
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value: str) -> str:
+        return value.strip().lower() if isinstance(value, str) else value
+
+
+class ForgotPasswordResponse(BaseModel):
+    message: str
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    password: str
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_strength(cls, value: str) -> str:
+        if len(value) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if not re.search(r"[A-Z]", value):
+            raise ValueError("Password must include at least one uppercase letter")
+        if not re.search(r"[a-z]", value):
+            raise ValueError("Password must include at least one lowercase letter")
+        if not re.search(r"\d", value):
+            raise ValueError("Password must include at least one number")
+        if not re.search(r"[^A-Za-z0-9]", value):
+            raise ValueError("Password must include at least one special character")
+        return value
+

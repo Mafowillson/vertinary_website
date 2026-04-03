@@ -1,0 +1,17 @@
+{
+  "generic": "出现问题，请重试。",
+  "notFound": "页面未找到。",
+  "unauthorized": "您无权查看此内容。",
+  "serverError": "服务器错误，请稍后重试。",
+  "networkError": "网络错误，请检查连接。",
+  "fileTooLarge": "文件过大。",
+  "invalidFileType": "不允许的文件类型。",
+  "paymentFailed": "支付未完成。",
+  "sessionExpired": "会话已过期，请重新登录。",
+  "requestFailed": "请求失败",
+  "noRefreshToken": "无刷新令牌",
+  "loginFailed": "登录失败。",
+  "registerFailed": "注册失败。",
+  "passwordsDoNotMatch": "两次密码不一致。",
+  "passwordTooShort": "密码需满足复杂度要求（至少 8 位）。"
+}

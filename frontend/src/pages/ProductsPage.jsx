@@ -3,8 +3,71 @@ import { productService, setTranslationFunction } from '../services/productServi
 import ProductCard from '../components/ProductCard/ProductCard'
 import SkeletonLoader from '../components/LoadingSpinner/SkeletonLoader'
 import { useLanguage } from '../contexts/LanguageContext'
-import { FiSearch, FiX, FiFilter, FiSliders, FiDollarSign, FiFileText, FiGrid } from 'react-icons/fi'
+import {
+  FiSearch,
+  FiX,
+  FiFilter,
+  FiSliders,
+  FiDollarSign,
+  FiGrid,
+  FiVideo,
+  FiHeadphones,
+  FiBookOpen,
+  FiBook,
+  FiFileText,
+} from 'react-icons/fi'
 import { formatCurrency } from '../utils/formatters'
+
+/** Sidebar options + keyword fallbacks when API has no structured species/format */
+const SPECIES_OPTIONS = [
+  { id: 'poultry', label: 'Poules & volailles', hint: 'Pondeuses, chair, aviculture', emoji: '🐔', keywords: ['poule', 'poussin', 'avicole', 'pondeuse', 'chair', 'volaille', 'poulet', 'œuf', 'oeuf'] },
+  { id: 'pigs', label: 'Porcs', hint: 'Élevage porcin', emoji: '🐷', keywords: ['porc', 'porcin', 'truie'] },
+  { id: 'turkeys', label: 'Dindes', hint: 'Dindons, dinde', emoji: '🦃', keywords: ['dinde', 'dindon'] },
+  { id: 'small_ruminants', label: 'Chèvres & moutons', hint: 'Caprins, ovins', emoji: '🐐', keywords: ['chèvre', 'mouton', 'caprin', 'ovin'] },
+  { id: 'cattle', label: 'Bovins', hint: 'Vaches, bœufs', emoji: '🐄', keywords: ['bovin', 'vache', 'bœuf', 'boeuf'] },
+  { id: 'rabbits', label: 'Lapins', hint: 'Cuniculture', emoji: '🐰', keywords: ['lapin', 'cunicole'] },
+]
+
+const CONTENT_TYPE_OPTIONS = [
+  { id: 'course', label: 'Cours (vidéo)', hint: 'Séries, formations', icon: FiVideo, keywords: ['cours', 'vidéo', 'video', 'formation', 'série', 'serie'] },
+  { id: 'document', label: 'Documents', hint: 'PDF, fiches', icon: FiFileText, keywords: ['pdf', 'document', 'fiche', 'manuel', 'kit'] },
+  { id: 'audio', label: 'Audio', hint: 'Podcasts, enregistrements', icon: FiHeadphones, keywords: ['audio', 'podcast', 'enregistrement'] },
+  { id: 'article', label: 'Articles', hint: 'Lecture courte', icon: FiBookOpen, keywords: ['article', 'blog'] },
+  { id: 'ebook', label: 'E-books', hint: 'Livres numériques', icon: FiBook, keywords: ['e-book', 'ebook', 'livre numérique'] },
+]
+
+function productTextBlob(p) {
+  return `${p.title || ''} ${p.description || ''}`.toLowerCase()
+}
+
+function productMatchesSpecies(product, selectedIds) {
+  if (!selectedIds.length) return true
+  const blob = productTextBlob(product)
+  const explicit = [product.species, product.animal_type, product.category, ...(Array.isArray(product.tags) ? product.tags : [])]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+  return selectedIds.some((id) => {
+    const opt = SPECIES_OPTIONS.find((o) => o.id === id)
+    if (!opt) return false
+    const inExplicit = opt.keywords.some((k) => explicit.includes(k))
+    const inText = opt.keywords.some((k) => blob.includes(k))
+    return inExplicit || inText
+  })
+}
+
+function productMatchesContentType(product, selectedIds) {
+  if (!selectedIds.length) return true
+  const blob = productTextBlob(product)
+  const fmt = (product.format || product.content_type || '').toString().toLowerCase()
+  return selectedIds.some((id) => {
+    const opt = CONTENT_TYPE_OPTIONS.find((o) => o.id === id)
+    if (!opt) return false
+    const labelMatch = opt.keywords.some((k) => fmt.includes(k))
+    const textMatch = opt.keywords.some((k) => blob.includes(k))
+    return labelMatch || textMatch
+  })
+}
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([])
@@ -74,6 +137,9 @@ const ProductsPage = () => {
       return price <= priceRange
     })
 
+    filtered = filtered.filter((p) => productMatchesSpecies(p, selectedSpecies))
+    filtered = filtered.filter((p) => productMatchesContentType(p, selectedFormats))
+
     // Sort
     if (sortBy === 'most-popular') {
       filtered.sort((a, b) => (b.purchase_count || b.sold || 0) - (a.purchase_count || a.sold || 0))
@@ -96,19 +162,15 @@ const ProductsPage = () => {
     setDisplayedProducts(filteredProducts.slice(startIndex, endIndex))
   }, [filteredProducts, currentPage])
 
-  const handleSpeciesChange = (species) => {
-    setSelectedSpecies(prev =>
-      prev.includes(species)
-        ? prev.filter(s => s !== species)
-        : [...prev, species]
+  const handleSpeciesToggle = (speciesId) => {
+    setSelectedSpecies((prev) =>
+      prev.includes(speciesId) ? prev.filter((s) => s !== speciesId) : [...prev, speciesId]
     )
   }
 
-  const handleFormatChange = (format) => {
-    setSelectedFormats(prev =>
-      prev.includes(format)
-        ? prev.filter(f => f !== format)
-        : [...prev, format]
+  const handleContentTypeToggle = (typeId) => {
+    setSelectedFormats((prev) =>
+      prev.includes(typeId) ? prev.filter((f) => f !== typeId) : [...prev, typeId]
     )
   }
 
@@ -119,13 +181,16 @@ const ProductsPage = () => {
     setSearchQuery('')
   }
 
-  const removeSpeciesFilter = (species) => {
-    setSelectedSpecies(prev => prev.filter(s => s !== species))
+  const removeSpeciesFilter = (speciesId) => {
+    setSelectedSpecies((prev) => prev.filter((s) => s !== speciesId))
   }
 
-  const removeFormatFilter = (format) => {
-    setSelectedFormats(prev => prev.filter(f => f !== format))
+  const removeFormatFilter = (typeId) => {
+    setSelectedFormats((prev) => prev.filter((f) => f !== typeId))
   }
+
+  const speciesLabel = (id) => SPECIES_OPTIONS.find((o) => o.id === id)?.label || id
+  const contentTypeLabel = (id) => CONTENT_TYPE_OPTIONS.find((o) => o.id === id)?.label || id
 
   const loadMore = () => {
     setCurrentPage(prev => prev + 1)
@@ -134,81 +199,164 @@ const ProductsPage = () => {
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
   const activeFiltersCount = selectedSpecies.length + selectedFormats.length + (priceRange < 100000 ? 1 : 0)
 
-  // Filter Sidebar Component
   const FilterSidebar = ({ isMobile = false }) => (
-    <div 
-      className={`${isMobile ? 'lg:hidden' : 'hidden lg:block'} ${isMobile ? 'fixed inset-0 z-50 bg-black bg-opacity-50' : ''}`}
-      onClick={isMobile ? (e) => {
-        if (e.target === e.currentTarget) {
-          setMobileFiltersOpen(false)
-        }
-      } : undefined}
+    <div
+      className={`${isMobile ? 'lg:hidden' : 'hidden lg:block'} ${isMobile ? 'fixed inset-0 z-50' : ''} ${
+        isMobile && !mobileFiltersOpen ? 'pointer-events-none invisible' : ''
+      }`}
+      onClick={
+        isMobile
+          ? (e) => {
+              if (e.target === e.currentTarget) setMobileFiltersOpen(false)
+            }
+          : undefined
+      }
+      role={isMobile ? 'presentation' : undefined}
     >
-      <div 
-        className={`${isMobile ? 'absolute right-0 top-0 h-full w-80 bg-white shadow-2xl overflow-y-auto' : 'bg-white border border-gray-200 rounded-xl p-6 sticky top-24'} transition-transform duration-300 ${isMobile && !mobileFiltersOpen ? 'translate-x-full' : ''}`}
+      {isMobile && (
+        <div
+          className={`absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileFiltersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        />
+      )}
+      <aside
+        className={`
+          ${isMobile ? 'absolute right-0 top-0 h-full w-[min(100%,20rem)]' : 'w-full max-w-[17.5rem] shrink-0'}
+          ${isMobile ? 'shadow-2xl' : 'sticky top-24'}
+          flex flex-col
+          rounded-2xl border border-emerald-100/80 bg-gradient-to-b from-white via-emerald-50/30 to-white
+          shadow-[0_4px_24px_-4px_rgba(5,150,105,0.12)]
+          overflow-hidden
+          transition-transform duration-300 ease-out
+          ${isMobile && !mobileFiltersOpen ? 'translate-x-full' : 'translate-x-0'}
+        `}
         onClick={(e) => e.stopPropagation()}
+        aria-hidden={isMobile && !mobileFiltersOpen}
       >
-        {isMobile && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900">Filtres</h2>
-            <button
-              onClick={() => setMobileFiltersOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <FiX className="w-5 h-5 text-gray-600" />
-            </button>
-          </div>
-        )}
-        
-        <div className={isMobile ? 'p-4' : ''}>
-          {!isMobile && (
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <FiSliders className="w-5 h-5 text-green-600" />
-                Filtres
-              </h2>
-              {activeFiltersCount > 0 && (
-                <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {activeFiltersCount}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* SPECIES Filter */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-2.5 6c.83 0 1.5.67 1.5 1.5S10.33 11 9.5 11 8 10.33 8 9.5 8.67 8 9.5 8zm5 0c.83 0 1.5.67 1.5 1.5S15.33 11 14.5 11 13 10.33 13 9.5 13.67 8 14.5 8zM12 7.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
-                </svg>
-              </div>
-              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">Espèces</h3>
-            </div>
-            <div className="space-y-3">
-              {['Bovine', 'Equine', 'Canine', 'Feline'].map((species) => (
-                <label key={species} className="flex items-center group cursor-pointer p-2 rounded-lg hover:bg-green-50 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={selectedSpecies.includes(species)}
-                    onChange={() => handleSpeciesChange(species)}
-                    className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-700 group-hover:text-green-600 transition-colors">{species}</span>
-                </label>
-              ))}
+        <div
+          className={`flex items-center justify-between px-4 py-3.5 border-b border-emerald-100/80 bg-white/80 backdrop-blur-sm ${
+            isMobile ? '' : 'rounded-t-2xl'
+          }`}
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+              <FiSliders className="w-4 h-4" />
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-base font-bold text-slate-900 leading-tight">Affiner</h2>
+              <p className="text-[11px] text-slate-500 truncate">Espèces, formats, budget</p>
             </div>
           </div>
+          <div className="flex items-center gap-2 shrink-0">
+            {activeFiltersCount > 0 && (
+              <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[11px] font-bold text-white tabular-nums">
+                {activeFiltersCount}
+              </span>
+            )}
+            {isMobile && (
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(false)}
+                className="rounded-xl p-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+                aria-label="Fermer les filtres"
+              >
+                <FiX className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+        </div>
 
-          {/* PRICE RANGE Filter */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <FiDollarSign className="w-4 h-4 text-green-600" />
-              </div>
-              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">Gamme de Prix</h3>
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-6">
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800/80 mb-2.5">
+              Pour quel élevage ?
+            </p>
+            <div className="grid grid-cols-1 gap-2">
+              {SPECIES_OPTIONS.map(({ id, label, hint, emoji }) => {
+                const on = selectedSpecies.includes(id)
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => handleSpeciesToggle(id)}
+                    className={`group flex w-full items-start gap-2.5 rounded-xl border-2 px-3 py-2.5 text-left transition-all
+                      ${
+                        on
+                          ? 'border-emerald-600 bg-emerald-50/90 shadow-sm ring-1 ring-emerald-600/20'
+                          : 'border-slate-100 bg-white/90 hover:border-emerald-200 hover:bg-emerald-50/40'
+                      }`}
+                  >
+                    <span className="text-lg leading-none mt-0.5" aria-hidden>
+                      {emoji}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className={`block text-sm font-semibold ${on ? 'text-emerald-950' : 'text-slate-800'}`}>
+                        {label}
+                      </span>
+                      <span className="block text-[11px] text-slate-500 leading-snug">{hint}</span>
+                    </span>
+                    <span
+                      className={`mt-1 h-4 w-4 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors
+                        ${on ? 'border-emerald-600 bg-emerald-600' : 'border-slate-300 bg-white group-hover:border-emerald-400'}`}
+                    >
+                      {on && <span className="h-1.5 w-1.5 rounded-full bg-white" />}
+                    </span>
+                  </button>
+                )
+              })}
             </div>
-            <div className="px-2">
+          </section>
+
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800/80 mb-2.5">
+              Type de contenu
+            </p>
+            <div className="flex flex-col gap-2">
+              {CONTENT_TYPE_OPTIONS.map(({ id, label, hint, icon: Icon }) => {
+                const on = selectedFormats.includes(id)
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => handleContentTypeToggle(id)}
+                    className={`flex w-full items-center gap-3 rounded-xl border-2 px-3 py-2.5 text-left transition-all
+                      ${
+                        on
+                          ? 'border-amber-500/90 bg-amber-50/80 shadow-sm ring-1 ring-amber-400/25'
+                          : 'border-slate-100 bg-white/90 hover:border-amber-200 hover:bg-amber-50/30'
+                      }`}
+                  >
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                        on ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-600'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className={`block text-sm font-semibold ${on ? 'text-amber-950' : 'text-slate-800'}`}>
+                        {label}
+                      </span>
+                      <span className="block text-[11px] text-slate-500">{hint}</span>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          <section>
+            <div className="flex items-center gap-2 mb-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white">
+                <FiDollarSign className="w-3.5 h-3.5" />
+              </span>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Budget max</p>
+                <p className="text-sm font-bold text-slate-900">{formatCurrency(priceRange)}</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-slate-50/80 border border-slate-100 px-3 py-3">
               <input
                 type="range"
                 min="0"
@@ -216,65 +364,73 @@ const ProductsPage = () => {
                 step="5000"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600"
+                className="w-full h-2 rounded-full bg-slate-200 accent-emerald-600 cursor-pointer"
               />
-              <div className="flex justify-between mt-3 text-xs font-medium text-gray-600">
-                <span>0 FCFA</span>
-                <span className="text-green-600 font-bold">{formatCurrency(priceRange)}</span>
-                <span>100.000+ FCFA</span>
+              <div className="mt-2 flex justify-between text-[10px] font-medium text-slate-500">
+                <span>0</span>
+                <span>100 000+ FCFA</span>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* FORMAT Filter */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <FiFileText className="w-4 h-4 text-green-600" />
-              </div>
-              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">Format</h3>
-            </div>
-            <div className="space-y-3">
-              {['PDF Guide', 'Video Lecture', 'E-book'].map((format) => (
-                <label key={format} className="flex items-center group cursor-pointer p-2 rounded-lg hover:bg-green-50 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={selectedFormats.includes(format)}
-                    onChange={() => handleFormatChange(format)}
-                    className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-700 group-hover:text-green-600 transition-colors">{format}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Clear All Filters Button */}
           {activeFiltersCount > 0 && (
             <button
+              type="button"
               onClick={clearAllFilters}
-              className="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+              className="w-full rounded-xl border-2 border-slate-200 bg-white py-3 text-sm font-semibold text-slate-700 hover:border-red-200 hover:bg-red-50 hover:text-red-800 transition-colors flex items-center justify-center gap-2"
             >
               <FiX className="w-4 h-4" />
-              Réinitialiser les Filtres
+              Tout effacer
             </button>
           )}
         </div>
-      </div>
+
+        {isMobile && (
+          <div className="border-t border-emerald-100/80 bg-white/90 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
+            <button
+              type="button"
+              onClick={() => setMobileFiltersOpen(false)}
+              className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition-colors"
+            >
+              Voir les résultats
+            </button>
+          </div>
+        )}
+      </aside>
     </div>
   )
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            Ressources Vétérinaires
-          </h1>
-          <p className="text-green-50 text-lg max-w-2xl">
-            Découvrez notre collection complète de livres, guides et formations en médecine vétérinaire pour éleveurs et professionnels.
+      {/* Hero — catalogue contenus élevage */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-700 text-white">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+          <p className="text-emerald-100/90 text-sm font-semibold tracking-wide uppercase mb-2">
+            Catalogue éleveurs
           </p>
+          <h1 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold mb-4 max-w-3xl leading-tight">
+            Formations et ressources pour bien élever vos animaux
+          </h1>
+          <p className="text-emerald-50/95 text-base md:text-lg max-w-2xl leading-relaxed">
+            Cours en vidéo, guides PDF, audios et articles : tout ce qu’il faut pour les poules, porcs, dindes et autres
+            élevages familiaux ou professionnels — choisissez une espèce et un format à gauche pour affiner.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {['Cours', 'Documents', 'Audio', 'Articles'].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur-sm ring-1 ring-white/20"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -304,11 +460,12 @@ const ProductsPage = () => {
 
             {/* Mobile Filter Button */}
             <button
+              type="button"
               onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden px-6 py-3 bg-white border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
+              className="lg:hidden px-5 py-3 bg-white border-2 border-emerald-200 rounded-xl font-semibold text-emerald-900 hover:bg-emerald-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
-              <FiFilter className="w-5 h-5" />
-              Filtres
+              <FiFilter className="w-5 h-5 text-emerald-600" />
+              Affiner
               {activeFiltersCount > 0 && (
                 <span className="bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                   {activeFiltersCount}
@@ -328,18 +485,24 @@ const ProductsPage = () => {
                   </button>
                 </span>
               )}
-              {selectedSpecies.map((species) => (
-                <span key={species} className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                  {species}
-                  <button onClick={() => removeSpeciesFilter(species)} className="hover:text-green-900">
+              {selectedSpecies.map((id) => (
+                <span
+                  key={id}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-100 text-emerald-900 rounded-full text-sm font-medium"
+                >
+                  {speciesLabel(id)}
+                  <button type="button" onClick={() => removeSpeciesFilter(id)} className="hover:text-emerald-950 rounded-full p-0.5">
                     <FiX className="w-4 h-4" />
                   </button>
                 </span>
               ))}
-              {selectedFormats.map((format) => (
-                <span key={format} className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                  {format}
-                  <button onClick={() => removeFormatFilter(format)} className="hover:text-blue-900">
+              {selectedFormats.map((id) => (
+                <span
+                  key={id}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-900 rounded-full text-sm font-medium"
+                >
+                  {contentTypeLabel(id)}
+                  <button type="button" onClick={() => removeFormatFilter(id)} className="hover:text-amber-950 rounded-full p-0.5">
                     <FiX className="w-4 h-4" />
                   </button>
                 </span>
@@ -392,17 +555,16 @@ const ProductsPage = () => {
             )}
 
             {/* Results Header */}
-            <div className="bg-white rounded-xl p-6 mb-6 shadow-sm border border-gray-200">
+            <div className="bg-white rounded-2xl p-5 sm:p-6 mb-6 shadow-sm border border-slate-200/80 ring-1 ring-slate-100">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                    {loading ? 'Chargement...' : `${filteredProducts.length} Ressources Disponibles`}
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
+                    {loading ? 'Chargement...' : `${filteredProducts.length} contenu${filteredProducts.length !== 1 ? 's' : ''} à explorer`}
                   </h2>
-                  <p className="text-gray-600 text-sm">
-                    {filteredProducts.length > 0 
-                      ? `Trouvez exactement ce dont vous avez besoin pour votre pratique vétérinaire`
-                      : 'Aucune ressource ne correspond à vos critères'
-                    }
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    {filteredProducts.length > 0
+                      ? 'Parcourez les guides et formations pour nourrir, soigner et développer votre élevage.'
+                      : 'Aucun contenu ne correspond à vos critères — élargissez le budget ou retirez un filtre.'}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">

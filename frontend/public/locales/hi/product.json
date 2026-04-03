@@ -1,0 +1,63 @@
+{
+  "types": { "course": "पाठ्यक्रम", "document": "दस्तावेज़", "article": "लेख", "audio": "ऑडियो" },
+  "detail": {
+    "price": "मूल्य",
+    "currency": "मुद्रा",
+    "buy": "खरीदें",
+    "preview": "पूर्वावलोकन",
+    "reviews": "समीक्षाएँ",
+    "noReviews": "अभी कोई समीक्षा नहीं",
+    "addedToCart": "जोड़ा गया!",
+    "inCart": "कार्ट में",
+    "addToCart": "कार्ट में जोड़ें",
+    "productNotFound": "उत्पाद नहीं मила",
+    "backToProducts": "उत्पादों पर वापस",
+    "description": "विवरण",
+    "noDescriptionAvailable": "कोई विवरण नहीं।",
+    "limitedOffer": "सीमित ऑफ़र",
+    "saveMoney": "बचत",
+    "downloadNow": "अभी डाउनलोड",
+    "loginToAddToCart": "कार्ट में जोड़ने के लिए लॉग इन",
+    "loginRequired": "लॉग इन आवश्यक"
+  },
+  "upload": {
+    "title": "उत्पाद अपलोड",
+    "titleLabel": "शीर्षक",
+    "descriptionLabel": "विवरण",
+    "typeLabel": "प्रकार",
+    "priceLabel": "मूल्य",
+    "categoryLabel": "श्रेणी",
+    "coverLabel": "कवर छवि",
+    "fileLabel": "फ़ाइल",
+    "publishButton": "प्रकाशित करें",
+    "uploadSuccess": "अपलोड सफल",
+    "publishSuccess": "उत्पाद लाइव है"
+  },
+  "filters": {
+    "all": "सभी",
+    "byType": "प्रकार से",
+    "byAnimal": "जानवर से",
+    "sortBy": "क्रमबद्ध",
+    "priceAsc": "मूल्य बढ़ते",
+    "priceDesc": "मूल्य घटते",
+    "newest": "नवीनतम"
+  },
+  "mock": {
+    "product1Title": "अंडेदार मुर्गी पालन की संपूर्ण मार्गदर्शिका",
+    "product1Desc": "नसल चयन से अंड उत्पादन: पोषण, स्वास्थ्य और सुविधाएँ।",
+    "product2Title": "सुअर पालन — संपूर्ण मार्गदर्शिका",
+    "product2Desc": "आधुनिक सुअर पालन: आनुवंशिकी, भोजन, पशुचिकित्सा और प्रजनन।",
+    "product3Title": "कुक्कुट पालन स्टार्टर किट — विशेष संस्करण",
+    "product3Desc": "शेड, चूज़ा चयन, खाना और रोग रोधी।",
+    "product4Title": "0–8 सप्ताह ब्रॉयलर टीकाकरण व औषधि",
+    "product4Desc": "अनुसूचियाँ और मात्रा।",
+    "product5Title": "अंड उत्पादन प्रबंधन",
+    "product5Desc": "उत्पादन अनुकूलन।",
+    "product6Title": "बकरी व भेड़ पालन — व्यावहारिक गाइड",
+    "product6Desc": "नसलें, भोजन, प्रजनन, चारागाह व देखभाल।",
+    "product7Title": "फार्म स्वास्थ्य प्रबंधन — रोकथाम व उपचार",
+    "product7Desc": "जैविक सुरक्षा, टीकाकरण व नियंत्रण।",
+    "product8Title": "पशु आहार — संरचना व प्रबंधन",
+    "product8Desc": "राशन, स्टॉक व लागत।"
+  }
+}

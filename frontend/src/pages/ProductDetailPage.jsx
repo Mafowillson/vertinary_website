@@ -117,14 +117,14 @@ const ProductDetailPage = () => {
           <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
             <FiFileText className="w-12 h-12 text-gray-400" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('productNotFound')}</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('detail.productNotFound', { ns: 'product' })}</h2>
           <p className="text-gray-600 mb-6">Le produit que vous recherchez n'existe pas ou a été supprimé.</p>
           <Link 
             to="/products" 
             className="inline-flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             <FiArrowLeft className="w-5 h-5" />
-            <span>{t('backToProducts')}</span>
+            <span>{t('detail.backToProducts', { ns: 'product' })}</span>
           </Link>
         </div>
       </div>
@@ -352,7 +352,7 @@ const ProductDetailPage = () => {
                   className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
                 >
                   <FiDownload className="w-6 h-6" />
-                  <span>{t('downloadNow')}</span>
+                  <span>{t('detail.downloadNow', { ns: 'product' })}</span>
                 </button>
 
                 <button
@@ -367,12 +367,12 @@ const ProductDetailPage = () => {
                   {cartAdded || (product && isInCart(product.id)) ? (
                     <>
                       <FiCheck className="w-6 h-6" />
-                      <span>{product && isInCart(product.id) ? t('inCart') : t('addedToCart')}</span>
+                      <span>{product && isInCart(product.id) ? t('detail.inCart', { ns: 'product' }) : t('detail.addedToCart', { ns: 'product' })}</span>
                     </>
                   ) : (
                     <>
                       <FiPlus className="w-6 h-6" />
-                      <span>{t('addToCart')}</span>
+                      <span>{t('detail.addToCart', { ns: 'product' })}</span>
                     </>
                   )}
                 </button>
@@ -386,7 +386,7 @@ const ProductDetailPage = () => {
                   className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <FiMessageCircle className="w-5 h-5" />
-                  <span>{t('contactWhatsApp')}</span>
+                  <span>{t('services.contactWhatsApp', { ns: 'common' })}</span>
                 </a>
               )}
             </div>
@@ -454,7 +454,7 @@ const ProductDetailPage = () => {
             {activeTab === 'description' && (
               <div className="prose max-w-none">
                 <p className="text-gray-700 leading-relaxed whitespace-pre-line text-lg">
-                  {description || t('noDescriptionAvailable')}
+                  {description || t('detail.noDescriptionAvailable', { ns: 'product' })}
                 </p>
               </div>
             )}

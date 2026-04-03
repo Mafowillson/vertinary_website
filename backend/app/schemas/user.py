@@ -29,6 +29,20 @@ class UserUpdate(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
 
+
+class UserLanguageUpdate(BaseModel):
+    language: str
+
+    @field_validator("language")
+    @classmethod
+    def language_must_be_supported(cls, value: str) -> str:
+        from app.i18n import SUPPORTED_LANGUAGES
+
+        code = value.strip().lower().split("-")[0]
+        if code not in SUPPORTED_LANGUAGES:
+            raise ValueError("language must be one of: " + ", ".join(SUPPORTED_LANGUAGES))
+        return code
+
 class UserResponse(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
@@ -36,6 +50,7 @@ class UserResponse(UserBase):
     role: str
     is_active: bool
     is_verified: bool
+    preferred_language: str
     created_at: datetime
 
     @computed_field
@@ -52,4 +67,9 @@ class UserResponse(UserBase):
     @property
     def isVerified(self) -> bool:
         return self.is_verified
+
+    @computed_field
+    @property
+    def preferredLanguage(self) -> str:
+        return self.preferred_language
 

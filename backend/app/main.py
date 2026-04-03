@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.db.database import engine, Base, ensure_auth_verification_columns
+from app.db.database import (
+    engine,
+    Base,
+    ensure_auth_verification_columns,
+    ensure_password_reset_columns,
+    ensure_preferred_language_column,
+)
 from app.api.v1 import api_router
+import app.models  # noqa: F401 — register SQLAlchemy models with Base.metadata
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
 ensure_auth_verification_columns()
+ensure_password_reset_columns()
+ensure_preferred_language_column()
 
 app = FastAPI(
     title="Vertinary Website API",

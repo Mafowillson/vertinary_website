@@ -1,0 +1,63 @@
+{
+  "types": { "course": "Curso", "document": "Documento", "article": "Artículo", "audio": "Audio" },
+  "detail": {
+    "price": "Precio",
+    "currency": "Moneda",
+    "buy": "Comprar",
+    "preview": "Vista previa",
+    "reviews": "Reseñas",
+    "noReviews": "Sin reseñas",
+    "addedToCart": "¡Añadido!",
+    "inCart": "En el carrito",
+    "addToCart": "Añadir al carrito",
+    "productNotFound": "Producto no encontrado",
+    "backToProducts": "Volver al catálogo",
+    "description": "Descripción",
+    "noDescriptionAvailable": "Sin descripción.",
+    "limitedOffer": "Oferta limitada",
+    "saveMoney": "Ahorre",
+    "downloadNow": "Descargar ahora",
+    "loginToAddToCart": "Inicie sesión para añadir",
+    "loginRequired": "Se requiere inicio de sesión"
+  },
+  "upload": {
+    "title": "Subir producto",
+    "titleLabel": "Título",
+    "descriptionLabel": "Descripción",
+    "typeLabel": "Tipo",
+    "priceLabel": "Precio",
+    "categoryLabel": "Categoría",
+    "coverLabel": "Portada",
+    "fileLabel": "Archivo",
+    "publishButton": "Publicar",
+    "uploadSuccess": "Subida correcta",
+    "publishSuccess": "Producto publicado"
+  },
+  "filters": {
+    "all": "Todos",
+    "byType": "Por tipo",
+    "byAnimal": "Por especie",
+    "sortBy": "Ordenar",
+    "priceAsc": "Precio ascendente",
+    "priceDesc": "Precio descendente",
+    "newest": "Más reciente"
+  },
+  "mock": {
+    "product1Title": "Guía completa de gallinas ponedoras",
+    "product1Desc": "De la raza a la producción de huevos: nutrición, salud e instalaciones.",
+    "product2Title": "Todo sobre porcicultura — guía completa",
+    "product2Desc": "Porcicultura moderna: genética, alimentación, sanidad y reproducción.",
+    "product3Title": "Kit de inicio avícola — edición especial",
+    "product3Desc": "Galpón, selección de pollitos, alimentación y prevención.",
+    "product4Title": "Vacunación y medicación — pollos 0–8 semanas",
+    "product4Desc": "Protocolos y dosis.",
+    "product5Title": "Manejo de la postura",
+    "product5Desc": "Optimización del hato ponedor.",
+    "product6Title": "Caprinos y ovinos — guía práctica",
+    "product6Desc": "Razas, alimentación, reproducción, pastoreo y sanidad.",
+    "product7Title": "Sanidad en la explotación — prevención y tratamiento",
+    "product7Desc": "Bioseguridad, vacunación y control de enfermedades.",
+    "product8Title": "Alimentación animal — formulación y gestión",
+    "product8Desc": "Raciones, inventario y costos."
+  }
+}

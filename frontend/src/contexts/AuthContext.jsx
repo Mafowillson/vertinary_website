@@ -46,14 +46,6 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     const response = await authService.register(userData)
-    if (response.token) {
-      setToken(response.token)
-      setUser(response.user)
-      localStorage.setItem('token', response.token)
-      if (response.refresh_token) {
-        localStorage.setItem('refreshToken', response.refresh_token)
-      }
-    }
     return response
   }
 

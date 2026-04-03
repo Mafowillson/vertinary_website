@@ -3,6 +3,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.db.database import Base
 
+
+
+
 class Product(Base):
     __tablename__ = "products"
 
@@ -28,4 +31,10 @@ class Product(Base):
 
     # Relationships
     orders = relationship("Order", back_populates="product")
+    reviews = relationship(
+        "Review", back_populates="product", cascade="all, delete-orphan"
+    )
+    likes = relationship(
+        "ProductLike", back_populates="product", cascade="all, delete-orphan"
+    )
 

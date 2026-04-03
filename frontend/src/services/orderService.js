@@ -1,4 +1,4 @@
-import api from './api'
+import api from '../../axiosInterceptor'
 import { createMockOrder, getMockOrderById, processMockPayment, getMockUserOrders } from '../data/mockOrders'
 import { productService } from './productService'
 

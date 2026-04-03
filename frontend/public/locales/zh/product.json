@@ -1,0 +1,63 @@
+{
+  "types": { "course": "课程", "document": "文档", "article": "文章", "audio": "音频" },
+  "detail": {
+    "price": "价格",
+    "currency": "货币",
+    "buy": "购买",
+    "preview": "预览",
+    "reviews": "评价",
+    "noReviews": "暂无评价",
+    "addedToCart": "已加入！",
+    "inCart": "在购物车中",
+    "addToCart": "加入购物车",
+    "productNotFound": "未找到产品",
+    "backToProducts": "返回产品列表",
+    "description": "描述",
+    "noDescriptionAvailable": "暂无描述。",
+    "limitedOffer": "限时优惠",
+    "saveMoney": "节省",
+    "downloadNow": "立即下载",
+    "loginToAddToCart": "登录后加入购物车",
+    "loginRequired": "需要登录"
+  },
+  "upload": {
+    "title": "上传产品",
+    "titleLabel": "标题",
+    "descriptionLabel": "描述",
+    "typeLabel": "类型",
+    "priceLabel": "价格",
+    "categoryLabel": "类别",
+    "coverLabel": "封面图",
+    "fileLabel": "文件",
+    "publishButton": "发布",
+    "uploadSuccess": "上传成功",
+    "publishSuccess": "产品已上架"
+  },
+  "filters": {
+    "all": "全部",
+    "byType": "按类型",
+    "byAnimal": "按动物",
+    "sortBy": "排序",
+    "priceAsc": "价格从低到高",
+    "priceDesc": "价格从高到低",
+    "newest": "最新"
+  },
+  "mock": {
+    "product1Title": "蛋鸡养殖完整指南",
+    "product1Desc": "从品种选择到产蛋管理：营养、健康与设施。",
+    "product2Title": "生猪养殖完全指南",
+    "product2Desc": "现代养猪：遗传、饲喂、兽医保健与繁殖。",
+    "product3Title": "家禽养殖入门套装（特别版）",
+    "product3Desc": "禽舍建设、雏禽选择、饲喂与防病。",
+    "product4Title": "0–8 周肉鸡防疫与用药",
+    "product4Desc": "规程、日程与剂量。",
+    "product5Title": "产蛋期管理——从开产到月度计划",
+    "product5Desc": "优化产蛋性能与鸡群管理。",
+    "product6Title": "山羊与绵羊养殖实用指南",
+    "product6Desc": "品种、饲喂、繁殖、放牧与兽医护理。",
+    "product7Title": "牧场健康管理——预防与治疗",
+    "product7Desc": "生物安全、免疫程序与常见病控制。",
+    "product8Title": "动物营养——配方与管理",
+    "product8Desc": "日粮设计、库存与成本控制。"
+  }
+}

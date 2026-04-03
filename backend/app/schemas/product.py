@@ -125,6 +125,14 @@ class ProductResponse(ProductBase):
         return self.updated_at
 
 
+class ProductDetailResponse(ProductResponse):
+    """Single product with engagement stats; Authorization header sets liked_by_me when logged in."""
+
+    like_count: int = 0
+    review_count: int = 0
+    liked_by_me: Optional[bool] = None
+
+
 def product_payload_to_orm_dict(data: dict) -> dict:
     """Turn API/create dict into SQLAlchemy Product constructor kwargs."""
     out = dict(data)

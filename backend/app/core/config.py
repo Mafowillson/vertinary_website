@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str = ""
     SMTP_FROM_EMAIL: str = "noreply@vertinary.local"
     VERIFICATION_URL_BASE: str = "http://localhost:5173/verify-email"
+    PASSWORD_RESET_URL_BASE: str = "http://localhost:3000/reset-password"
     VERIFICATION_RESEND_COOLDOWN_SECONDS: int = 60
     # smtp: send via SMTP (set SMTP_USERNAME / SMTP_PASSWORD). console: log link only (local dev).
     VERIFICATION_EMAIL_MODE: str = "smtp"

@@ -1,0 +1,17 @@
+{
+  "generic": "Algo salió mal. Intente de nuevo.",
+  "notFound": "Página no encontrada.",
+  "unauthorized": "No autorizado.",
+  "serverError": "Error del servidor.",
+  "networkError": "Error de red.",
+  "fileTooLarge": "Archivo demasiado grande.",
+  "invalidFileType": "Tipo no permitido.",
+  "paymentFailed": "Pago no completado.",
+  "sessionExpired": "Sesión caducada. Inicie sesión de nuevo.",
+  "requestFailed": "Solicitud fallida",
+  "noRefreshToken": "Sin token de actualización",
+  "loginFailed": "Error al iniciar sesión.",
+  "registerFailed": "Error al registrarse.",
+  "passwordsDoNotMatch": "Las contraseñas no coinciden.",
+  "passwordTooShort": "La contraseña no cumple la complejidad (mín. 8)."
+}

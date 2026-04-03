@@ -1,0 +1,17 @@
+{
+  "generic": "कुछ गलत हुआ। पुनः प्रयास करें।",
+  "notFound": "पृष्ठ नहीं मिला।",
+  "unauthorized": "पहुँच अनुमत नहीं।",
+  "serverError": "सर्वर त्रुटि। बाद में प्रयास करें।",
+  "networkError": "नेटवर्क त्रुटि।",
+  "fileTooLarge": "फ़ाइल बहुत बड़ी।",
+  "invalidFileType": "फ़ाइल प्रकार अस्वीकृत।",
+  "paymentFailed": "भुगतान असफल।",
+  "sessionExpired": "सत्र समाप्त। पुनः लॉग इन।",
+  "requestFailed": "अनुरोध असफल",
+  "noRefreshToken": "रीफ़्रेश टोकन नहीं",
+  "loginFailed": "लॉग इन असफल।",
+  "registerFailed": "पंजीकरण असफल।",
+  "passwordsDoNotMatch": "पासवर्ड मेल नहीं खाते।",
+  "passwordTooShort": "पासवर्ड जटिलता आवश्यक (कम से कम 8)।"
+}
